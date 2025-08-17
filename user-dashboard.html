@@ -1,0 +1,1219 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dashboard - DevHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .stats-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+        .progress-bar {
+            transition: width 0.5s ease-in-out;
+        }
+        .activity-item {
+            border-left: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .activity-item:hover {
+            border-left-color: #3b82f6;
+            background-color: rgba(59, 130, 246, 0.05);
+        }
+        .dark .activity-item:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+        .sidebar-item {
+            transition: all 0.3s ease;
+        }
+        .sidebar-item:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+            transform: translateX(4px);
+        }
+        .sidebar-item.active {
+            background-color: #3b82f6;
+            color: white;
+        }
+        .notification-badge {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+        .modal-backdrop {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+        }
+        .skill-progress {
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            height: 8px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-lg sticky top-0 z-50 transition-colors duration-300">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo & Brand -->
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="flex items-center space-x-2">
+                        <div class="w-10 h-10 bg-gradient-to-r from-primary-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-code text-white text-lg"></i>
+                        </div>
+                        <h1 class="text-2xl font-bold bg-gradient-to-r from-primary-500 to-purple-600 bg-clip-text text-transparent">
+                            DevHub
+                        </h1>
+                    </a>
+                    <div class="hidden md:flex items-center space-x-2 text-gray-500">
+                        <i class="fas fa-chevron-right text-sm"></i>
+                        <span class="text-primary-600">My Dashboard</span>
+                    </div>
+                </div>
+
+                <!-- User Menu -->
+                <div class="flex items-center space-x-4">
+                    <!-- Notifications -->
+                    <div class="relative">
+                        <button onclick="toggleNotifications()" class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors relative">
+                            <i class="fas fa-bell text-xl"></i>
+                            <span class="notification-badge absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">3</span>
+                        </button>
+                        
+                        <div id="notifications-dropdown" class="hidden absolute right-0 mt-2 w-80 bg-white dark:bg-gray-800 rounded-lg shadow-lg border dark:border-gray-700 z-10">
+                            <div class="p-4 border-b dark:border-gray-700">
+                                <h3 class="font-semibold">Notifications</h3>
+                            </div>
+                            <div class="max-h-64 overflow-y-auto">
+                                <div class="p-3 hover:bg-gray-50 dark:hover:bg-gray-700 border-b dark:border-gray-700">
+                                    <div class="flex items-start space-x-3">
+                                        <div class="w-2 h-2 bg-blue-500 rounded-full mt-2"></div>
+                                        <div class="flex-1">
+                                            <p class="text-sm">New resource "Vue Dashboard" was added to your wishlist</p>
+                                            <p class="text-xs text-gray-500">2 hours ago</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-3 hover:bg-gray-50 dark:hover:bg-gray-700 border-b dark:border-gray-700">
+                                    <div class="flex items-start space-x-3">
+                                        <div class="w-2 h-2 bg-green-500 rounded-full mt-2"></div>
+                                        <div class="flex-1">
+                                            <p class="text-sm">Your review for "React Admin Template" was approved</p>
+                                            <p class="text-xs text-gray-500">1 day ago</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-3 hover:bg-gray-50 dark:hover:bg-gray-700">
+                                    <div class="flex items-start space-x-3">
+                                        <div class="w-2 h-2 bg-purple-500 rounded-full mt-2"></div>
+                                        <div class="flex-1">
+                                            <p class="text-sm">Weekly digest: 5 new components in your favorite categories</p>
+                                            <p class="text-xs text-gray-500">3 days ago</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dark Mode Toggle -->
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:block"></i>
+                    </button>
+
+                    <!-- User Profile -->
+                    <div class="relative">
+                        <button onclick="toggleUserMenu()" class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e9893e95-49ff-4d1e-a5e2-6d76202da5fa.png" alt="Profile picture of Alex Thompson, frontend developer and DevHub user" class="w-8 h-8 rounded-full">
+                            <span class="hidden md:block font-medium">Alex Thompson</span>
+                            <i class="fas fa-chevron-down text-sm"></i>
+                        </button>
+                        
+                        <div id="user-menu" class="hidden absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border dark:border-gray-700 z-10">
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-700 text-sm">
+                                <i class="fas fa-user mr-2"></i>Profile Settings
+                            </a>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-700 text-sm">
+                                <i class="fas fa-heart mr-2"></i>Wishlist
+                            </a>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-700 text-sm">
+                                <i class="fas fa-download mr-2"></i>Downloads
+                            </a>
+                            <div class="border-t dark:border-gray-700 my-1"></div>
+                            <a href="index.html" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-700 text-sm">
+                                <i class="fas fa-home mr-2"></i>Back to Hub
+                            </a>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-50 dark:hover:bg-gray-700 text-sm text-red-600">
+                                <i class="fas fa-sign-out-alt mr-2"></i>Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="flex">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-white dark:bg-gray-800 shadow-lg min-h-screen">
+            <nav class="p-4">
+                <div class="space-y-2">
+                    <a href="#overview" onclick="showSection('overview')" class="sidebar-item active block w-full text-left px-4 py-3 rounded-lg">
+                        <i class="fas fa-chart-bar mr-3"></i>Overview
+                    </a>
+                    <a href="#assets" onclick="showSection('assets')" class="sidebar-item block w-full text-left px-4 py-3 rounded-lg">
+                        <i class="fas fa-cube mr-3"></i>My Assets
+                    </a>
+                    <a href="#purchases" onclick="showSection('purchases')" class="sidebar-item block w-full text-left px-4 py-3 rounded-lg">
+                        <i class="fas fa-shopping-cart mr-3"></i>Purchases
+                    </a>
+                    <a href="#wishlist" onclick="showSection('wishlist')" class="sidebar-item block w-full text-left px-4 py-3 rounded-lg">
+                        <i class="fas fa-heart mr-3"></i>Wishlist
+                    </a>
+                    <a href="#reviews" onclick="showSection('reviews')" class="sidebar-item block w-full text-left px-4 py-3 rounded-lg">
+                        <i class="fas fa-star mr-3"></i>My Reviews
+                    </a>
+                    <a href="#analytics" onclick="showSection('analytics')" class="sidebar-item block w-full text-left px-4 py-3 rounded-lg">
+                        <i class="fas fa-chart-line mr-3"></i>Analytics
+                    </a>
+                    <a href="#settings" onclick="showSection('settings')" class="sidebar-item block w-full text-left px-4 py-3 rounded-lg">
+                        <i class="fas fa-cog mr-3"></i>Settings
+                    </a>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="mt-8">
+                    <h3 class="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide mb-3">Quick Actions</h3>
+                    <div class="space-y-2">
+                        <button onclick="openUploadModal()" class="w-full bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors text-sm">
+                            <i class="fas fa-plus mr-2"></i>Upload Asset
+                        </button>
+                        <button onclick="openSubmissionModal()" class="w-full bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors text-sm">
+                            <i class="fas fa-share mr-2"></i>Submit Resource
+                        </button>
+                    </div>
+                </div>
+
+                <!-- User Stats -->
+                <div class="mt-8 bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                    <h3 class="text-sm font-semibold mb-3">Your Stats</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between text-sm">
+                            <span>Downloads</span>
+                            <span class="font-bold text-primary-600">2,847</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span>Likes Received</span>
+                            <span class="font-bold text-red-500">456</span>
+                        </div>
+                        <div class="flex justify-between text-sm">
+                            <span>Reviews Written</span>
+                            <span class="font-bold text-green-500">23</span>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="flex-1 p-6">
+            <!-- Overview Section -->
+            <section id="overview" class="dashboard-section">
+                <!-- Welcome Banner -->
+                <div class="stats-card text-white rounded-lg p-6 mb-6">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <h2 class="text-2xl font-bold mb-2">Welcome back, Alex!</h2>
+                            <p class="opacity-90">Here's what's happening with your DevHub account</p>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-3xl font-bold">Level 8</div>
+                            <div class="text-sm opacity-75">Developer</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <div class="bg-white dark:bg-gray-800 rounded-lg p-6 card-hover">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-600 dark:text-gray-400 text-sm">Total Downloads</p>
+                                <p class="text-2xl font-bold text-blue-600">2,847</p>
+                                <p class="text-green-500 text-sm">↑ 12% this month</p>
+                            </div>
+                            <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-download text-blue-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 rounded-lg p-6 card-hover">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-600 dark:text-gray-400 text-sm">Uploaded Assets</p>
+                                <p class="text-2xl font-bold text-green-600">15</p>
+                                <p class="text-green-500 text-sm">+3 this month</p>
+                            </div>
+                            <div class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-cube text-green-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 rounded-lg p-6 card-hover">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-600 dark:text-gray-400 text-sm">Reputation</p>
+                                <p class="text-2xl font-bold text-purple-600">8,945</p>
+                                <p class="text-green-500 text-sm">↑ 8% this month</p>
+                            </div>
+                            <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-star text-purple-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-white dark:bg-gray-800 rounded-lg p-6 card-hover">
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <p class="text-gray-600 dark:text-gray-400 text-sm">Total Purchases</p>
+                                <p class="text-2xl font-bold text-orange-600">$450</p>
+                                <p class="text-gray-500 text-sm">7 items bought</p>
+                            </div>
+                            <div class="w-12 h-12 bg-orange-100 dark:bg-orange-900 rounded-lg flex items-center justify-center">
+                                <i class="fas fa-shopping-cart text-orange-600 text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity & Charts -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    <!-- Recent Activity -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg p-6">
+                        <h3 class="text-xl font-bold mb-4">Recent Activity</h3>
+                        <div class="space-y-4">
+                            <div class="activity-item flex items-start space-x-3 p-3 rounded-lg">
+                                <div class="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-download text-blue-600 text-sm"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-sm">Downloaded "React Navigation Component"</p>
+                                    <p class="text-xs text-gray-500">2 hours ago</p>
+                                </div>
+                            </div>
+                            <div class="activity-item flex items-start space-x-3 p-3 rounded-lg">
+                                <div class="w-8 h-8 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-star text-green-600 text-sm"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-sm">Received 5-star review on "Dashboard Cards"</p>
+                                    <p class="text-xs text-gray-500">5 hours ago</p>
+                                </div>
+                            </div>
+                            <div class="activity-item flex items-start space-x-3 p-3 rounded-lg">
+                                <div class="w-8 h-8 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-upload text-purple-600 text-sm"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-sm">Uploaded "Modern Button Set"</p>
+                                    <p class="text-xs text-gray-500">1 day ago</p>
+                                </div>
+                            </div>
+                            <div class="activity-item flex items-start space-x-3 p-3 rounded-lg">
+                                <div class="w-8 h-8 bg-orange-100 dark:bg-orange-900 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-shopping-cart text-orange-600 text-sm"></i>
+                                </div>
+                                <div class="flex-1">
+                                    <p class="text-sm">Purchased "Vue Admin Template"</p>
+                                    <p class="text-xs text-gray-500">2 days ago</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Downloads Chart -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg p-6">
+                        <h3 class="text-xl font-bold mb-4">Downloads This Month</h3>
+                        <div class="chart-container">
+                            <canvas id="downloadsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skills & Progress -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-6">
+                    <h3 class="text-xl font-bold mb-6">Skill Progress</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm font-medium">React Components</span>
+                                <span class="text-sm text-gray-500">85%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                <div class="skill-progress progress-bar rounded-full" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm font-medium">UI Design</span>
+                                <span class="text-sm text-gray-500">72%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                <div class="skill-progress progress-bar rounded-full" style="width: 72%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm font-medium">TypeScript</span>
+                                <span class="text-sm text-gray-500">68%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                <div class="skill-progress progress-bar rounded-full" style="width: 68%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-sm font-medium">Animation</span>
+                                <span class="text-sm text-gray-500">45%</span>
+                            </div>
+                            <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                <div class="skill-progress progress-bar rounded-full" style="width: 45%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Assets Section -->
+            <section id="assets" class="dashboard-section hidden">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-3xl font-bold">My Assets</h2>
+                    <button onclick="openUploadModal()" class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors">
+                        <i class="fas fa-plus mr-2"></i>Upload New Asset
+                    </button>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="user-assets">
+                    <!-- User assets will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Purchases Section -->
+            <section id="purchases" class="dashboard-section hidden">
+                <h2 class="text-3xl font-bold mb-6">Purchase History</h2>
+                
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead class="bg-gray-50 dark:bg-gray-700">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Item</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Type</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Price</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Date</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200 dark:divide-gray-700" id="purchases-table">
+                                <!-- Purchase history will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Wishlist Section -->
+            <section id="wishlist" class="dashboard-section hidden">
+                <h2 class="text-3xl font-bold mb-6">My Wishlist</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="wishlist-grid">
+                    <!-- Wishlist items will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Reviews Section -->
+            <section id="reviews" class="dashboard-section hidden">
+                <h2 class="text-3xl font-bold mb-6">My Reviews</h2>
+                
+                <div class="space-y-6" id="user-reviews">
+                    <!-- User reviews will be populated by JavaScript -->
+                </div>
+            </section>
+
+            <!-- Analytics Section -->
+            <section id="analytics" class="dashboard-section hidden">
+                <h2 class="text-3xl font-bold mb-6">Analytics Dashboard</h2>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+                    <!-- Asset Performance Chart -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg p-6">
+                        <h3 class="text-xl font-bold mb-4">Asset Performance</h3>
+                        <div class="chart-container">
+                            <canvas id="performanceChart"></canvas>
+                        </div>
+                    </div>
+
+                    <!-- Revenue Chart -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg p-6">
+                        <h3 class="text-xl font-bold mb-4">Monthly Revenue</h3>
+                        <div class="chart-container">
+                            <canvas id="revenueChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top Performing Assets -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-6">
+                    <h3 class="text-xl font-bold mb-4">Top Performing Assets</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full">
+                            <thead>
+                                <tr class="border-b dark:border-gray-700">
+                                    <th class="text-left py-2">Asset Name</th>
+                                    <th class="text-left py-2">Downloads</th>
+                                    <th class="text-left py-2">Rating</th>
+                                    <th class="text-left py-2">Revenue</th>
+                                </tr>
+                            </thead>
+                            <tbody id="top-assets-table">
+                                <!-- Top assets will be populated by JavaScript -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Settings Section -->
+            <section id="settings" class="dashboard-section hidden">
+                <h2 class="text-3xl font-bold mb-6">Account Settings</h2>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Profile Settings -->
+                    <div class="lg:col-span-2 bg-white dark:bg-gray-800 rounded-lg p-6">
+                        <h3 class="text-xl font-bold mb-4">Profile Information</h3>
+                        <form id="profile-form" class="space-y-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">First Name</label>
+                                    <input type="text" value="Alex" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Last Name</label>
+                                    <input type="text" value="Thompson" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600">
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Email</label>
+                                <input type="email" value="alex.thompson@email.com" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Bio</label>
+                                <textarea rows="3" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600" placeholder="Tell us about yourself...">Frontend developer passionate about creating beautiful and functional user interfaces. Specializing in React and modern web technologies.</textarea>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Website</label>
+                                <input type="url" value="https://alexthompson.dev" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600">
+                            </div>
+                            <button type="submit" class="bg-primary-600 text-white px-6 py-2 rounded-lg hover:bg-primary-700 transition-colors">
+                                Update Profile
+                            </button>
+                        </form>
+                    </div>
+
+                    <!-- Preferences -->
+                    <div class="space-y-6">
+                        <!-- Notification Preferences -->
+                        <div class="bg-white dark:bg-gray-800 rounded-lg p-6">
+                            <h3 class="text-lg font-semibold mb-4">Notifications</h3>
+                            <div class="space-y-3">
+                                <label class="flex items-center">
+                                    <input type="checkbox" checked class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500">
+                                    <span class="ml-2 text-sm">Email notifications</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" checked class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500">
+                                    <span class="ml-2 text-sm">New asset alerts</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500">
+                                    <span class="ml-2 text-sm">Marketing emails</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" checked class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500">
+                                    <span class="ml-2 text-sm">Weekly digest</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Privacy Settings -->
+                        <div class="bg-white dark:bg-gray-800 rounded-lg p-6">
+                            <h3 class="text-lg font-semibold mb-4">Privacy</h3>
+                            <div class="space-y-3">
+                                <label class="flex items-center">
+                                    <input type="checkbox" checked class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500">
+                                    <span class="ml-2 text-sm">Public profile</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500">
+                                    <span class="ml-2 text-sm">Show download count</span>
+                                </label>
+                                <label class="flex items-center">
+                                    <input type="checkbox" checked class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500">
+                                    <span class="ml-2 text-sm">Allow messages</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Account Actions -->
+                        <div class="bg-white dark:bg-gray-800 rounded-lg p-6">
+                            <h3 class="text-lg font-semibold mb-4">Account</h3>
+                            <div class="space-y-3">
+                                <button class="w-full text-left text-primary-600 hover:text-primary-700 text-sm">
+                                    <i class="fas fa-key mr-2"></i>Change Password
+                                </button>
+                                <button class="w-full text-left text-primary-600 hover:text-primary-700 text-sm">
+                                    <i class="fas fa-download mr-2"></i>Export Data
+                                </button>
+                                <button class="w-full text-left text-red-600 hover:text-red-700 text-sm">
+                                    <i class="fas fa-trash mr-2"></i>Delete Account
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Upload Asset Modal -->
+    <div id="upload-modal" class="hidden fixed inset-0 modal-backdrop z-50 flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-lg max-w-2xl w-full max-h-90vh overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold">Upload New Asset</h3>
+                    <button onclick="closeUploadModal()" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <form id="upload-form" class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Asset Title</label>
+                        <input type="text" placeholder="Enter asset title" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600" required>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Description</label>
+                        <textarea rows="3" placeholder="Describe your asset..." class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600" required></textarea>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Category</label>
+                            <select class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600">
+                                <option>Components</option>
+                                <option>Templates</option>
+                                <option>Icons</option>
+                                <option>Layouts</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Technology</label>
+                            <select class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600">
+                                <option>React</option>
+                                <option>Vue</option>
+                                <option>HTML/CSS</option>
+                                <option>Angular</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Tags</label>
+                        <input type="text" placeholder="Enter tags separated by commas" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Files</label>
+                        <div class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-6 text-center">
+                            <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-4"></i>
+                            <p class="text-gray-600 dark:text-gray-400 mb-2">Drag & drop files here or click to browse</p>
+                            <input type="file" multiple class="hidden" id="file-input">
+                            <button type="button" onclick="document.getElementById('file-input').click()" class="text-primary-600 hover:text-primary-700">Choose Files</button>
+                        </div>
+                    </div>
+                    
+                    <div class="flex space-x-4">
+                        <button type="submit" class="flex-1 bg-primary-600 text-white py-3 px-6 rounded-lg hover:bg-primary-700 transition-colors">
+                            Upload Asset
+                        </button>
+                        <button type="button" onclick="closeUploadModal()" class="flex-1 bg-gray-300 dark:bg-gray-600 py-3 px-6 rounded-lg hover:bg-gray-400 dark:hover:bg-gray-700 transition-colors">
+                            Cancel
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State Management
+        let isDarkMode = false;
+        let currentSection = 'overview';
+        let downloadsChart, performanceChart, revenueChart;
+
+        // Sample Data
+        const userAssets = [
+            {
+                id: 1,
+                title: "Modern Dashboard Cards",
+                description: "Collection of responsive dashboard card components",
+                category: "Components",
+                technology: "React",
+                downloads: 1247,
+                likes: 89,
+                imageUrl: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/142269ee-5877-4ac6-a950-76494ed813b1.png",
+                imageAlt: "Modern dashboard cards component showing various statistical widgets with clean design"
+            },
+            {
+                id: 2,
+                title: "Login Form Set",
+                description: "Multiple login form variations with animations",
+                category: "Components",
+                technology: "HTML/CSS",
+                downloads: 892,
+                likes: 67,
+                imageUrl: "https://placehold.co/400x300",
+                imageAlt: "Collection of login form designs with different styles and animations"
+            },
+            {
+                id: 3,
+                title: "Navigation Menu Pack",
+                description: "Responsive navigation components for modern websites",
+                category: "Components",
+                technology: "React",
+                downloads: 654,
+                likes: 45,
+                imageUrl: "https://placehold.co/400x300",
+                imageAlt: "Navigation menu components showing horizontal and vertical menu layouts"
+            }
+        ];
+
+        const purchaseHistory = [
+            {
+                id: 1,
+                name: "React Admin Template",
+                type: "Template",
+                price: "$49",
+                date: "2024-01-15",
+                status: "Completed"
+            },
+            {
+                id: 2,
+                name: "Vue Dashboard Kit",
+                type: "Template",
+                price: "$39",
+                date: "2024-01-10",
+                status: "Completed"
+            },
+            {
+                id: 3,
+                name: "Icon Set Pro",
+                type: "Icons",
+                price: "$19",
+                date: "2024-01-05",
+                status: "Completed"
+            }
+        ];
+
+        const wishlistItems = [
+            {
+                id: 1,
+                title: "Mobile App UI Kit",
+                price: "$29",
+                rating: 4.9,
+                imageUrl: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/9ba5cb2e-ad4f-45ec-a9ec-ad87d7e4c48c.png",
+                imageAlt: "Mobile app UI kit with modern design components for iOS and Android"
+            },
+            {
+                id: 2,
+                title: "Landing Page Template",
+                price: "$19",
+                rating: 4.6,
+                imageUrl: "https://placehold.co/300x200",
+                imageAlt: "Modern landing page template with conversion-optimized design"
+            },
+            {
+                id: 3,
+                title: "Dashboard Icon Set",
+                price: "Free",
+                rating: 4.8,
+                imageUrl: "https://placehold.co/300x200",
+                imageAlt: "Professional icon set designed for dashboard and admin interfaces"
+            }
+        ];
+
+        const userReviews = [
+            {
+                id: 1,
+                assetTitle: "React Admin Template",
+                rating: 5,
+                title: "Excellent template!",
+                content: "This template saved me weeks of development time. Clean code and great documentation.",
+                date: "2024-01-20"
+            },
+            {
+                id: 2,
+                assetTitle: "Vue Dashboard Kit",
+                rating: 4,
+                title: "Good value for money",
+                content: "Nice design and components, though some customization was needed for our use case.",
+                date: "2024-01-18"
+            }
+        ];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            initializePage();
+            renderUserAssets();
+            renderPurchaseHistory();
+            renderWishlist();
+            renderUserReviews();
+            initializeCharts();
+        });
+
+        function initializePage() {
+            if (localStorage.getItem('darkMode') === 'true') {
+                isDarkMode = true;
+                document.documentElement.classList.add('dark');
+            }
+        }
+
+        function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', isDarkMode);
+            
+            // Update charts for dark mode
+            updateChartsTheme();
+        }
+
+        function showSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.dashboard-section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            // Show target section
+            document.getElementById(sectionName).classList.remove('hidden');
+            
+            // Update sidebar active state
+            document.querySelectorAll('.sidebar-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            currentSection = sectionName;
+            
+            // Initialize charts if analytics section
+            if (sectionName === 'analytics') {
+                setTimeout(() => {
+                    initializeAnalyticsCharts();
+                }, 100);
+            }
+        }
+
+        function toggleNotifications() {
+            const dropdown = document.getElementById('notifications-dropdown');
+            dropdown.classList.toggle('hidden');
+        }
+
+        function toggleUserMenu() {
+            const menu = document.getElementById('user-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function openUploadModal() {
+            document.getElementById('upload-modal').classList.remove('hidden');
+        }
+
+        function closeUploadModal() {
+            document.getElementById('upload-modal').classList.add('hidden');
+        }
+
+        function openSubmissionModal() {
+            showNotification('Resource submission form would open here');
+        }
+
+        function renderUserAssets() {
+            const container = document.getElementById('user-assets');
+            container.innerHTML = userAssets.map(asset => `
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden card-hover">
+                    <img src="${asset.imageUrl}" alt="${asset.imageAlt}" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h4 class="text-xl font-semibold mb-2">${asset.title}</h4>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4">${asset.description}</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex space-x-2">
+                                <span class="bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200 px-2 py-1 rounded text-xs">${asset.category}</span>
+                                <span class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded text-xs">${asset.technology}</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                <span><i class="fas fa-download mr-1"></i>${asset.downloads}</span>
+                                <span><i class="fas fa-heart mr-1"></i>${asset.likes}</span>
+                            </div>
+                            <div class="flex space-x-2">
+                                <button class="text-primary-600 hover:text-primary-700">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="text-red-600 hover:text-red-700">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderPurchaseHistory() {
+            const container = document.getElementById('purchases-table');
+            container.innerHTML = purchaseHistory.map(purchase => `
+                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700">
+                    <td class="px-6 py-4">
+                        <div class="font-medium">${purchase.name}</div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <span class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded-full text-xs">${purchase.type}</span>
+                    </td>
+                    <td class="px-6 py-4 font-semibold">${purchase.price}</td>
+                    <td class="px-6 py-4 text-gray-500">${purchase.date}</td>
+                    <td class="px-6 py-4">
+                        <button class="text-primary-600 hover:text-primary-700 text-sm">
+                            <i class="fas fa-download mr-1"></i>Download
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function renderWishlist() {
+            const container = document.getElementById('wishlist-grid');
+            container.innerHTML = wishlistItems.map(item => `
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden card-hover">
+                    <img src="${item.imageUrl}" alt="${item.imageAlt}" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <h4 class="text-xl font-semibold mb-2">${item.title}</h4>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-1">
+                                <div class="flex text-yellow-400 text-sm">
+                                    ${Array(5).fill().map((_, i) => `<i class="fas fa-star ${i < Math.floor(item.rating) ? '' : 'text-gray-300'}"></i>`).join('')}
+                                </div>
+                                <span class="text-sm text-gray-500 ml-1">${item.rating}</span>
+                            </div>
+                            <span class="font-bold text-primary-600">${item.price}</span>
+                        </div>
+                        <div class="flex space-x-2">
+                            <button class="flex-1 bg-primary-600 text-white py-2 px-4 rounded-lg hover:bg-primary-700 transition-colors text-sm">
+                                View Details
+                            </button>
+                            <button class="bg-red-100 dark:bg-red-900 text-red-600 dark:text-red-400 p-2 rounded-lg hover:bg-red-200 dark:hover:bg-red-800 transition-colors">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderUserReviews() {
+            const container = document.getElementById('user-reviews');
+            container.innerHTML = userReviews.map(review => `
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
+                    <div class="flex items-center justify-between mb-4">
+                        <h4 class="text-lg font-semibold">${review.assetTitle}</h4>
+                        <div class="flex text-yellow-400">
+                            ${Array(5).fill().map((_, i) => `<i class="fas fa-star ${i < review.rating ? '' : 'text-gray-300'}"></i>`).join('')}
+                        </div>
+                    </div>
+                    <h5 class="font-medium mb-2">${review.title}</h5>
+                    <p class="text-gray-600 dark:text-gray-400 mb-3">${review.content}</p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-500">${review.date}</span>
+                        <div class="flex space-x-2">
+                            <button class="text-primary-600 hover:text-primary-700 text-sm">
+                                <i class="fas fa-edit mr-1"></i>Edit
+                            </button>
+                            <button class="text-red-600 hover:text-red-700 text-sm">
+                                <i class="fas fa-trash mr-1"></i>Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function initializeCharts() {
+            // Downloads Chart
+            const downloadsCtx = document.getElementById('downloadsChart');
+            if (downloadsCtx) {
+                downloadsChart = new Chart(downloadsCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                        datasets: [{
+                            label: 'Downloads',
+                            data: [120, 190, 300, 250],
+                            borderColor: '#3b82f6',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            fill: true,
+                            tension: 0.4
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: isDarkMode ? '#374151' : '#e5e7eb'
+                                },
+                                ticks: {
+                                    color: isDarkMode ? '#9ca3af' : '#6b7280'
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    color: isDarkMode ? '#374151' : '#e5e7eb'
+                                },
+                                ticks: {
+                                    color: isDarkMode ? '#9ca3af' : '#6b7280'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        function initializeAnalyticsCharts() {
+            // Performance Chart
+            const performanceCtx = document.getElementById('performanceChart');
+            if (performanceCtx && !performanceChart) {
+                performanceChart = new Chart(performanceCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Components', 'Templates', 'Icons', 'Layouts'],
+                        datasets: [{
+                            data: [45, 30, 15, 10],
+                            backgroundColor: ['#3b82f6', '#10b981', '#f59e0b', '#ef4444']
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    color: isDarkMode ? '#d1d5db' : '#374151'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Revenue Chart
+            const revenueCtx = document.getElementById('revenueChart');
+            if (revenueCtx && !revenueChart) {
+                revenueChart = new Chart(revenueCtx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                        datasets: [{
+                            label: 'Revenue',
+                            data: [120, 150, 180, 200, 170, 220],
+                            backgroundColor: '#8b5cf6'
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    color: isDarkMode ? '#374151' : '#e5e7eb'
+                                },
+                                ticks: {
+                                    color: isDarkMode ? '#9ca3af' : '#6b7280'
+                                }
+                            },
+                            x: {
+                                grid: {
+                                    color: isDarkMode ? '#374151' : '#e5e7eb'
+                                },
+                                ticks: {
+                                    color: isDarkMode ? '#9ca3af' : '#6b7280'
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Top Assets Table
+            const topAssetsTable = document.getElementById('top-assets-table');
+            if (topAssetsTable) {
+                topAssetsTable.innerHTML = `
+                    <tr class="border-b dark:border-gray-700">
+                        <td class="py-3">Modern Dashboard Cards</td>
+                        <td class="py-3">1,247</td>
+                        <td class="py-3">4.9 ⭐</td>
+                        <td class="py-3">$0 (Free)</td>
+                    </tr>
+                    <tr class="border-b dark:border-gray-700">
+                        <td class="py-3">Login Form Set</td>
+                        <td class="py-3">892</td>
+                        <td class="py-3">4.7 ⭐</td>
+                        <td class="py-3">$0 (Free)</td>
+                    </tr>
+                    <tr class="border-b dark:border-gray-700">
+                        <td class="py-3">Navigation Menu Pack</td>
+                        <td class="py-3">654</td>
+                        <td class="py-3">4.5 ⭐</td>
+                        <td class="py-3">$0 (Free)</td>
+                    </tr>
+                `;
+            }
+        }
+
+        function updateChartsTheme() {
+            if (downloadsChart) {
+                downloadsChart.options.scales.y.grid.color = isDarkMode ? '#374151' : '#e5e7eb';
+                downloadsChart.options.scales.y.ticks.color = isDarkMode ? '#9ca3af' : '#6b7280';
+                downloadsChart.options.scales.x.grid.color = isDarkMode ? '#374151' : '#e5e7eb';
+                downloadsChart.options.scales.x.ticks.color = isDarkMode ? '#9ca3af' : '#6b7280';
+                downloadsChart.update();
+            }
+            
+            if (performanceChart) {
+                performanceChart.options.plugins.legend.labels.color = isDarkMode ? '#d1d5db' : '#374151';
+                performanceChart.update();
+            }
+            
+            if (revenueChart) {
+                revenueChart.options.scales.y.grid.color = isDarkMode ? '#374151' : '#e5e7eb';
+                revenueChart.options.scales.y.ticks.color = isDarkMode ? '#9ca3af' : '#6b7280';
+                revenueChart.options.scales.x.grid.color = isDarkMode ? '#374151' : '#e5e7eb';
+                revenueChart.options.scales.x.ticks.color = isDarkMode ? '#9ca3af' : '#6b7280';
+                revenueChart.update();
+            }
+        }
+
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-4 right-4 bg-primary-600 text-white px-6 py-3 rounded-lg shadow-lg z-50 transition-all duration-300';
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Form Submissions
+        document.getElementById('upload-form')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            showNotification('Asset uploaded successfully!');
+            closeUploadModal();
+        });
+
+        document.getElementById('profile-form')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            showNotification('Profile updated successfully!');
+        });
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('#notifications-dropdown') && !e.target.closest('button[onclick="toggleNotifications()"]')) {
+                document.getElementById('notifications-dropdown').classList.add('hidden');
+            }
+            if (!e.target.closest('#user-menu') && !e.target.closest('button[onclick="toggleUserMenu()"]')) {
+                document.getElementById('user-menu').classList.add('hidden');
+            }
+            if (e.target.classList.contains('modal-backdrop')) {
+                closeUploadModal();
+            }
+        });
+
+        // Escape key to close modals
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeUploadModal();
+            }
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to DevHub - Interactive Onboarding</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a'
+                        }
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'ui-sans-serif', 'system-ui']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .welcome-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .welcome-gradient::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.3), transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.15), transparent 50%),
+                        radial-gradient(circle at 40% 40%, rgba(240, 147, 251, 0.2), transparent 50%);
+            animation: floating 10s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+        
+        .onboarding-card {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .dark .onboarding-card {
+            background: linear-gradient(145deg, #1f2937, #111827);
+        }
+        
+        .onboarding-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+            transition: left 0.8s ease;
+        }
+        
+        .onboarding-card:hover::before {
+            left: 100%;
+        }
+        
+        .onboarding-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            border-color: #3b82f6;
+        }
+        
+        .dark .onboarding-card:hover {
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+        }
+        
+        .step-indicator {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+        
+        .step-indicator.completed {
+            background: linear-gradient(135deg, #10b981, #059669);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+        
+        .step-indicator.current {
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3); }
+            50% { transform: scale(1.05); box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5); }
+        }
+        
+        .progress-line {
+            height: 3px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            transition: width 0.8s ease;
+            border-radius: 2px;
+        }
+        
+        .feature-highlight {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border: 2px solid #7dd3fc;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .dark .feature-highlight {
+            background: linear-gradient(135deg, #0c4a6e, #075985);
+            border-color: #0284c7;
+        }
+        
+        .feature-highlight:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.2);
+            border-color: #3b82f6;
+        }
+        
+        .tutorial-card {
+            background: linear-gradient(135deg, #fefbff, #f3e8ff);
+            border: 2px dashed #c084fc;
+            transition: all 0.3s ease;
+        }
+        
+        .dark .tutorial-card {
+            background: linear-gradient(135deg, #581c87, #6b21a8);
+            border-color: #a855f7;
+        }
+        
+        .tutorial-card:hover {
+            border-style: solid;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(192, 132, 252, 0.3);
+        }
+        
+        .achievement-badge {
+            background: linear-gradient(45deg, #fbbf24, #f59e0b);
+            color: white;
+            animation: shine 3s infinite;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        @keyframes shine {
+            0% { box-shadow: 0 0 5px rgba(251, 191, 36, 0.5); }
+            50% { box-shadow: 0 0 20px rgba(251, 191, 36, 0.8); }
+            100% { box-shadow: 0 0 5px rgba(251, 191, 36, 0.5); }
+        }
+        
+        .interactive-demo {
+            background: linear-gradient(135deg, #1f2937, #111827);
+            border-radius: 1rem;
+            overflow: hidden;
+            border: 2px solid #374151;
+        }
+        
+        .demo-screen {
+            background: #0f172a;
+            color: #e2e8f0;
+            font-family: 'Monaco', 'Menlo', monospace;
+            padding: 1.5rem;
+            min-height: 200px;
+            position: relative;
+        }
+        
+        .typing-animation {
+            border-right: 2px solid #3b82f6;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { border-right-color: #3b82f6; }
+            51%, 100% { border-right-color: transparent; }
+        }
+        
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .dark .glassmorphism {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .floating-help {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 50;
+        }
+        
+        .help-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+            animation: helpPulse 3s infinite;
+        }
+        
+        @keyframes helpPulse {
+            0%, 100% { box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4); }
+            50% { box-shadow: 0 8px 35px rgba(59, 130, 246, 0.6); }
+        }
+        
+        .help-button:hover {
+            transform: scale(1.1);
+        }
+        
+        .tooltip {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            background: #1f2937;
+            color: white;
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            white-space: nowrap;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .help-button:hover .tooltip {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #3b82f6;
+            animation: confetti-fall 3s linear infinite;
+            pointer-events: none;
+        }
+        
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .form-step {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.5s ease;
+        }
+        
+        .form-step.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .skill-level-card {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            border: 2px solid #cbd5e1;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .dark .skill-level-card {
+            background: linear-gradient(135deg, #1e293b, #334155);
+            border-color: #475569;
+        }
+        
+        .skill-level-card:hover {
+            border-color: #3b82f6;
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            transform: scale(1.02);
+        }
+        
+        .dark .skill-level-card:hover {
+            background: linear-gradient(135deg, #1e3a8a, #1e40af);
+        }
+        
+        .skill-level-card.selected {
+            border-color: #3b82f6;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+        }
+        
+        .preference-chip {
+            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+            color: #3730a3;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .dark .preference-chip {
+            background: linear-gradient(135deg, #312e81, #3730a3);
+            color: #e0e7ff;
+        }
+        
+        .preference-chip:hover {
+            transform: scale(1.05);
+        }
+        
+        .preference-chip.selected {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            border-color: #1d4ed8;
+        }
+        
+        .tour-spotlight {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 100;
+            pointer-events: none;
+        }
+        
+        .tour-content {
+            position: absolute;
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            max-width: 300px;
+            z-index: 101;
+            pointer-events: auto;
+        }
+        
+        .dark .tour-content {
+            background: #1f2937;
+            color: white;
+        }
+        
+        .completion-animation {
+            animation: completionBounce 0.6s ease-out;
+        }
+        
+        @keyframes completionBounce {
+            0% { transform: scale(0.3) rotate(-180deg); opacity: 0; }
+            50% { transform: scale(1.05) rotate(-10deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+        
+        .mobile-friendly {
+            padding: 1rem;
+        }
+        
+        @media (min-width: 640px) {
+            .mobile-friendly {
+                padding: 1.5rem;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .mobile-friendly {
+                padding: 2rem;
+            }
+        }
+        
+        .responsive-text {
+            font-size: 1rem;
+        }
+        
+        @media (min-width: 640px) {
+            .responsive-text {
+                font-size: 1.125rem;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .responsive-text {
+                font-size: 1.25rem;
+            }
+        }
+        
+        .responsive-heading {
+            font-size: 2rem;
+        }
+        
+        @media (min-width: 640px) {
+            .responsive-heading {
+                font-size: 3rem;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .responsive-heading {
+                font-size: 4rem;
+            }
+        }
+        
+        .mobile-stack {
+            flex-direction: column;
+        }
+        
+        @media (min-width: 768px) {
+            .mobile-stack {
+                flex-direction: row;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <!-- Progress Bar -->
+    <div class="fixed top-0 left-0 right-0 z-50 bg-white dark:bg-gray-800 shadow-sm">
+        <div class="h-1 bg-gray-200 dark:bg-gray-700">
+            <div class="progress-line h-full" style="width: 0%" id="onboarding-progress"></div>
+        </div>
+    </div>
+
+    <!-- Tour Overlay -->
+    <div id="tour-overlay" class="tour-spotlight hidden">
+        <div id="tour-content" class="tour-content">
+            <div class="flex justify-between items-start mb-4">
+                <h4 class="font-bold text-lg" id="tour-title">Welcome to DevHub!</h4>
+                <button onclick="skipTour()" class="text-gray-400 hover:text-gray-600">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <p class="text-sm mb-4" id="tour-description">Let's take a quick tour to get you started.</p>
+            <div class="flex justify-between items-center">
+                <span class="text-xs text-gray-500" id="tour-step">Step 1 of 5</span>
+                <div class="flex space-x-2">
+                    <button onclick="previousTourStep()" class="bg-gray-200 text-gray-700 px-3 py-1 rounded text-xs" id="tour-prev">Previous</button>
+                    <button onclick="nextTourStep()" class="bg-primary-600 text-white px-3 py-1 rounded text-xs" id="tour-next">Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Help -->
+    <div class="floating-help">
+        <div class="help-button" onclick="startTour()">
+            <i class="fas fa-question"></i>
+            <div class="tooltip">Need help? Start tour</div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-lg shadow-lg relative z-40 transition-all duration-300">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo & Brand -->
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-r from-primary-500 to-purple-600 rounded-lg flex items-center justify-center shadow-lg">
+                        <i class="fas fa-code text-white text-lg sm:text-xl"></i>
+                    </div>
+                    <h1 class="text-xl sm:text-2xl lg:text-3xl font-bold bg-gradient-to-r from-primary-500 to-purple-600 bg-clip-text text-transparent">
+                        DevHub
+                    </h1>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex items-center space-x-2 sm:space-x-4">
+                    <!-- Dark Mode Toggle -->
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:block"></i>
+                    </button>
+
+                    <!-- Skip Onboarding -->
+                    <button onclick="skipOnboarding()" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 font-medium text-sm sm:text-base">
+                        Skip
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="min-h-screen">
+        <!-- Welcome Step -->
+        <section id="step-1" class="onboarding-step active">
+            <div class="welcome-gradient text-white py-12 sm:py-16 lg:py-24 relative">
+                <div class="container mx-auto px-4 relative z-10">
+                    <div class="max-w-4xl mx-auto text-center">
+                        <div class="mb-6 sm:mb-8">
+                            <div class="inline-flex items-center space-x-2 bg-white/20 px-4 py-2 rounded-full text-sm backdrop-blur">
+                                <i class="fas fa-sparkles"></i>
+                                <span>Welcome to the Future of Development</span>
+                            </div>
+                        </div>
+                        
+                        <h2 class="responsive-heading font-black mb-6 sm:mb-8 leading-tight">
+                            Welcome to DevHub! 🎉
+                        </h2>
+                        
+                        <p class="text-lg sm:text-xl lg:text-2xl mb-8 sm:mb-12 opacity-90 leading-relaxed max-w-3xl mx-auto">
+                            Join 50,000+ developers who are building better products faster with our comprehensive 
+                            library of UI components, templates, and resources.
+                        </p>
+
+                        <!-- Welcome Stats -->
+                        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8 mb-8 sm:mb-12">
+                            <div class="glassmorphism rounded-xl p-3 sm:p-6 text-center">
+                                <div class="text-xl sm:text-2xl lg:text-3xl font-bold mb-1 sm:mb-2">50K+</div>
+                                <div class="text-xs sm:text-sm text-blue-200">Developers</div>
+                            </div>
+                            <div class="glassmorphism rounded-xl p-3 sm:p-6 text-center">
+                                <div class="text-xl sm:text-2xl lg:text-3xl font-bold mb-1 sm:mb-2">15K+</div>
+                                <div class="text-xs sm:text-sm text-blue-200">Components</div>
+                            </div>
+                            <div class="glassmorphism rounded-xl p-3 sm:p-6 text-center">
+                                <div class="text-xl sm:text-2xl lg:text-3xl font-bold mb-1 sm:mb-2">2.8M+</div>
+                                <div class="text-xs sm:text-sm text-blue-200">Downloads</div>
+                            </div>
+                            <div class="glassmorphism rounded-xl p-3 sm:p-6 text-center">
+                                <div class="text-xl sm:text-2xl lg:text-3xl font-bold mb-1 sm:mb-2">4.9★</div>
+                                <div class="text-xs sm:text-sm text-blue-200">Rating</div>
+                            </div>
+                        </div>
+
+                        <button onclick="nextStep()" class="bg-white text-primary-600 px-6 sm:px-8 py-3 sm:py-4 rounded-xl hover:bg-gray-100 transition-colors font-bold text-base sm:text-lg">
+                            <i class="fas fa-rocket mr-2"></i>Let's Get Started
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Account Setup Step -->
+        <section id="step-2" class="onboarding-step hidden">
+            <div class="py-12 sm:py-16 lg:py-20">
+                <div class="container mx-auto px-4">
+                    <div class="max-w-3xl mx-auto">
+                        <!-- Step Header -->
+                        <div class="text-center mb-8 sm:mb-12">
+                            <div class="flex items-center justify-center space-x-4 mb-6">
+                                <div class="step-indicator completed">1</div>
+                                <div class="w-8 sm:w-16 h-1 bg-gray-200 dark:bg-gray-700 rounded">
+                                    <div class="progress-line w-full"></div>
+                                </div>
+                                <div class="step-indicator current">2</div>
+                                <div class="w-8 sm:w-16 h-1 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                                <div class="step-indicator">3</div>
+                                <div class="w-8 sm:w-16 h-1 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                                <div class="step-indicator">4</div>
+                            </div>
+                            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 text-gray-800 dark:text-gray-100">
+                                Create Your Profile
+                            </h2>
+                            <p class="responsive-text text-gray-600 dark:text-gray-400">
+                                Tell us about yourself so we can personalize your DevHub experience
+                            </p>
+                        </div>
+
+                        <!-- Profile Form -->
+                        <div class="onboarding-card rounded-2xl mobile-friendly shadow-xl">
+                            <form id="profile-form" class="space-y-6">
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+                                    <div>
+                                        <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">First Name</label>
+                                        <input type="text" required class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 text-base">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Last Name</label>
+                                        <input type="text" required class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 text-base">
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Email Address</label>
+                                    <input type="email" required class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 text-base">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Job Title</label>
+                                    <input type="text" placeholder="e.g., Frontend Developer" class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 text-base">
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Company (Optional)</label>
+                                    <input type="text" placeholder="e.g., Google, Startup, Freelance" class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 text-base">
+                                </div>
+
+                                <!-- Profile Picture Upload -->
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Profile Picture (Optional)</label>
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-16 h-16 sm:w-20 sm:h-20 bg-gray-200 dark:bg-gray-600 rounded-full flex items-center justify-center">
+                                            <i class="fas fa-user text-gray-400 text-xl sm:text-2xl"></i>
+                                        </div>
+                                        <div class="flex-1">
+                                            <input type="file" accept="image/*" class="hidden" id="profile-pic">
+                                            <button type="button" onclick="document.getElementById('profile-pic').click()" class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors text-sm font-semibold">
+                                                <i class="fas fa-upload mr-2"></i>Upload Photo
+                                            </button>
+                                            <p class="text-xs text-gray-500 mt-1">JPG, PNG up to 2MB</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex mobile-stack space-y-4 sm:space-y-0 sm:space-x-4 pt-6">
+                                    <button type="button" onclick="previousStep()" class="flex-1 bg-gray-300 dark:bg-gray-600 py-3 px-6 rounded-xl hover:bg-gray-400 dark:hover:bg-gray-700 transition-colors font-semibold">
+                                        <i class="fas fa-arrow-left mr-2"></i>Back
+                                    </button>
+                                    <button type="submit" class="flex-1 bg-primary-600 text-white py-3 px-6 rounded-xl hover:bg-primary-700 transition-colors font-semibold">
+                                        Continue <i class="fas fa-arrow-right ml-2"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skill Level Step -->
+        <section id="step-3" class="onboarding-step hidden">
+            <div class="py-12 sm:py-16 lg:py-20">
+                <div class="container mx-auto px-4">
+                    <div class="max-w-4xl mx-auto">
+                        <!-- Step Header -->
+                        <div class="text-center mb-8 sm:mb-12">
+                            <div class="flex items-center justify-center space-x-2 sm:space-x-4 mb-6">
+                                <div class="step-indicator completed">1</div>
+                                <div class="w-8 sm:w-16 h-1 bg-gray-200 dark:bg-gray-700 rounded">
+                                    <div class="progress-line w-full"></div>
+                                </div>
+                                <div class="step-indicator completed">2</div>
+                                <div class="w-8 sm:w-16 h-1 bg-gray-200 dark:bg-gray-700 rounded">
+                                    <div class="progress-line w-full"></div>
+                                </div>
+                                <div class="step-indicator current">3</div>
+                                <div class="w-8 sm:w-16 h-1 bg-gray-200 dark:bg-gray-700 rounded"></div>
+                                <div class="step-indicator">4</div>
+                            </div>
+                            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 text-gray-800 dark:text-gray-100">
+                                What's Your Experience Level?
+                            </h2>
+                            <p class="responsive-text text-gray-600 dark:text-gray-400">
+                                Help us recommend the right content for your skill level
+                            </p>
+                        </div>
+
+                        <!-- Skill Level Cards -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-8">
+                            <div class="skill-level-card rounded-2xl mobile-friendly" onclick="selectSkillLevel('beginner')">
+                                <div class="text-center">
+                                    <div class="w-16 h-16 sm:w-20 sm:h-20 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <i class="fas fa-seedling text-green-600 text-xl sm:text-2xl"></i>
+                                    </div>
+                                    <h3 class="text-lg sm:text-xl font-bold mb-2 text-gray-800 dark:text-gray-100">Beginner</h3>
+                                    <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-4">
+                                        New to web development or just getting started with modern frameworks
+                                    </p>
+                                    <ul class="text-xs sm:text-sm text-gray-500 space-y-1 text-left">
+                                        <li>• Basic HTML, CSS, JavaScript</li>
+                                        <li>• Learning React fundamentals</li>
+                                        <li>• 0-1 years experience</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="skill-level-card rounded-2xl mobile-friendly" onclick="selectSkillLevel('intermediate')">
+                                <div class="text-center">
+                                    <div class="w-16 h-16 sm:w-20 sm:h-20 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <i class="fas fa-code text-blue-600 text-xl sm:text-2xl"></i>
+                                    </div>
+                                    <h3 class="text-lg sm:text-xl font-bold mb-2 text-gray-800 dark:text-gray-100">Intermediate</h3>
+                                    <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-4">
+                                        Comfortable with frameworks and building real applications
+                                    </p>
+                                    <ul class="text-xs sm:text-sm text-gray-500 space-y-1 text-left">
+                                        <li>• Solid React/Vue/Angular skills</li>
+                                        <li>• Built several projects</li>
+                                        <li>• 1-3 years experience</li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <div class="skill-level-card rounded-2xl mobile-friendly sm:col-span-2 lg:col-span-1" onclick="selectSkillLevel('advanced')">
+                                <div class="text-center">
+                                    <div class="w-16 h-16 sm:w-20 sm:h-20 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                                        <i class="fas fa-rocket text-purple-600 text-xl sm:text-2xl"></i>
+                                    </div>
+                                    <h3 class="text-lg sm:text-xl font-bold mb-2 text-gray-800 dark:text-gray-100">Advanced</h3>
+                                    <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400 mb-4">
+                                        Senior developer or architect building complex systems
+                                    </p>
+                                    <ul class="text-xs sm:text-sm text-gray-500 space-y-1 text-left">
+                                        <li>• Expert in multiple frameworks</li>
+                                        <li>• Architecture & team leadership</li>
+                                        <li>• 3+ years experience</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex mobile-stack space-y-4 sm:space-y-0 sm:space-x-4">
+                            <button onclick="previousStep()" class="flex-1 bg-gray-300 dark:bg-gray-600 py-3 px-6 rounded-xl hover:bg-gray-400 dark:hover:bg-gray-700 transition-colors font-semibold">
+                                <i class="fas fa-arrow-left mr-2"></i>Back
+                            </button>
+                            <button onclick="nextStep()" class="flex-1 bg-primary-600 text-white py-3 px-6 rounded-xl hover:bg-primary-700 transition-colors font-semibold" disabled id="skill-continue">
+                                Continue <i class="fas fa-arrow-right ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Preferences Step -->
+        <section id="step-4" class="onboarding-step hidden">
+            <div class="py-12 sm:py-16 lg:py-20">
+                <div class="container mx-auto px-4">
+                    <div class="max-w-4xl mx-auto">
+                        <!-- Step Header -->
+                        <div class="text-center mb-8 sm:mb-12">
+                            <div class="flex items-center justify-center space-x-2 sm:space-x-4 mb-6">
+                                <div class="step-indicator completed">1</div>
+                                <div class="w-8 sm:w-16 h-1 bg-gray-200 dark:bg-gray-700 rounded">
+                                    <div class="progress-line w-full"></div>
+                                </div>
+                                <div class="step-indicator completed">2</div>
+                                <div class="w-8 sm:w-16 h-1 bg-gray-200 dark:bg-gray-700 rounded">
+                                    <div class="progress-line w-full"></div>
+                                </div>
+                                <div class="step-indicator completed">3</div>
+                                <div class="w-8 sm:w-16 h-1 bg-gray-200 dark:bg-gray-700 rounded">
+                                    <div class="progress-line w-full"></div>
+                                </div>
+                                <div class="step-indicator current">4</div>
+                            </div>
+                            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 text-gray-800 dark:text-gray-100">
+                                What Interests You Most?
+                            </h2>
+                            <p class="responsive-text text-gray-600 dark:text-gray-400">
+                                Select your areas of interest to get personalized recommendations
+                            </p>
+                        </div>
+
+                        <!-- Interest Categories -->
+                        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 mb-8 sm:mb-12">
+                            <div class="preference-chip rounded-xl p-3 sm:p-4 text-center" onclick="togglePreference('react')">
+                                <i class="fab fa-react text-xl sm:text-2xl mb-2"></i>
+                                <div class="font-semibold text-sm sm:text-base">React</div>
+                            </div>
+                            <div class="preference-chip rounded-xl p-3 sm:p-4 text-center" onclick="togglePreference('vue')">
+                                <i class="fab fa-vuejs text-xl sm:text-2xl mb-2"></i>
+                                <div class="font-semibold text-sm sm:text-base">Vue.js</div>
+                            </div>
+                            <div class="preference-chip rounded-xl p-3 sm:p-4 text-center" onclick="togglePreference('angular')">
+                                <i class="fab fa-angular text-xl sm:text-2xl mb-2"></i>
+                                <div class="font-semibold text-sm sm:text-base">Angular</div>
+                            </div>
+                            <div class="preference-chip rounded-xl p-3 sm:p-4 text-center" onclick="togglePreference('typescript')">
+                                <i class="fas fa-code text-xl sm:text-2xl mb-2"></i>
+                                <div class="font-semibold text-sm sm:text-base">TypeScript</div>
+                            </div>
+                            <div class="preference-chip rounded-xl p-3 sm:p-4 text-center" onclick="togglePreference('design')">
+                                <i class="fas fa-palette text-xl sm:text-2xl mb-2"></i>
+                                <div class="font-semibold text-sm sm:text-base">UI/UX Design</div>
+                            </div>
+                            <div class="preference-chip rounded-xl p-3 sm:p-4 text-center" onclick="togglePreference('mobile')">
+                                <i class="fas fa-mobile-alt text-xl sm:text-2xl mb-2"></i>
+                                <div class="font-semibold text-sm sm:text-base">Mobile Dev</div>
+                            </div>
+                            <div class="preference-chip rounded-xl p-3 sm:p-4 text-center" onclick="togglePreference('backend')">
+                                <i class="fas fa-server text-xl sm:text-2xl mb-2"></i>
+                                <div class="font-semibold text-sm sm:text-base">Backend</div>
+                            </div>
+                            <div class="preference-chip rounded-xl p-3 sm:p-4 text-center" onclick="togglePreference('devops')">
+                                <i class="fas fa-cogs text-xl sm:text-2xl mb-2"></i>
+                                <div class="font-semibold text-sm sm:text-base">DevOps</div>
+                            </div>
+                        </div>
+
+                        <!-- Selected Preferences Display -->
+                        <div class="bg-blue-50 dark:bg-blue-900 rounded-xl p-4 sm:p-6 mb-8" id="selected-preferences">
+                            <h4 class="font-bold mb-3 text-blue-800 dark:text-blue-200">Selected Interests:</h4>
+                            <div class="flex flex-wrap gap-2" id="preferences-list">
+                                <span class="text-sm text-blue-600 dark:text-blue-300">Select your interests above</span>
+                            </div>
+                        </div>
+
+                        <div class="flex mobile-stack space-y-4 sm:space-y-0 sm:space-x-4">
+                            <button onclick="previousStep()" class="flex-1 bg-gray-300 dark:bg-gray-600 py-3 px-6 rounded-xl hover:bg-gray-400 dark:hover:bg-gray-700 transition-colors font-semibold">
+                                <i class="fas fa-arrow-left mr-2"></i>Back
+                            </button>
+                            <button onclick="nextStep()" class="flex-1 bg-primary-600 text-white py-3 px-6 rounded-xl hover:bg-primary-700 transition-colors font-semibold">
+                                Continue <i class="fas fa-arrow-right ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interactive Demo Step -->
+        <section id="step-5" class="onboarding-step hidden">
+            <div class="py-12 sm:py-16 lg:py-20">
+                <div class="container mx-auto px-4">
+                    <div class="max-w-5xl mx-auto">
+                        <div class="text-center mb-8 sm:mb-12">
+                            <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold mb-4 text-gray-800 dark:text-gray-100">
+                                🎉 Welcome to DevHub!
+                            </h2>
+                            <p class="responsive-text text-gray-600 dark:text-gray-400 mb-8">
+                                You're all set! Here's a quick overview of what you can do
+                            </p>
+                        </div>
+
+                        <!-- Feature Overview -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 lg:gap-8 mb-8 sm:mb-12">
+                            <div class="feature-highlight rounded-2xl mobile-friendly" onclick="exploreFeature('browse')">
+                                <div class="w-12 h-12 sm:w-16 sm:h-16 bg-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-search text-white text-lg sm:text-2xl"></i>
+                                </div>
+                                <h3 class="text-lg sm:text-xl font-bold mb-3 text-gray-800 dark:text-gray-100">Browse Components</h3>
+                                <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400 leading-relaxed">
+                                    Explore our library of 15,000+ UI components, templates, and resources
+                                </p>
+                            </div>
+
+                            <div class="feature-highlight rounded-2xl mobile-friendly" onclick="exploreFeature('download')">
+                                <div class="w-12 h-12 sm:w-16 sm:h-16 bg-green-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-download text-white text-lg sm:text-2xl"></i>
+                                </div>
+                                <h3 class="text-lg sm:text-xl font-bold mb-3 text-gray-800 dark:text-gray-100">Download & Use</h3>
+                                <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400 leading-relaxed">
+                                    Copy code, download files, or integrate via API directly into your projects
+                                </p>
+                            </div>
+
+                            <div class="feature-highlight rounded-2xl mobile-friendly sm:col-span-2 lg:col-span-1" onclick="exploreFeature('community')">
+                                <div class="w-12 h-12 sm:w-16 sm:h-16 bg-purple-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                    <i class="fas fa-users text-white text-lg sm:text-2xl"></i>
+                                </div>
+                                <h3 class="text-lg sm:text-xl font-bold mb-3 text-gray-800 dark:text-gray-100">Join Community</h3>
+                                <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400 leading-relaxed">
+                                    Connect with developers, share your work, and get help from experts
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Interactive Demo -->
+                        <div class="tutorial-card rounded-2xl mobile-friendly mb-8 sm:mb-12">
+                            <h3 class="text-xl sm:text-2xl font-bold mb-6 text-gray-800 dark:text-gray-100 text-center">
+                                <i class="fas fa-play-circle mr-2 text-purple-600"></i>
+                                Try It Out: Download Your First Component
+                            </h3>
+                            
+                            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
+                                <div>
+                                    <div class="bg-white dark:bg-gray-800 rounded-xl p-4 sm:p-6 shadow-lg border">
+                                        <img src="https://placehold.co/400x250" alt="Modern login form component preview with gradient styling and responsive design" class="w-full rounded-lg mb-4">
+                                        <h4 class="font-bold text-lg mb-2 text-gray-800 dark:text-gray-100">Modern Login Form</h4>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                                            Beautiful, responsive login form with gradient styling and form validation
+                                        </p>
+                                        <div class="flex items-center justify-between">
+                                            <div class="flex items-center space-x-2 text-sm text-gray-500">
+                                                <span><i class="fas fa-star text-yellow-500 mr-1"></i>4.9</span>
+                                                <span><i class="fas fa-download mr-1"></i>2.4K</span>
+                                            </div>
+                                            <button onclick="downloadDemo()" class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors font-semibold text-sm">
+                                                <i class="fas fa-download mr-2"></i>Download
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="interactive-demo">
+                                    <div class="bg-gray-700 px-4 py-3 text-sm text-gray-300 border-b border-gray-600">
+                                        <i class="fas fa-terminal mr-2"></i>DevHub CLI Demo
+                                    </div>
+                                    <div class="demo-screen" id="demo-terminal">
+                                        <div class="text-green-400 mb-2">$ devhub search "login form"</div>
+                                        <div class="text-gray-300 mb-2">🔍 Searching components...</div>
+                                        <div class="text-blue-400 mb-2">✅ Found 23 login form components</div>
+                                        <div class="text-green-400 mb-2">$ devhub download modern-login-form</div>
+                                        <div class="text-gray-300 mb-2">📦 Downloading component...</div>
+                                        <div class="text-blue-400 mb-2">✅ Component downloaded to ./components/</div>
+                                        <div class="text-yellow-400 typing-animation" id="typing-text">$ </div>
+                                    </div>
+                                    <div class="bg-gray-700 px-4 py-3 text-center">
+                                        <button onclick="runDemo()" class="bg-green-500 text-white px-4 py-2 rounded text-sm hover:bg-green-600 transition-colors">
+                                            <i class="fas fa-play mr-2"></i>Run Demo
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Achievement Unlock -->
+                        <div class="text-center mb-8" id="achievement-section" style="display: none;">
+                            <div class="achievement-badge rounded-xl px-6 py-4 inline-block completion-animation">
+                                <div class="flex items-center space-x-3">
+                                    <i class="fas fa-trophy text-2xl"></i>
+                                    <div>
+                                        <div class="font-bold">Achievement Unlocked!</div>
+                                        <div class="text-sm opacity-90">First Component Downloaded</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <button onclick="completeOnboarding()" class="bg-gradient-to-r from-primary-600 to-purple-600 text-white px-8 sm:px-12 py-3 sm:py-4 rounded-xl hover:from-primary-700 hover:to-purple-700 transition-colors font-bold text-base sm:text-lg">
+                                <i class="fas fa-rocket mr-2"></i>Start Exploring DevHub
+                            </button>
+                            <p class="text-sm text-gray-500 mt-4">You can always access this tutorial later from your dashboard</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // State Management
+        let isDarkMode = false;
+        let currentStep = 1;
+        let selectedSkillLevel = '';
+        let selectedPreferences = [];
+        let tourStep = 0;
+        let demoRun = false;
+
+        const totalSteps = 4;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            initializePage();
+            updateProgress();
+        });
+
+        function initializePage() {
+            if (localStorage.getItem('darkMode') === 'true') {
+                isDarkMode = true;
+                document.documentElement.classList.add('dark');
+            }
+            
+            // Check if user has completed onboarding before
+            if (localStorage.getItem('onboardingCompleted') === 'true') {
+                showNotification('Welcome back! You can restart the tour anytime.', 'info');
+            }
+        }
+
+        // Step Navigation
+        function nextStep() {
+            if (currentStep < totalSteps) {
+                // Hide current step
+                document.getElementById(`step-${currentStep}`).classList.add('hidden');
+                document.getElementById(`step-${currentStep}`).classList.remove('active');
+                
+                currentStep++;
+                
+                // Show next step
+                document.getElementById(`step-${currentStep}`).classList.remove('hidden');
+                document.getElementById(`step-${currentStep}`).classList.add('active');
+                
+                updateProgress();
+                showNotification(`Step ${currentStep} of ${totalSteps}`, 'info');
+            }
+        }
+
+        function previousStep() {
+            if (currentStep > 1) {
+                // Hide current step
+                document.getElementById(`step-${currentStep}`).classList.add('hidden');
+                document.getElementById(`step-${currentStep}`).classList.remove('active');
+                
+                currentStep--;
+                
+                // Show previous step
+                document.getElementById(`step-${currentStep}`).classList.remove('hidden');
+                document.getElementById(`step-${currentStep}`).classList.add('active');
+                
+                updateProgress();
+            }
+        }
+
+        function updateProgress() {
+            const progressPercent = ((currentStep - 1) / (totalSteps - 1)) * 100;
+            document.getElementById('onboarding-progress').style.width = progressPercent + '%';
+        }
+
+        // Skill Level Selection
+        function selectSkillLevel(level) {
+            selectedSkillLevel = level;
+            
+            // Update UI
+            document.querySelectorAll('.skill-level-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            event.currentTarget.classList.add('selected');
+            
+            // Enable continue button
+            document.getElementById('skill-continue').disabled = false;
+            document.getElementById('skill-continue').classList.remove('opacity-50');
+            
+            showNotification(`${level.charAt(0).toUpperCase() + level.slice(1)} level selected!`, 'success');
+        }
+
+        // Preferences
+        function togglePreference(preference) {
+            const chip = event.currentTarget;
+            
+            if (selectedPreferences.includes(preference)) {
+                selectedPreferences = selectedPreferences.filter(p => p !== preference);
+                chip.classList.remove('selected');
+            } else {
+                selectedPreferences.push(preference);
+                chip.classList.add('selected');
+            }
+            
+            updatePreferencesDisplay();
+        }
+
+        function updatePreferencesDisplay() {
+            const container = document.getElementById('preferences-list');
+            
+            if (selectedPreferences.length === 0) {
+                container.innerHTML = '<span class="text-sm text-blue-600 dark:text-blue-300">Select your interests above</span>';
+            } else {
+                container.innerHTML = selectedPreferences.map(pref => 
+                    `<span class="bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-sm font-medium">${pref}</span>`
+                ).join('');
+            }
+        }
+
+        // Demo Functions
+        function downloadDemo() {
+            if (!demoRun) {
+                showNotification('🎉 Great choice! This is how easy it is to download components.', 'success');
+                
+                // Show achievement
+                document.getElementById('achievement-section').style.display = 'block';
+                createConfetti();
+                demoRun = true;
+            } else {
+                showNotification('Component downloaded! (Demo mode)', 'info');
+            }
+        }
+
+        function runDemo() {
+            const terminal = document.getElementById('demo-terminal');
+            const typingText = document.getElementById('typing-text');
+            
+            // Simulate typing
+            typingText.innerHTML = '$ devhub init my-project';
+            
+            setTimeout(() => {
+                terminal.innerHTML += '<div class="text-gray-300 mb-2">🚀 Initializing new project...</div>';
+                terminal.innerHTML += '<div class="text-green-400 mb-2">✅ Project created successfully!</div>';
+                terminal.innerHTML += '<div class="text-blue-400 mb-2">📁 Created: ./my-project/</div>';
+                terminal.innerHTML += '<div class="text-yellow-400">💡 Run "cd my-project && npm start" to begin</div>';
+                
+                showNotification('🎯 Demo completed! This is how the DevHub CLI works.', 'success');
+            }, 2000);
+        }
+
+        function exploreFeature(feature) {
+            const features = {
+                browse: 'Opening component library...',
+                download: 'Showing download options...',
+                community: 'Joining the community...'
+            };
+            
+            showNotification(features[feature], 'info');
+        }
+
+        // Tour Functions
+        function startTour() {
+            tourStep = 0;
+            showTourStep();
+        }
+
+        function showTourStep() {
+            const steps = [
+                {
+                    title: 'Welcome to DevHub! 👋',
+                    description: 'Let\'s take a quick tour to show you around.',
+                    element: 'header'
+                },
+                {
+                    title: 'Component Library 📚',
+                    description: 'Browse thousands of high-quality UI components.',
+                    element: '.feature-highlight'
+                },
+                {
+                    title: 'Interactive Demos 🎮',
+                    description: 'Try components before downloading them.',
+                    element: '.interactive-demo'
+                },
+                {
+                    title: 'Community Support 🤝',
+                    description: 'Get help from 50,000+ developers worldwide.',
+                    element: '.floating-help'
+                },
+                {
+                    title: 'You\'re Ready! 🚀',
+                    description: 'Start building amazing things with DevHub.',
+                    element: 'main'
+                }
+            ];
+
+            if (tourStep < steps.length) {
+                const step = steps[tourStep];
+                document.getElementById('tour-overlay').classList.remove('hidden');
+                document.getElementById('tour-title').textContent = step.title;
+                document.getElementById('tour-description').textContent = step.description;
+                document.getElementById('tour-step').textContent = `Step ${tourStep + 1} of ${steps.length}`;
+                
+                // Update button states
+                document.getElementById('tour-prev').style.display = tourStep === 0 ? 'none' : 'block';
+                document.getElementById('tour-next').textContent = tourStep === steps.length - 1 ? 'Finish' : 'Next';
+            }
+        }
+
+        function nextTourStep() {
+            tourStep++;
+            if (tourStep >= 5) {
+                hideTour();
+                showNotification('🎉 Tour completed! You\'re ready to explore DevHub.', 'success');
+            } else {
+                showTourStep();
+            }
+        }
+
+        function previousTourStep() {
+            if (tourStep > 0) {
+                tourStep--;
+                showTourStep();
+            }
+        }
+
+        function skipTour() {
+            hideTour();
+            showNotification('Tour skipped. You can restart it anytime!', 'info');
+        }
+
+        function hideTour() {
+            document.getElementById('tour-overlay').classList.add('hidden');
+        }
+
+        // Completion
+        function completeOnboarding() {
+            localStorage.setItem('onboardingCompleted', 'true');
+            localStorage.setItem('userSkillLevel', selectedSkillLevel);
+            localStorage.setItem('userPreferences', JSON.stringify(selectedPreferences));
+            
+            createConfetti();
+            showNotification('🎉 Onboarding completed! Redirecting to your personalized dashboard...', 'success');
+            
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 2000);
+        }
+
+        function skipOnboarding() {
+            if (confirm('Are you sure you want to skip the onboarding? You can always access it later.')) {
+                window.location.href = 'index.html';
+            }
+        }
+
+        // Visual Effects
+        function createConfetti() {
+            const colors = ['#3b82f6', '#8b5cf6', '#10b981', '#f59e0b', '#ef4444'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.animationDelay = Math.random() * 3 + 's';
+                confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+                
+                document.body.appendChild(confetti);
+                
+                setTimeout(() => {
+                    if (confetti.parentNode) {
+                        confetti.parentNode.removeChild(confetti);
+                    }
+                }, 5000);
+            }
+        }
+
+        // Form Handling
+        document.getElementById('profile-form')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            showNotification('✅ Profile saved! Moving to the next step.', 'success');
+            nextStep();
+        });
+
+        function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', isDarkMode);
+            showNotification(isDarkMode ? '🌙 Dark mode enabled' : '☀️ Light mode enabled', 'info');
+        }
+
+        function showNotification(message, type = 'info') {
+            const colors = {
+                info: 'bg-blue-500',
+                success: 'bg-green-500',
+                warning: 'bg-yellow-500',
+                error: 'bg-red-500'
+            };
+            
+            const notification = document.createElement('div');
+            notification.className = `fixed top-20 right-4 ${colors[type]} text-white px-4 sm:px-6 py-3 rounded-lg shadow-lg z-50 transition-all duration-300 transform translate-x-full max-w-sm`;
+            notification.innerHTML = `
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-info-circle"></i>
+                    <span class="font-medium text-sm">${message}</span>
+                    <button onclick="this.parentElement.parentElement.remove()" class="ml-2 text-white hover:text-gray-200">
+                        <i class="fas fa-times text-xs"></i>
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.remove('translate-x-full');
+            }, 100);
+            
+            setTimeout(() => {
+                notification.classList.add('translate-x-full');
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 4000);
+        }
+
+        // Responsive handling
+        window.addEventListener('resize', function() {
+            // Adjust tour positioning on resize
+            if (!document.getElementById('tour-overlay').classList.contains('hidden')) {
+                showTourStep();
+            }
+        });
+
+        // Touch gestures for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', function(e) {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const swipeDistance = touchEndX - touchStartX;
+            
+            if (Math.abs(swipeDistance) > swipeThreshold) {
+                if (swipeDistance > 0 && currentStep > 1) {
+                    // Swipe right - previous step
+                    previousStep();
+                } else if (swipeDistance < 0 && currentStep < totalSteps) {
+                    // Swipe left - next step
+                    nextStep();
+                }
+            }
+        }
+    </script>
+</body>
+</html>
+

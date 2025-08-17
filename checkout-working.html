@@ -1,0 +1,1754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 Complete Your DevHub Pro Upgrade - Limited Time 50% OFF!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a'
+                        }
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'ui-sans-serif', 'system-ui']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .premium-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 30%, #f093fb 60%, #ff6b6b 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .premium-gradient::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 107, 107, 0.3), transparent 40%),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.2), transparent 40%),
+                radial-gradient(circle at 40% 40%, rgba(240, 147, 251, 0.25), transparent 40%);
+            animation: premiumFloat 12s ease-in-out infinite;
+        }
+        
+        @keyframes premiumFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+            33% { transform: translateY(-15px) rotate(1deg) scale(1.02); }
+            66% { transform: translateY(-10px) rotate(-1deg) scale(0.98); }
+        }
+        
+        .checkout-card {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 3px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .dark .checkout-card {
+            background: linear-gradient(145deg, #1f2937, #111827);
+        }
+        
+        .checkout-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.15), transparent);
+            transition: left 1s ease;
+        }
+        
+        .checkout-card:hover::before {
+            left: 100%;
+        }
+        
+        .checkout-card:hover {
+            transform: translateY(-6px);
+            border-color: #3b82f6;
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.15);
+        }
+        
+        .payment-method {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            border: 3px solid #cbd5e1;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .dark .payment-method {
+            background: linear-gradient(135deg, #1e293b, #334155);
+            border-color: #475569;
+        }
+        
+        .payment-method::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+        
+        .payment-method:hover::before {
+            left: 100%;
+        }
+        
+        .payment-method:hover {
+            border-color: #3b82f6;
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            transform: translateY(-3px);
+        }
+        
+        .dark .payment-method:hover {
+            background: linear-gradient(135deg, #1e3a8a, #1e40af);
+        }
+        
+        .payment-method.selected {
+            border-color: #10b981;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+        }
+        
+        .order-summary {
+            background: linear-gradient(145deg, #f0f9ff, #e0f2fe);
+            border: 3px solid #7dd3fc;
+            position: sticky;
+            top: 2rem;
+            box-shadow: 0 15px 35px rgba(59, 130, 246, 0.1);
+        }
+        
+        .dark .order-summary {
+            background: linear-gradient(145deg, #0c4a6e, #075985);
+            border-color: #0284c7;
+        }
+        
+        .security-badge {
+            background: linear-gradient(45deg, #10b981, #059669);
+            color: white;
+            animation: securityPulse 3s infinite;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+        }
+        
+        @keyframes securityPulse {
+            0%, 100% { 
+                box-shadow: 0 0 20px rgba(16, 185, 129, 0.4); 
+                transform: scale(1);
+            }
+            50% { 
+                box-shadow: 0 0 30px rgba(16, 185, 129, 0.6); 
+                transform: scale(1.05);
+            }
+        }
+        
+        .urgency-banner {
+            background: linear-gradient(45deg, #ef4444, #dc2626, #ff6b6b);
+            background-size: 200% 200%;
+            animation: urgencyPulse 2s ease-in-out infinite;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        @keyframes urgencyPulse {
+            0%, 100% { 
+                background-position: 0% 50%;
+                box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+            }
+            50% { 
+                background-position: 100% 50%;
+                box-shadow: 0 0 40px rgba(239, 68, 68, 0.8);
+            }
+        }
+        
+        .timer-display {
+            background: linear-gradient(135deg, #1f2937, #111827);
+            color: #ff6b6b;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            text-align: center;
+            border: 3px solid #ef4444;
+            animation: timerPulse 1s infinite;
+        }
+        
+        @keyframes timerPulse {
+            0%, 100% { 
+                border-color: #ef4444;
+                box-shadow: 0 0 10px rgba(239, 68, 68, 0.3);
+            }
+            50% { 
+                border-color: #ff6b6b; 
+                box-shadow: 0 0 25px rgba(255, 107, 107, 0.6);
+            }
+        }
+        
+        .savings-highlight {
+            background: linear-gradient(45deg, #10b981, #059669);
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-align: center;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            animation: savingsPulse 2s ease-in-out infinite;
+            position: relative;
+        }
+        
+        @keyframes savingsPulse {
+            0%, 100% { 
+                transform: scale(1);
+                box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+            }
+            50% { 
+                transform: scale(1.02);
+                box-shadow: 0 0 30px rgba(16, 185, 129, 0.6);
+            }
+        }
+        
+        .card-input {
+            background: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 1rem;
+            padding: 1.25rem;
+            font-size: 1.1rem;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .dark .card-input {
+            background: #1f2937;
+            border-color: #374151;
+            color: white;
+        }
+        
+        .card-input:focus {
+            border-color: #10b981;
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .purchase-button {
+            background: linear-gradient(45deg, #10b981, #059669, #10b981);
+            background-size: 200% 200%;
+            animation: purchaseGlow 2s ease-in-out infinite;
+            color: white;
+            font-weight: 800;
+            font-size: 1.2rem;
+            padding: 1.5rem 3rem;
+            border-radius: 1rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+        }
+        
+        @keyframes purchaseGlow {
+            0%, 100% { 
+                background-position: 0% 50%;
+                box-shadow: 0 10px 30px rgba(16, 185, 129, 0.4);
+            }
+            50% { 
+                background-position: 100% 50%;
+                box-shadow: 0 15px 40px rgba(16, 185, 129, 0.6);
+            }
+        }
+        
+        .purchase-button:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(16, 185, 129, 0.5);
+        }
+        
+        .live-users {
+            background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            animation: liveUsersPulse 3s infinite;
+            font-weight: 700;
+        }
+        
+        @keyframes liveUsersPulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+        
+        .price-strike {
+            position: relative;
+            color: #ef4444;
+            font-weight: bold;
+            text-decoration: line-through;
+            text-decoration-color: #ef4444;
+            text-decoration-thickness: 3px;
+        }
+        
+        .new-price {
+            background: linear-gradient(45deg, #10b981, #059669);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 900;
+            animation: priceGlow 2s ease-in-out infinite;
+        }
+        
+        @keyframes priceGlow {
+            0%, 100% { filter: drop-shadow(0 0 8px rgba(16, 185, 129, 0.6)); }
+            50% { filter: drop-shadow(0 0 16px rgba(16, 185, 129, 0.9)); }
+        }
+        
+        .guarantee-badge {
+            background: linear-gradient(135deg, #fef3c7, #fbbf24);
+            border: 3px solid #f59e0b;
+            color: #92400e;
+            padding: 1rem;
+            border-radius: 1rem;
+            text-align: center;
+            font-weight: bold;
+            animation: guaranteeShine 4s infinite;
+        }
+        
+        .dark .guarantee-badge {
+            background: linear-gradient(135deg, #92400e, #b45309);
+            color: #fbbf24;
+        }
+        
+        @keyframes guaranteeShine {
+            0%, 100% { box-shadow: 0 0 20px rgba(245, 158, 11, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(245, 158, 11, 0.6); }
+        }
+        
+        .floating-discount {
+            position: fixed;
+            top: 20%;
+            right: -350px;
+            background: linear-gradient(45deg, #ff6b6b, #ef4444);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 1rem 0 0 1rem;
+            box-shadow: 0 15px 35px rgba(239, 68, 68, 0.4);
+            z-index: 60;
+            transition: right 0.5s ease;
+            animation: floatingBounce 4s ease-in-out infinite;
+            cursor: pointer;
+        }
+        
+        .floating-discount.show {
+            right: 0;
+        }
+        
+        @keyframes floatingBounce {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .processing-overlay {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.95), rgba(139, 92, 246, 0.95));
+            backdrop-filter: blur(15px);
+        }
+        
+        .success-celebration {
+            animation: successCelebration 1s ease-out;
+        }
+        
+        @keyframes successCelebration {
+            0% { transform: scale(0) rotate(-180deg); opacity: 0; }
+            50% { transform: scale(1.3) rotate(-10deg); opacity: 1; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+        
+        .coupon-highlight {
+            background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+            border: 3px solid #10b981;
+            color: #065f46;
+            animation: couponSuccess 0.5s ease-out;
+        }
+        
+        .dark .coupon-highlight {
+            background: linear-gradient(135deg, #064e3b, #065f46);
+            color: #6ee7b7;
+        }
+        
+        @keyframes couponSuccess {
+            0% { transform: scale(0.9); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .payment-form {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.4s ease;
+        }
+        
+        .payment-form.hidden {
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+            height: 0;
+            overflow: hidden;
+        }
+        
+        .social-proof {
+            background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+            border: 2px solid #10b981;
+            animation: socialProofGlow 3s ease-in-out infinite;
+        }
+        
+        .dark .social-proof {
+            background: linear-gradient(135deg, #064e3b, #065f46);
+        }
+        
+        @keyframes socialProofGlow {
+            0%, 100% { box-shadow: 0 0 10px rgba(16, 185, 129, 0.3); }
+            50% { box-shadow: 0 0 25px rgba(16, 185, 129, 0.5); }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+        
+        @keyframes confetti-fall {
+            0% { transform: translateY(-10px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <!-- Floating Discount Offer -->
+    <div id="floating-discount" class="floating-discount" onclick="applyFloatingDiscount()">
+        <div class="text-center">
+            <div class="font-black text-xl mb-1">🎉 FLASH SALE!</div>
+            <div class="font-bold text-2xl">50% OFF</div>
+            <div class="text-sm opacity-90">Next <span id="float-timer">27</span> minutes only!</div>
+            <div class="text-xs mt-1 bg-white/20 rounded px-2 py-1">Click to apply!</div>
+        </div>
+    </div>
+
+    <!-- Header with Urgency -->
+    <header class="bg-white/95 dark:bg-gray-800/95 backdrop-blur-lg shadow-2xl relative z-50 border-b-4 border-primary-500">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo & Brand -->
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="flex items-center space-x-2">
+                        <div class="w-12 h-12 bg-gradient-to-r from-primary-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-code text-white text-xl"></i>
+                        </div>
+                        <h1 class="text-2xl md:text-3xl font-black bg-gradient-to-r from-primary-500 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+                            DevHub Pro
+                        </h1>
+                    </a>
+                    <div class="hidden md:flex items-center space-x-2">
+                        <div class="live-users text-sm">
+                            <i class="fas fa-eye mr-2"></i>
+                            <span id="live-count">1,247</span> people viewing this offer
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Security & Trust Indicators -->
+                <div class="flex items-center space-x-4">
+                    <div class="security-badge px-4 py-2 rounded-full text-sm font-bold">
+                        <i class="fas fa-shield-alt mr-2"></i>SSL Secure
+                    </div>
+                    <div class="hidden sm:flex items-center space-x-2 text-sm text-green-600">
+                        <i class="fas fa-check-circle"></i>
+                        <span class="font-semibold">Trusted by 50K+ developers</span>
+                    </div>
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-moon dark:hidden text-lg"></i>
+                        <i class="fas fa-sun hidden dark:block text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Urgency Banner -->
+    <div class="urgency-banner py-4 text-center relative">
+        <div class="font-bold text-lg">
+            ⚡ LIMITED TIME: 50% OFF FLASH SALE - ENDS IN <span id="countdown-timer" class="font-black text-xl">26:42:15</span> ⚡
+        </div>
+        <div class="text-sm opacity-90 mt-1">Join now and save $90 instantly! Only <span id="spots-left" class="font-bold text-yellow-300">47</span> spots left at this price.</div>
+    </div>
+
+    <!-- Hero Section with Social Proof -->
+    <section class="premium-gradient text-white py-20 relative">
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-5xl mx-auto text-center">
+                <div class="mb-8">
+                    <div class="inline-flex items-center space-x-3 bg-white/20 px-6 py-3 rounded-full backdrop-blur border border-white/30">
+                        <i class="fas fa-fire text-orange-400"></i>
+                        <span class="font-bold">🔥 MOST POPULAR UPGRADE</span>
+                        <i class="fas fa-fire text-orange-400"></i>
+                    </div>
+                </div>
+                
+                <h1 class="text-4xl md:text-6xl lg:text-7xl font-black mb-8 leading-tight">
+                    Unlock Your Full 
+                    <span class="bg-gradient-to-r from-yellow-300 via-orange-400 to-red-500 bg-clip-text text-transparent">
+                        Potential
+                    </span>
+                </h1>
+                
+                <p class="text-xl md:text-2xl mb-10 opacity-95 leading-relaxed max-w-4xl mx-auto font-medium">
+                    Join the elite 15% of developers who ship 10x faster with DevHub Pro. 
+                    <strong>Limited time: Get everything for just $90/year</strong> (normally $180)
+                </p>
+
+                <!-- Social Proof Indicators -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-12">
+                    <div class="bg-white/15 backdrop-blur rounded-2xl p-6">
+                        <div class="text-3xl font-black mb-2" id="pro-members">52,847</div>
+                        <div class="text-sm text-blue-200">Pro Members</div>
+                        <div class="text-xs text-green-300 mt-1">↗ +<span id="monthly-growth">2,400</span> this month</div>
+                    </div>
+                    <div class="bg-white/15 backdrop-blur rounded-2xl p-6">
+                        <div class="text-3xl font-black mb-2">10x</div>
+                        <div class="text-sm text-blue-200">Faster Shipping</div>
+                        <div class="text-xs text-green-300 mt-1">Verified by users</div>
+                    </div>
+                    <div class="bg-white/15 backdrop-blur rounded-2xl p-6">
+                        <div class="text-3xl font-black mb-2">$47K</div>
+                        <div class="text-sm text-blue-200">Avg. Savings/Year</div>
+                        <div class="text-xs text-green-300 mt-1">Per development team</div>
+                    </div>
+                    <div class="bg-white/15 backdrop-blur rounded-2xl p-6">
+                        <div class="text-3xl font-black mb-2">4.9★</div>
+                        <div class="text-sm text-blue-200">Satisfaction</div>
+                        <div class="text-xs text-green-300 mt-1">12K+ reviews</div>
+                    </div>
+                </div>
+
+                <!-- Countdown Timer -->
+                <div class="timer-display max-w-md mx-auto mb-8">
+                    <div class="text-lg font-bold mb-2">⏰ FLASH SALE ENDS IN:</div>
+                    <div class="text-4xl font-black" id="main-timer">26:42:15</div>
+                    <div class="text-sm mt-2">Hours : Minutes : Seconds</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Checkout -->
+    <main class="container mx-auto px-4 py-8 -mt-12 relative z-20">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Checkout Form Column -->
+                <div class="lg:col-span-2 space-y-8">
+                    <!-- Scarcity Alert -->
+                    <div class="bg-gradient-to-r from-yellow-400 to-orange-500 text-white rounded-2xl p-6 text-center font-bold shadow-xl">
+                        <div class="flex items-center justify-center space-x-3">
+                            <i class="fas fa-exclamation-triangle text-2xl animate-pulse"></i>
+                            <div>
+                                <div class="text-xl font-black">⚡ Only <span id="urgency-spots">47</span> Pro spots left at 50% OFF!</div>
+                                <div class="text-sm opacity-90">Join <span id="weekly-upgrades">2,400</span>+ developers who upgraded this week</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Methods -->
+                    <div class="checkout-card rounded-3xl p-8 shadow-2xl">
+                        <div class="flex items-center justify-between mb-8">
+                            <h2 class="text-3xl font-black text-gray-800 dark:text-gray-100">
+                                <i class="fas fa-credit-card mr-3 text-primary-600"></i>
+                                Choose Payment Method
+                            </h2>
+                            <div class="text-sm text-green-600 font-bold">
+                                <i class="fas fa-lock mr-1"></i>100% Secure
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8">
+                            <div class="payment-method selected rounded-2xl p-6 text-center" onclick="selectPaymentMethod('card')" id="card-method">
+                                <i class="fas fa-credit-card text-3xl mb-3"></i>
+                                <div class="font-bold text-lg mb-2">Credit Card</div>
+                                <div class="text-sm opacity-75">Most Popular ⭐</div>
+                            </div>
+                            <div class="payment-method rounded-2xl p-6 text-center" onclick="selectPaymentMethod('paypal')" id="paypal-method">
+                                <i class="fab fa-paypal text-3xl mb-3"></i>
+                                <div class="font-bold text-lg mb-2">PayPal</div>
+                                <div class="text-sm opacity-75">Quick & Easy 🚀</div>
+                            </div>
+                            <div class="payment-method rounded-2xl p-6 text-center" onclick="selectPaymentMethod('apple')" id="apple-method">
+                                <i class="fab fa-apple text-3xl mb-3"></i>
+                                <div class="font-bold text-lg mb-2">Apple Pay</div>
+                                <div class="text-sm opacity-75">One-Touch 📱</div>
+                            </div>
+                        </div>
+
+                        <!-- Credit Card Form -->
+                        <div id="card-form" class="payment-form space-y-6">
+                            <div class="bg-blue-50 dark:bg-blue-900 rounded-xl p-4 mb-6">
+                                <div class="flex items-center text-blue-800 dark:text-blue-200">
+                                    <i class="fas fa-info-circle mr-2"></i>
+                                    <span class="text-sm font-semibold">Your card will be charged immediately after clicking "Complete Purchase"</span>
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <div class="sm:col-span-2">
+                                    <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-3">Card Number *</label>
+                                    <div class="relative">
+                                        <input 
+                                            type="text" 
+                                            placeholder="1234 5678 9012 3456" 
+                                            class="card-input w-full pr-24" 
+                                            maxlength="19" 
+                                            onkeyup="formatCardNumber(this)"
+                                            required
+                                        >
+                                        <div class="absolute right-4 top-4 flex space-x-2">
+                                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/e70bcb08-cc26-47f1-ba02-0c1795c6e86e.png" alt="Visa accepted" class="h-5 opacity-70 hover:opacity-100 transition-opacity">
+                                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/8e8de7b7-a776-4419-a53b-9838ceb51cc8.png" alt="Mastercard accepted" class="h-5 opacity-70 hover:opacity-100 transition-opacity">
+                                            <img src="https://placehold.co/32x20" alt="Amex accepted" class="h-5 opacity-70 hover:opacity-100 transition-opacity">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-3">Expiry Date *</label>
+                                    <input 
+                                        type="text" 
+                                        placeholder="MM/YY" 
+                                        class="card-input w-full" 
+                                        maxlength="5" 
+                                        onkeyup="formatExpiry(this)"
+                                        required
+                                    >
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-3">Security Code *</label>
+                                    <input 
+                                        type="password" 
+                                        placeholder="CVC" 
+                                        class="card-input w-full" 
+                                        maxlength="4"
+                                        required
+                                    >
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-3">Cardholder Name *</label>
+                                <input 
+                                    type="text" 
+                                    placeholder="Full name as shown on card" 
+                                    class="card-input w-full"
+                                    required
+                                >
+                            </div>
+                        </div>
+
+                        <!-- PayPal Form -->
+                        <div id="paypal-form" class="payment-form hidden">
+                            <div class="text-center py-12 bg-gradient-to-r from-blue-50 to-blue-100 dark:from-blue-900 dark:to-blue-800 rounded-2xl">
+                                <i class="fab fa-paypal text-8xl text-blue-500 mb-6"></i>
+                                <h3 class="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100">Continue with PayPal</h3>
+                                <p class="text-gray-600 dark:text-gray-400 mb-8 max-w-md mx-auto text-lg">
+                                    You'll be redirected to PayPal's secure checkout. Your 50% discount will be automatically applied.
+                                </p>
+                                <div class="bg-green-100 dark:bg-green-900 rounded-xl p-4 mb-6 max-w-sm mx-auto">
+                                    <div class="text-green-800 dark:text-green-200 font-semibold text-sm">
+                                        ✅ Your $90 savings are already included
+                                    </div>
+                                </div>
+                                <button onclick="processPayPal()" class="bg-blue-500 text-white px-12 py-4 rounded-2xl hover:bg-blue-600 transition-colors font-bold text-lg shadow-xl">
+                                    <i class="fab fa-paypal mr-3"></i>Continue with PayPal ($90.00)
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Apple Pay Form -->
+                        <div id="apple-form" class="payment-form hidden">
+                            <div class="text-center py-12 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700 rounded-2xl">
+                                <i class="fab fa-apple text-8xl text-gray-800 dark:text-gray-200 mb-6"></i>
+                                <h3 class="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100">Pay with Apple Pay</h3>
+                                <p class="text-gray-600 dark:text-gray-400 mb-8 max-w-md mx-auto text-lg">
+                                    Use Touch ID or Face ID for instant, secure payment. Your discount is already applied.
+                                </p>
+                                <div class="bg-green-100 dark:bg-green-900 rounded-xl p-4 mb-6 max-w-sm mx-auto">
+                                    <div class="text-green-800 dark:text-green-200 font-semibold text-sm">
+                                        🍎 One-touch payment with biometric security
+                                    </div>
+                                </div>
+                                <button onclick="processApplePay()" class="bg-black text-white px-12 py-4 rounded-2xl hover:bg-gray-800 transition-colors font-bold text-lg shadow-xl">
+                                    <i class="fab fa-apple mr-3"></i>Pay with Apple Pay ($90.00)
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Billing Information -->
+                    <div class="checkout-card rounded-3xl p-8 shadow-2xl">
+                        <h2 class="text-3xl font-black mb-8 text-gray-800 dark:text-gray-100">
+                            <i class="fas fa-file-invoice mr-3 text-primary-600"></i>
+                            Billing Details
+                        </h2>
+                        
+                        <form id="billing-form" class="space-y-6">
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-3">First Name *</label>
+                                    <input 
+                                        type="text" 
+                                        required 
+                                        class="w-full px-6 py-4 border-2 rounded-xl focus:ring-4 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 text-lg transition-all duration-300"
+                                        placeholder="John"
+                                    >
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-3">Last Name *</label>
+                                    <input 
+                                        type="text" 
+                                        required 
+                                        class="w-full px-6 py-4 border-2 rounded-xl focus:ring-4 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 text-lg transition-all duration-300"
+                                        placeholder="Doe"
+                                    >
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-3">Email Address *</label>
+                                <input 
+                                    type="email" 
+                                    required 
+                                    class="w-full px-6 py-4 border-2 rounded-xl focus:ring-4 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 text-lg transition-all duration-300"
+                                    placeholder="john@company.com"
+                                >
+                                <p class="text-sm text-gray-500 mt-2 flex items-center">
+                                    <i class="fas fa-info-circle mr-2 text-blue-500"></i>
+                                    We'll send your receipt and Pro access details here within 2 minutes
+                                </p>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-3">Company/Organization</label>
+                                <input 
+                                    type="text" 
+                                    class="w-full px-6 py-4 border-2 rounded-xl focus:ring-4 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 text-lg transition-all duration-300"
+                                    placeholder="Your Company Inc. (Optional)"
+                                >
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-3">Country *</label>
+                                <select 
+                                    required 
+                                    class="w-full px-6 py-4 border-2 rounded-xl focus:ring-4 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 text-lg transition-all duration-300"
+                                    onchange="calculateTax(this.value)"
+                                >
+                                    <option value="">🌍 Select Your Country</option>
+                                    <option value="US">🇺🇸 United States</option>
+                                    <option value="CA">🇨🇦 Canada</option>
+                                    <option value="GB">🇬🇧 United Kingdom</option>
+                                    <option value="AU">🇦🇺 Australia</option>
+                                    <option value="DE">🇩🇪 Germany</option>
+                                    <option value="FR">🇫🇷 France</option>
+                                    <option value="JP">🇯🇵 Japan</option>
+                                    <option value="IN">🇮🇳 India</option>
+                                    <option value="BR">🇧🇷 Brazil</option>
+                                    <option value="MX">🇲🇽 Mexico</option>
+                                </select>
+                            </div>
+
+                            <!-- Terms Agreement -->
+                            <div class="bg-blue-50 dark:bg-blue-900 rounded-2xl p-6 border-2 border-blue-200 dark:border-blue-700">
+                                <div class="flex items-start space-x-4">
+                                    <input 
+                                        type="checkbox" 
+                                        required 
+                                        class="w-5 h-5 text-green-600 border-2 border-gray-300 rounded focus:ring-green-500 mt-1"
+                                        id="terms-checkbox"
+                                    >
+                                    <label for="terms-checkbox" class="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
+                                        <strong class="text-base">I agree to the following:</strong><br>
+                                        • <a href="#" class="text-primary-600 hover:text-primary-700 underline font-semibold">Terms of Service</a> and 
+                                        <a href="#" class="text-primary-600 hover:text-primary-700 underline font-semibold">Privacy Policy</a><br>
+                                        • My subscription auto-renews annually (cancel anytime with 1-click)<br>
+                                        • <strong class="text-green-600 text-base">30-day money-back guarantee</strong> if not satisfied<br>
+                                        • I understand this offer expires in <span id="terms-timer" class="font-bold text-red-600">26 minutes</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Social Proof Testimonials -->
+                    <div class="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900 dark:to-emerald-900 rounded-3xl p-8 shadow-2xl border-l-6 border-green-500">
+                        <div class="flex items-start space-x-6">
+                            <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/cbcdbddc-cc5f-47cc-8aab-28f7e5bb78c1.png" alt="Customer testimonial from Jennifer Walsh, CTO" class="w-20 h-20 rounded-full border-4 border-green-500 shadow-lg">
+                            <div class="flex-1">
+                                <div class="flex items-center space-x-3 mb-3">
+                                    <h4 class="font-bold text-2xl text-gray-800 dark:text-gray-100">Jennifer Walsh</h4>
+                                    <span class="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-bold">✅ VERIFIED BUYER</span>
+                                </div>
+                                <p class="text-gray-600 dark:text-gray-400 mb-3 font-medium">CTO at TechFlow • Upgraded 3 months ago • Saved $47K</p>
+                                <div class="flex text-yellow-400 mb-4 text-xl">
+                                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                                    <span class="ml-2 text-gray-600 dark:text-gray-400 font-bold">5.0/5 ⭐</span>
+                                </div>
+                                <p class="text-xl italic text-gray-700 dark:text-gray-300 font-semibold">
+                                    "DevHub Pro paid for itself in the first week. We shipped our product 3 months early 
+                                    and raised $2M in funding. The ROI is absolutely incredible - best business decision ever!"
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Summary Sidebar -->
+                <div class="lg:col-span-1">
+                    <!-- Flash Sale Timer -->
+                    <div class="bg-gradient-to-r from-red-500 via-orange-500 to-yellow-500 text-white rounded-3xl p-8 mb-8 text-center shadow-2xl">
+                        <div class="text-2xl font-black mb-2">⚡ FLASH SALE ACTIVE</div>
+                        <div class="text-5xl font-black mb-3" id="sidebar-timer">26:42</div>
+                        <div class="text-sm opacity-90 font-bold">This 50% discount expires soon!</div>
+                        <div class="mt-4 bg-white/20 rounded-xl p-3">
+                            <div class="text-sm font-bold">🔥 <span id="sidebar-spots">47</span> spots remaining</div>
+                        </div>
+                    </div>
+
+                    <!-- Order Summary -->
+                    <div class="order-summary rounded-3xl p-8">
+                        <h3 class="text-2xl font-black mb-8 text-gray-800 dark:text-gray-100">
+                            <i class="fas fa-crown mr-3 text-yellow-500"></i>
+                            Your DevHub Pro Upgrade
+                        </h3>
+                        
+                        <!-- Plan Details -->
+                        <div class="bg-gradient-to-r from-primary-500 to-purple-600 text-white rounded-2xl p-6 mb-8 relative overflow-hidden">
+                            <div class="absolute top-2 right-2 bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full text-xs font-black">
+                                50% OFF!
+                            </div>
+                            <div class="flex items-center space-x-4 mb-4">
+                                <div class="w-20 h-20 bg-white/20 rounded-2xl flex items-center justify-center">
+                                    <i class="fas fa-star text-4xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="text-2xl font-black">DevHub Pro</h4>
+                                    <p class="text-blue-100 font-bold">Annual Subscription</p>
+                                    <p class="text-sm bg-yellow-400 text-yellow-900 px-2 py-1 rounded-full font-bold inline-block mt-1">
+                                        🎁 BEST VALUE PLAN
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- What You Get -->
+                        <div class="mb-8">
+                            <h4 class="font-black text-xl mb-6 text-gray-800 dark:text-gray-100">
+                                🎁 What You Get Instantly:
+                            </h4>
+                            <div class="space-y-4">
+                                <div class="flex items-center space-x-4 p-4 bg-white/50 dark:bg-gray-700/50 rounded-xl">
+                                    <i class="fas fa-infinity text-2xl text-blue-500"></i>
+                                    <div class="flex-1">
+                                        <div class="font-bold">Unlimited Downloads</div>
+                                        <div class="text-sm text-gray-500">Normally $500/month value</div>
+                                    </div>
+                                    <div class="text-green-600 font-bold">✓</div>
+                                </div>
+                                <div class="flex items-center space-x-4 p-4 bg-white/50 dark:bg-gray-700/50 rounded-xl">
+                                    <i class="fas fa-crown text-2xl text-yellow-500"></i>
+                                    <div class="flex-1">
+                                        <div class="font-bold">500+ Premium Components</div>
+                                        <div class="text-sm text-gray-500">Exclusive, high-quality designs</div>
+                                    </div>
+                                    <div class="text-green-600 font-bold">✓</div>
+                                </div>
+                                <div class="flex items-center space-x-4 p-4 bg-white/50 dark:bg-gray-700/50 rounded-xl">
+                                    <i class="fas fa-headset text-2xl text-green-500"></i>
+                                    <div class="flex-1">
+                                        <div class="font-bold">Priority Support</div>
+                                        <div class="text-sm text-gray-500">< 1 hour response time</div>
+                                    </div>
+                                    <div class="text-green-600 font-bold">✓</div>
+                                </div>
+                                <div class="flex items-center space-x-4 p-4 bg-white/50 dark:bg-gray-700/50 rounded-xl">
+                                    <i class="fas fa-code text-2xl text-purple-500"></i>
+                                    <div class="flex-1">
+                                        <div class="font-bold">Full API Access</div>
+                                        <div class="text-sm text-gray-500">10,000 requests per day</div>
+                                    </div>
+                                    <div class="text-green-600 font-bold">✓</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pricing Breakdown -->
+                        <div class="space-y-4 mb-8">
+                            <div class="flex justify-between items-center text-lg">
+                                <span class="text-gray-600 dark:text-gray-400">DevHub Pro (Annual)</span>
+                                <span class="price-strike text-xl">$180.00</span>
+                            </div>
+                            <div class="flex justify-between items-center text-xl font-bold">
+                                <span class="text-green-600">🔥 Flash Sale Discount (50%)</span>
+                                <span class="text-green-600">-$90.00</span>
+                            </div>
+                            <div class="flex justify-between items-center hidden" id="coupon-line">
+                                <span class="text-red-600">Extra Coupon Discount</span>
+                                <span class="text-red-600 font-bold" id="extra-discount">-$0.00</span>
+                            </div>
+                            
+                            <div class="border-t-2 border-dashed border-gray-300 pt-6">
+                                <div class="savings-highlight">
+                                    <div class="text-sm">💰 YOU SAVE</div>
+                                    <div class="text-4xl font-black" id="total-savings">$90.00</div>
+                                    <div class="text-sm opacity-90">This year alone!</div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-gradient-to-r from-green-500 to-green-600 text-white rounded-2xl p-6 text-center shadow-xl">
+                                <div class="text-lg font-medium mb-2">🎯 FINAL PRICE TODAY</div>
+                                <div class="new-price text-6xl font-black mb-2" id="final-price">$90.00</div>
+                                <div class="text-lg opacity-90 font-bold">That's only $7.50/month!</div>
+                                <div class="mt-2 text-sm bg-white/20 rounded-full px-4 py-2 inline-block">
+                                    🚀 Instant activation • No setup fees
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Coupon Code -->
+                        <div class="mb-8">
+                            <div class="bg-yellow-50 dark:bg-yellow-900 border-3 border-yellow-300 dark:border-yellow-600 rounded-xl p-6 mb-4 text-center">
+                                <div class="font-bold text-yellow-800 dark:text-yellow-200 text-lg mb-2">
+                                    💎 STACK YOUR SAVINGS!
+                                </div>
+                                <div class="text-sm text-yellow-700 dark:text-yellow-300 mb-3">
+                                    Use code <strong class="text-lg">EXTRA10</strong> for an additional $9 off!
+                                </div>
+                                <div class="text-xs text-yellow-600 dark:text-yellow-400">
+                                    Final price would be just <strong>$81.00</strong>
+                                </div>
+                            </div>
+                            <div class="flex space-x-3">
+                                <input 
+                                    type="text" 
+                                    placeholder="Enter coupon code (try EXTRA10)" 
+                                    class="flex-1 px-4 py-3 border-2 rounded-xl focus:ring-2 focus:ring-green-500 focus:border-green-500 dark:bg-gray-700 dark:border-gray-600 text-lg"
+                                    id="coupon-input"
+                                >
+                                <button onclick="applyCoupon()" class="bg-primary-600 text-white px-8 py-3 rounded-xl hover:bg-primary-700 transition-colors font-bold">
+                                    Apply
+                                </button>
+                            </div>
+                            <div id="coupon-success" class="coupon-highlight rounded-xl p-4 mt-4 hidden">
+                                <div class="flex items-center">
+                                    <i class="fas fa-check-circle text-2xl mr-3"></i>
+                                    <div>
+                                        <div class="font-bold text-lg">Coupon Applied Successfully! 🎉</div>
+                                        <div class="text-sm">You saved an extra <span id="coupon-save-amount">$9.00</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Urgency Elements -->
+                        <div class="space-y-4 mb-8">
+                            <div class="social-proof rounded-xl p-4 text-center">
+                                <div class="flex items-center justify-center space-x-2 mb-3">
+                                    <div class="flex -space-x-2">
+                                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/af0a5434-2b3b-485d-803e-42628f55d549.png" alt="Recent customer 1" class="w-8 h-8 rounded-full border-2 border-white">
+                                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/9feb8e48-8fed-4584-a1b0-16da735b78c9.png" alt="Recent customer 2" class="w-8 h-8 rounded-full border-2 border-white">
+                                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/04574e98-8d24-4ffd-86da-8069879704b9.png" alt="Recent customer 3" class="w-8 h-8 rounded-full border-2 border-white">
+                                        <div class="w-8 h-8 rounded-full border-2 border-white bg-primary-500 text-white text-xs flex items-center justify-center font-bold">+K</div>
+                                    </div>
+                                </div>
+                                <div class="text-lg font-bold text-green-800 dark:text-green-200">
+                                    🔥 <span id="recent-purchases">2,847</span> developers upgraded this week!
+                                </div>
+                                <div class="text-sm text-green-600 dark:text-green-300" id="live-activity">
+                                    ✅ Someone just purchased 3 minutes ago
+                                </div>
+                            </div>
+                            
+                            <div class="guarantee-badge">
+                                <div class="flex items-center justify-center space-x-3">
+                                    <i class="fas fa-shield-alt text-4xl"></i>
+                                    <div>
+                                        <div class="font-black text-xl">30-DAY GUARANTEE</div>
+                                        <div class="text-sm">Not satisfied? Full refund, no questions asked!</div>
+                                        <div class="text-xs mt-1">Used by <strong>less than 2%</strong> of customers</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Complete Purchase Button -->
+                        <button onclick="processPurchase()" class="purchase-button w-full mb-6">
+                            <i class="fas fa-lock mr-3"></i>
+                            <div>
+                                <div class="text-xl">SECURE INSTANT ACCESS</div>
+                                <div class="text-3xl font-black" id="button-price">$90.00</div>
+                                <div class="text-sm opacity-90">💥 Save $90 instantly!</div>
+                            </div>
+                        </button>
+                        
+                        <!-- Trust Elements -->
+                        <div class="space-y-3 text-sm">
+                            <div class="flex items-center justify-center space-x-2 bg-green-50 dark:bg-green-900 p-3 rounded-lg">
+                                <i class="fas fa-shield-alt text-green-500"></i>
+                                <span class="font-semibold text-green-700 dark:text-green-300">Bank-level 256-bit SSL encryption</span>
+                            </div>
+                            <div class="flex items-center justify-center space-x-2 bg-blue-50 dark:bg-blue-900 p-3 rounded-lg">
+                                <i class="fas fa-undo text-blue-500"></i>
+                                <span class="font-semibold text-blue-700 dark:text-blue-300">30-day money-back guarantee</span>
+                            </div>
+                            <div class="flex items-center justify-center space-x-2 bg-purple-50 dark:bg-purple-900 p-3 rounded-lg">
+                                <i class="fas fa-bolt text-purple-500"></i>
+                                <span class="font-semibold text-purple-700 dark:text-purple-300">Instant access - no waiting period</span>
+                            </div>
+                        </div>
+
+                        <!-- Payment Method Logos -->
+                        <div class="mt-8 pt-6 border-t-2 border-gray-200 dark:border-gray-600">
+                            <div class="text-center text-sm text-gray-500 mb-4 font-semibold">Secure Payment Methods</div>
+                            <div class="flex items-center justify-center space-x-4 opacity-60">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/8b5bbc79-fed4-4351-ae99-8e6aa2920d04.png" alt="Visa accepted" class="h-6 hover:opacity-100 transition-opacity">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/c7b71a92-339f-4a79-b696-84ac41c42754.png" alt="Mastercard accepted" class="h-6 hover:opacity-100 transition-opacity">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/5a83ff49-85c5-4652-8586-fd073d05fe6b.png" alt="American Express accepted" class="h-6 hover:opacity-100 transition-opacity">
+                                <img src="https://placehold.co/50x30" alt="PayPal accepted" class="h-6 hover:opacity-100 transition-opacity">
+                                <img src="https://placehold.co/50x30" alt="Apple Pay accepted" class="h-6 hover:opacity-100 transition-opacity">
+                            </div>
+                            <div class="text-center text-xs text-gray-400 mt-2">
+                                Protected by Stripe • PCI DSS Compliant
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Risk Reversal -->
+                    <div class="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900 dark:to-pink-900 rounded-2xl p-6 mt-6 border-2 border-purple-300 dark:border-purple-600">
+                        <h4 class="font-black text-lg mb-4 text-center text-gray-800 dark:text-gray-100">
+                            🤔 Still Thinking?
+                        </h4>
+                        <div class="grid grid-cols-1 gap-6 text-sm">
+                            <div class="bg-red-50 dark:bg-red-900 rounded-xl p-4 border-2 border-red-200 dark:border-red-700">
+                                <h5 class="font-bold mb-3 text-red-600 text-center">❌ Without DevHub Pro:</h5>
+                                <ul class="space-y-2 text-gray-600 dark:text-gray-400">
+                                    <li>• Waste weeks building basic components</li>
+                                    <li>• Stuck with limited, outdated designs</li>
+                                    <li>• Wait days for community support</li>
+                                    <li>• Miss deadlines & lose opportunities</li>
+                                    <li>• Pay full price ($180) later</li>
+                                </ul>
+                            </div>
+                            <div class="bg-green-50 dark:bg-green-900 rounded-xl p-4 border-2 border-green-200 dark:border-green-700">
+                                <h5 class="font-bold mb-3 text-green-600 text-center">✅ With DevHub Pro (TODAY):</h5>
+                                <ul class="space-y-2 text-gray-600 dark:text-gray-400">
+                                    <li>• Ship products 10x faster than competitors</li>
+                                    <li>• Access cutting-edge, premium designs</li>
+                                    <li>• Get expert help within 1 hour</li>
+                                    <li>• Beat everyone to market</li>
+                                    <li>• <strong class="text-green-600">Save $90 with this offer!</strong></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Processing Overlay -->
+    <div id="processing-overlay" class="hidden fixed inset-0 processing-overlay z-50 flex items-center justify-center">
+        <div class="bg-white dark:bg-gray-800 rounded-3xl p-12 shadow-2xl text-center max-w-lg mx-4">
+            <div class="relative mb-8">
+                <div class="animate-spin rounded-full h-24 w-24 border-4 border-primary-600 border-t-transparent mx-auto"></div>
+                <div class="absolute inset-0 flex items-center justify-center">
+                    <i class="fas fa-lock text-primary-600 text-2xl"></i>
+                </div>
+            </div>
+            <h3 class="text-3xl font-black mb-4 text-gray-800 dark:text-gray-100">
+                🔐 Processing Your Secure Payment...
+            </h3>
+            <p class="text-gray-600 dark:text-gray-400 mb-6 text-lg">
+                Please don't refresh or close this page. Your Pro access is being activated!
+            </p>
+            <div class="bg-green-50 dark:bg-green-900 rounded-xl p-4">
+                <div class="flex items-center justify-center space-x-2 text-sm text-green-700 dark:text-green-300">
+                    <i class="fas fa-shield-alt text-green-500"></i>
+                    <span class="font-semibold">Your payment is secured with bank-level encryption</span>
+                </div>
+            </div>
+            <div class="mt-4 text-xs text-gray-500">
+                Processing time: <span id="processing-time">0</span> seconds
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="success-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-3xl max-w-2xl w-full p-12 text-center relative overflow-hidden">
+            <div class="success-celebration mb-8">
+                <div class="w-32 h-32 bg-gradient-to-r from-green-400 to-green-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl">
+                    <i class="fas fa-crown text-white text-6xl"></i>
+                </div>
+                <h2 class="text-4xl font-black text-gray-800 dark:text-gray-100 mb-4">
+                    🎉 Welcome to DevHub Pro!
+                </h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400 mb-8 font-medium">
+                    Congratulations! Your payment was successful and your Pro features are now active.
+                </p>
+            </div>
+            
+            <div class="space-y-6">
+                <div class="bg-gradient-to-r from-green-50 to-emerald-50 dark:from-green-900 dark:to-emerald-900 rounded-2xl p-6 text-left border-2 border-green-200 dark:border-green-700">
+                    <h3 class="font-black text-green-800 dark:text-green-200 mb-4 text-xl flex items-center justify-center">
+                        <i class="fas fa-rocket mr-2"></i>
+                        You're Now Ready To:
+                    </h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                        <div class="space-y-3 text-green-700 dark:text-green-300">
+                            <div class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Download unlimited premium components</div>
+                            <div class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Access 500+ exclusive templates</div>
+                            <div class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Use our powerful API (10K requests/day)</div>
+                        </div>
+                        <div class="space-y-3 text-green-700 dark:text-green-300">
+                            <div class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Get priority support (< 1hr response)</div>
+                            <div class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Join our exclusive Pro community</div>
+                            <div class="flex items-center"><i class="fas fa-check-circle text-green-500 mr-2"></i>Early access to new features</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-blue-50 dark:bg-blue-900 rounded-2xl p-6 border-2 border-blue-200 dark:border-blue-700">
+                    <h4 class="font-bold text-blue-800 dark:text-blue-200 mb-3 text-lg flex items-center justify-center">
+                        <i class="fas fa-envelope mr-2"></i>
+                        What Happens Next?
+                    </h4>
+                    <ul class="text-sm text-blue-700 dark:text-blue-300 space-y-2 text-left">
+                        <li>1. ✅ Check your email for receipt & comprehensive welcome guide</li>
+                        <li>2. 🚀 Your Pro dashboard is already activated and ready</li>
+                        <li>3. 📦 Start downloading premium components immediately</li>
+                        <li>4. 💬 Join our exclusive Pro Discord community (1000+ experts)</li>
+                        <li>5. 🎯 Access priority support channel</li>
+                    </ul>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row gap-4">
+                    <button onclick="goToProDashboard()" class="flex-1 bg-gradient-to-r from-primary-600 to-purple-600 text-white py-4 px-8 rounded-xl hover:from-primary-700 hover:to-purple-700 transition-colors font-bold text-lg">
+                        <i class="fas fa-tachometer-alt mr-2"></i>Access Pro Dashboard
+                    </button>
+                    <button onclick="startDownloading()" class="flex-1 bg-gradient-to-r from-green-600 to-emerald-600 text-white py-4 px-8 rounded-xl hover:from-green-700 hover:to-emerald-700 transition-colors font-bold text-lg">
+                        <i class="fas fa-download mr-2"></i>Start Downloading Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Enhanced State Management
+        let isDarkMode = false;
+        let selectedPaymentMethod = 'card';
+        let couponApplied = false;
+        let basePrice = 180.00;
+        let flashDiscount = 50; // 50% flash sale
+        let couponDiscount = 0;
+        
+        // Timer state
+        let countdownHours = 0;
+        let countdownMinutes = 26;
+        let countdownSeconds = 42;
+        
+        // Social proof counters
+        let liveViewers = 1247;
+        let recentPurchases = 2847;
+        let proMembers = 52847;
+        let monthlyGrowth = 2400;
+        let spotsLeft = 47;
+        let processingTime = 0;
+
+        // Initialize everything
+        document.addEventListener('DOMContentLoaded', function() {
+            initializePage();
+            startCountdownTimer();
+            startLiveUpdates();
+            calculatePricing();
+            showFloatingOffer();
+        });
+
+        function initializePage() {
+            if (localStorage.getItem('darkMode') === 'true') {
+                isDarkMode = true;
+                document.documentElement.classList.add('dark');
+            }
+        }
+
+        // Working Countdown Timer
+        function startCountdownTimer() {
+            setInterval(() => {
+                if (countdownSeconds > 0) {
+                    countdownSeconds--;
+                } else if (countdownMinutes > 0) {
+                    countdownMinutes--;
+                    countdownSeconds = 59;
+                } else if (countdownHours > 0) {
+                    countdownHours--;
+                    countdownMinutes = 59;
+                    countdownSeconds = 59;
+                } else {
+                    // Reset timer for demo (in real app, offer would expire)
+                    countdownHours = 0;
+                    countdownMinutes = 26;
+                    countdownSeconds = 42;
+                }
+                
+                // Update all timer displays
+                const hoursStr = countdownHours.toString().padStart(2, '0');
+                const minutesStr = countdownMinutes.toString().padStart(2, '0');
+                const secondsStr = countdownSeconds.toString().padStart(2, '0');
+                
+                document.getElementById('countdown-timer').textContent = `${hoursStr}:${minutesStr}:${secondsStr}`;
+                document.getElementById('sidebar-timer').textContent = `${minutesStr}:${secondsStr}`;
+                document.getElementById('main-timer').textContent = `${hoursStr}:${minutesStr}:${secondsStr}`;
+                document.getElementById('float-timer').textContent = minutesStr;
+                document.getElementById('terms-timer').textContent = `${minutesStr} minutes`;
+                
+                // Add urgency when time is low
+                if (countdownMinutes < 10) {
+                    document.querySelectorAll('[id*="timer"]').forEach(timer => {
+                        timer.style.color = '#ef4444';
+                        timer.style.animation = 'timerUrgent 0.5s infinite';
+                    });
+                }
+            }, 1000);
+        }
+
+        // Live Social Proof Updates
+        function startLiveUpdates() {
+            setInterval(() => {
+                // Update live viewers with realistic fluctuation
+                liveViewers += Math.floor(Math.random() * 20) - 10;
+                if (liveViewers < 800) liveViewers = 800;
+                if (liveViewers > 2500) liveViewers = 2500;
+                document.getElementById('live-count').textContent = liveViewers.toLocaleString();
+                
+                // Decrease spots left occasionally
+                if (Math.random() > 0.85 && spotsLeft > 10) {
+                    spotsLeft--;
+                    document.getElementById('urgency-spots').textContent = spotsLeft;
+                    document.getElementById('sidebar-spots').textContent = spotsLeft;
+                    
+                    if (spotsLeft <= 20) {
+                        document.querySelectorAll('[id*="spots"]').forEach(el => {
+                            el.style.color = '#ef4444';
+                            el.style.fontWeight = 'bold';
+                        });
+                    }
+                }
+                
+                // Update recent purchases
+                if (Math.random() > 0.7) {
+                    recentPurchases++;
+                    document.getElementById('recent-purchases').textContent = recentPurchases.toLocaleString();
+                    document.getElementById('weekly-upgrades').textContent = recentPurchases.toLocaleString();
+                    
+                    // Show live purchase notification
+                    if (Math.random() > 0.8) {
+                        showRealtimePurchase();
+                    }
+                }
+                
+                // Update pro members count
+                if (Math.random() > 0.9) {
+                    proMembers++;
+                    document.getElementById('pro-members').textContent = proMembers.toLocaleString();
+                }
+            }, 2000);
+        }
+
+        function showFloatingOffer() {
+            setTimeout(() => {
+                document.getElementById('floating-discount').classList.add('show');
+            }, 8000);
+        }
+
+        function applyFloatingDiscount() {
+            document.getElementById('floating-discount').classList.remove('show');
+            document.getElementById('coupon-input').value = 'FLASH50';
+            applyCoupon();
+            showNotification('🔥 FLASH50 coupon applied! You\'re saving even more!', 'success');
+        }
+
+        // Enhanced Payment Method Selection
+        function selectPaymentMethod(method) {
+            selectedPaymentMethod = method;
+            
+            // Remove selected class from all methods
+            document.querySelectorAll('.payment-method').forEach(pm => {
+                pm.classList.remove('selected');
+            });
+            
+            // Add selected class to chosen method
+            document.getElementById(`${method}-method`).classList.add('selected');
+            
+            // Hide all forms first
+            document.querySelectorAll('.payment-form').forEach(form => {
+                form.classList.add('hidden');
+            });
+            
+            // Show selected form with animation
+            setTimeout(() => {
+                document.getElementById(`${method}-form`).classList.remove('hidden');
+            }, 200);
+            
+            const methodNames = { 
+                card: 'Credit/Debit Card', 
+                paypal: 'PayPal', 
+                apple: 'Apple Pay' 
+            };
+            
+            showNotification(`💳 ${methodNames[method]} selected for secure payment`, 'success');
+            
+            // Update button text based on method
+            updatePurchaseButton();
+        }
+
+        function updatePurchaseButton() {
+            const finalPrice = calculateFinalPrice();
+            const button = document.querySelector('.purchase-button');
+            const buttonPrice = document.getElementById('button-price');
+            
+            buttonPrice.textContent = `$${finalPrice.toFixed(2)}`;
+            
+            if (selectedPaymentMethod === 'paypal') {
+                button.innerHTML = `
+                    <i class="fab fa-paypal mr-3"></i>
+                    <div>
+                        <div class="text-xl">PAY WITH PAYPAL</div>
+                        <div class="text-3xl font-black">$${finalPrice.toFixed(2)}</div>
+                        <div class="text-sm opacity-90">💥 Secure PayPal checkout</div>
+                    </div>
+                `;
+            } else if (selectedPaymentMethod === 'apple') {
+                button.innerHTML = `
+                    <i class="fab fa-apple mr-3"></i>
+                    <div>
+                        <div class="text-xl">PAY WITH APPLE PAY</div>
+                        <div class="text-3xl font-black">$${finalPrice.toFixed(2)}</div>
+                        <div class="text-sm opacity-90">🍎 Touch ID / Face ID</div>
+                    </div>
+                `;
+            } else {
+                button.innerHTML = `
+                    <i class="fas fa-lock mr-3"></i>
+                    <div>
+                        <div class="text-xl">SECURE INSTANT ACCESS</div>
+                        <div class="text-3xl font-black">$${finalPrice.toFixed(2)}</div>
+                        <div class="text-sm opacity-90">💥 Save $90 instantly!</div>
+                    </div>
+                `;
+            }
+        }
+
+        // Enhanced Form Formatting
+        function formatCardNumber(input) {
+            let value = input.value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
+            let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+            if (formattedValue.length > 19) {
+                formattedValue = formattedValue.substring(0, 19);
+            }
+            input.value = formattedValue;
+            
+            // Visual feedback for valid card
+            if (value.length >= 13) {
+                input.classList.add('border-green-500');
+                input.classList.remove('border-gray-300', 'border-red-500');
+                showNotification('✅ Valid card number detected', 'success');
+            }
+        }
+
+        function formatExpiry(input) {
+            let value = input.value.replace(/\D/g, '');
+            if (value.length >= 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2, 4);
+            }
+            input.value = value;
+            
+            // Validate expiry
+            const parts = value.split('/');
+            const month = parseInt(parts[0]);
+            const year = parseInt(parts[1]);
+            const currentYear = new Date().getFullYear() % 100;
+            
+            if (month >= 1 && month <= 12 && year >= currentYear) {
+                input.classList.add('border-green-500');
+                input.classList.remove('border-gray-300', 'border-red-500');
+            }
+        }
+
+        // Enhanced Coupon System
+        function applyCoupon() {
+            const couponCode = document.getElementById('coupon-input').value.toUpperCase();
+            const validCoupons = {
+                'WELCOME30': { discount: 30, description: 'Welcome bonus' },
+                'EXTRA10': { discount: 10, description: 'Extra savings' },
+                'FLASH50': { discount: 20, description: 'Flash sale bonus' },
+                'STUDENT50': { discount: 50, description: 'Student discount' },
+                'SAVE25': { discount: 25, description: 'Save more' }
+            };
+            
+            if (validCoupons[couponCode]) {
+                const coupon = validCoupons[couponCode];
+                couponDiscount = coupon.discount;
+                couponApplied = true;
+                
+                const savings = calculateCouponSavings();
+                
+                document.getElementById('coupon-success').classList.remove('hidden');
+                document.getElementById('coupon-line').classList.remove('hidden');
+                document.getElementById('coupon-save-amount').textContent = `$${savings.toFixed(2)}`;
+                
+                calculatePricing();
+                updatePurchaseButton();
+                createMiniConfetti();
+                
+                showNotification(`🎉 ${coupon.description} applied! You saved $${savings.toFixed(2)} more!`, 'success');
+            } else {
+                showNotification('❌ Invalid coupon. Try EXTRA10 for additional savings!', 'error');
+                
+                // Shake animation for invalid coupon
+                const input = document.getElementById('coupon-input');
+                input.style.animation = 'shake 0.5s ease-in-out';
+                input.classList.add('border-red-500');
+                setTimeout(() => {
+                    input.style.animation = '';
+                    input.classList.remove('border-red-500');
+                }, 500);
+            }
+        }
+
+        function calculateCouponSavings() {
+            const afterFlashSale = basePrice * (1 - flashDiscount / 100);
+            return afterFlashSale * (couponDiscount / 100);
+        }
+
+        function calculateFinalPrice() {
+            const flashSaleAmount = basePrice * (flashDiscount / 100);
+            const priceAfterFlash = basePrice - flashSaleAmount;
+            const couponAmount = couponApplied ? priceAfterFlash * (couponDiscount / 100) : 0;
+            return priceAfterFlash - couponAmount;
+        }
+
+        function calculateTax(country) {
+            // Simplified tax calculation based on country
+            const taxRates = {
+                'US': 0.08,
+                'CA': 0.13,
+                'GB': 0.20,
+                'AU': 0.10,
+                'DE': 0.19,
+                'FR': 0.20,
+                'JP': 0.10,
+                'IN': 0.18
+            };
+            
+            const taxRate = taxRates[country] || 0;
+            const subtotal = calculateFinalPrice();
+            const tax = subtotal * taxRate;
+            
+            document.getElementById('tax-amount').textContent = `$${tax.toFixed(2)}`;
+            
+            if (taxRate > 0) {
+                showNotification(`📍 Tax rate for ${country}: ${(taxRate * 100).toFixed(0)}%`, 'info');
+            }
+        }
+
+        // Enhanced Price Calculation
+        function calculatePricing() {
+            const flashSaleAmount = basePrice * (flashDiscount / 100);
+            const priceAfterFlash = basePrice - flashSaleAmount;
+            const couponAmount = couponApplied ? priceAfterFlash * (couponDiscount / 100) : 0;
+            const finalPrice = priceAfterFlash - couponAmount;
+            const totalSavings = flashSaleAmount + couponAmount;
+            
+            // Update all price displays
+            document.getElementById('total-savings').textContent = `$${totalSavings.toFixed(2)}`;
+            document.getElementById('final-price').textContent = `$${finalPrice.toFixed(2)}`;
+            
+            if (couponApplied) {
+                document.getElementById('extra-discount').textContent = `-$${couponAmount.toFixed(2)}`;
+            }
+        }
+
+        // Enhanced Payment Processing
+        function processPurchase() {
+            if (!validateEnhancedForm()) return;
+            
+            // Show processing with timer
+            document.getElementById('processing-overlay').classList.remove('hidden');
+            processingTime = 0;
+            
+            const processingTimer = setInterval(() => {
+                processingTime++;
+                document.getElementById('processing-time').textContent = processingTime;
+            }, 100);
+            
+            // Simulate realistic processing
+            setTimeout(() => {
+                clearInterval(processingTimer);
+                document.getElementById('processing-overlay').classList.add('hidden');
+                document.getElementById('success-modal').classList.remove('hidden');
+                
+                // Store success data
+                localStorage.setItem('isDevHubPro', 'true');
+                localStorage.setItem('proUpgradeDate', new Date().toISOString());
+                localStorage.setItem('pricePaid', calculateFinalPrice().toFixed(2));
+                localStorage.setItem('paymentMethod', selectedPaymentMethod);
+                
+                // Celebrate with massive confetti
+                createMassiveConfetti();
+                
+                // Track conversion
+                trackConversion();
+                
+            }, 3500);
+        }
+
+        function processPayPal() {
+            showNotification('🔄 Opening PayPal in secure window...', 'info');
+            setTimeout(() => {
+                showNotification('🔐 PayPal checkout initialized successfully', 'success');
+                setTimeout(processPurchase, 2000);
+            }, 1000);
+        }
+
+        function processApplePay() {
+            showNotification('📱 Initializing Apple Pay with biometric security...', 'info');
+            setTimeout(() => {
+                showNotification('✅ Apple Pay authentication successful', 'success');
+                setTimeout(processPurchase, 1000);
+            }, 1500);
+        }
+
+        // Enhanced Form Validation
+        function validateEnhancedForm() {
+            const requiredFields = document.querySelectorAll('[required]');
+            let isValid = true;
+            let firstInvalidField = null;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.classList.add('border-red-500', 'bg-red-50', 'dark:bg-red-900');
+                    field.classList.remove('border-green-500');
+                    if (!firstInvalidField) firstInvalidField = field;
+                    isValid = false;
+                } else {
+                    field.classList.remove('border-red-500', 'bg-red-50', 'dark:bg-red-900');
+                    field.classList.add('border-green-500');
+                }
+            });
+            
+            if (!isValid) {
+                firstInvalidField?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                firstInvalidField?.focus();
+                showNotification('⚠️ Please complete all required fields to secure your 50% discount', 'warning');
+                
+                // Shake the first invalid field
+                if (firstInvalidField) {
+                    firstInvalidField.style.animation = 'shake 0.5s ease-in-out';
+                    setTimeout(() => firstInvalidField.style.animation = '', 500);
+                }
+            }
+            
+            return isValid;
+        }
+
+        // Success Actions
+        function goToProDashboard() {
+            showNotification('🚀 Opening your brand new Pro dashboard...', 'success');
+            setTimeout(() => {
+                window.location.href = 'user-dashboard.html?newPro=true';
+            }, 1000);
+        }
+
+        function startDownloading() {
+            showNotification('📦 Let\'s start downloading premium components!', 'success');
+            setTimeout(() => {
+                window.location.href = 'index.html?tab=assets&filter=premium&newPro=true';
+            }, 1000);
+        }
+
+        // Social Proof Functions
+        function showRealtimePurchase() {
+            const names = ['Sarah K.', 'Mike R.', 'Alex T.', 'Emma L.', 'David P.', 'Lisa M.', 'John S.', 'Maria G.'];
+            const locations = ['San Francisco', 'New York', 'London', 'Tokyo', 'Berlin', 'Toronto', 'Sydney', 'Paris'];
+            const companies = ['Google', 'Meta', 'Netflix', 'Spotify', 'Airbnb', 'Stripe', 'Tesla', 'Microsoft'];
+            
+            const name = names[Math.floor(Math.random() * names.length)];
+            const location = locations[Math.floor(Math.random() * locations.length)];
+            const company = companies[Math.floor(Math.random() * companies.length)];
+            
+            const notification = document.createElement('div');
+            notification.className = 'fixed bottom-6 left-6 bg-green-500 text-white px-6 py-4 rounded-xl shadow-2xl z-50 transition-all duration-500 transform -translate-x-full max-w-sm';
+            notification.innerHTML = `
+                <div class="flex items-center space-x-3">
+                    <div class="w-4 h-4 bg-green-300 rounded-full animate-pulse"></div>
+                    <div>
+                        <div class="font-bold">🎉 ${name} from ${location}</div>
+                        <div class="text-sm opacity-90">${company} developer just upgraded to Pro</div>
+                        <div class="text-xs mt-1 bg-green-400 text-green-900 px-2 py-1 rounded-full inline-block">
+                            Just now
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => notification.classList.remove('-translate-x-full'), 100);
+            setTimeout(() => {
+                notification.classList.add('-translate-x-full');
+                setTimeout(() => notification.remove(), 500);
+            }, 5000);
+            
+            // Update live activity text
+            document.getElementById('live-activity').textContent = `✅ ${name} just purchased 30 seconds ago`;
+        }
+
+        // Visual Effects
+        function createMiniConfetti() {
+            const colors = ['#10b981', '#3b82f6', '#f59e0b'];
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    createConfettiPiece(colors[Math.floor(Math.random() * colors.length)]);
+                }, i * 50);
+            }
+        }
+
+        function createMassiveConfetti() {
+            const colors = ['#10b981', '#3b82f6', '#8b5cf6', '#f59e0b', '#ef4444', '#ec4899'];
+            for (let i = 0; i < 200; i++) {
+                setTimeout(() => {
+                    createConfettiPiece(colors[Math.floor(Math.random() * colors.length)]);
+                }, i * 25);
+            }
+        }
+
+        function createConfettiPiece(color) {
+            const confetti = document.createElement('div');
+            confetti.style.cssText = `
+                position: fixed;
+                width: ${Math.random() * 8 + 8}px;
+                height: ${Math.random() * 8 + 8}px;
+                background: ${color};
+                left: ${Math.random() * 100}vw;
+                top: -20px;
+                z-index: 1000;
+                pointer-events: none;
+                border-radius: ${Math.random() > 0.5 ? '50%' : '0'};
+                animation: confetti-fall ${Math.random() * 2 + 2}s linear forwards;
+            `;
+            
+            document.body.appendChild(confetti);
+            
+            setTimeout(() => {
+                if (confetti.parentNode) confetti.parentNode.removeChild(confetti);
+            }, 4000);
+        }
+
+        function trackConversion() {
+            // Analytics tracking would go here
+            console.log('🎯 Conversion tracked:', {
+                plan: 'pro',
+                price: calculateFinalPrice(),
+                paymentMethod: selectedPaymentMethod,
+                couponUsed: couponApplied,
+                discount: couponDiscount,
+                timestamp: new Date().toISOString()
+            });
+        }
+
+        function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', isDarkMode);
+            showNotification(isDarkMode ? '🌙 Dark mode activated' : '☀️ Light mode activated', 'info');
+        }
+
+        function showNotification(message, type = 'info') {
+            const colors = {
+                info: 'bg-blue-500',
+                success: 'bg-green-500',
+                warning: 'bg-yellow-500',
+                error: 'bg-red-500'
+            };
+            
+            const notification = document.createElement('div');
+            notification.className = `fixed top-6 right-6 ${colors[type]} text-white px-6 py-4 rounded-xl shadow-2xl z-50 transition-all duration-500 transform translate-x-full max-w-sm`;
+            notification.innerHTML = `
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-info-circle text-xl"></i>
+                    <span class="font-semibold text-sm">${message}</span>
+                    <button onclick="this.parentElement.parentElement.remove()" class="ml-2 text-white hover:text-gray-200 transition-colors">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => notification.classList.remove('translate-x-full'), 100);
+            setTimeout(() => {
+                notification.classList.add('translate-x-full');
+                setTimeout(() => notification.remove(), 500);
+            }, 5000);
+        }
+
+        // Add all necessary CSS animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes confetti-fall {
+                0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+                100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+            }
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-8px); }
+                75% { transform: translateX(8px); }
+            }
+            @keyframes timerUrgent {
+                0%, 100% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Initialize calculations
+        calculatePricing();
+        updatePurchaseButton();
+    </script>
+</body>
+</html>
+

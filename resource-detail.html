@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React Admin Dashboard Template - DevHub Resource</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/glightbox/3.2.0/css/glightbox.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/glightbox/3.2.0/js/glightbox.min.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .tab-button.active {
+            background-color: #3b82f6;
+            color: white;
+            border-bottom-color: #3b82f6;
+        }
+        .rating-stars {
+            color: #fbbf24;
+        }
+        .gallery-thumbnail {
+            opacity: 0.7;
+            transition: opacity 0.3s;
+        }
+        .gallery-thumbnail.active {
+            opacity: 1;
+            border-color: #3b82f6;
+        }
+        .price-badge {
+            background: linear-gradient(45deg, #10b981, #059669);
+        }
+        .creator-badge {
+            background: linear-gradient(45deg, #8b5cf6, #7c3aed);
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        .comment-thread {
+            border-left: 2px solid #e5e7eb;
+            padding-left: 1rem;
+            margin-left: 1rem;
+        }
+        .dark .comment-thread {
+            border-left-color: #374151;
+        }
+        .sticky-sidebar {
+            position: sticky;
+            top: 2rem;
+        }
+        .zoom-overlay {
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-lg sticky top-0 z-50 transition-colors duration-300">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo & Brand -->
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="flex items-center space-x-2">
+                        <div class="w-10 h-10 bg-gradient-to-r from-primary-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-code text-white text-lg"></i>
+                        </div>
+                        <h1 class="text-2xl font-bold bg-gradient-to-r from-primary-500 to-purple-600 bg-clip-text text-transparent">
+                            DevHub
+                        </h1>
+                    </a>
+                    <div class="hidden md:flex items-center space-x-2 text-gray-500">
+                        <i class="fas fa-chevron-right text-sm"></i>
+                        <span>Resources</span>
+                        <i class="fas fa-chevron-right text-sm"></i>
+                        <span class="text-primary-600">React Admin Dashboard</span>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex items-center space-x-4">
+                    <button onclick="toggleWishlist()" class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" id="wishlist-btn">
+                        <i class="far fa-heart text-xl"></i>
+                    </button>
+                    
+                    <button onclick="shareResource()" class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-share text-xl"></i>
+                    </button>
+
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:block"></i>
+                    </button>
+
+                    <a href="index.html" class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors">
+                        <i class="fas fa-arrow-left mr-2"></i>Back to Hub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Gallery Section -->
+            <div class="lg:col-span-2">
+                <!-- Main Image -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden mb-6">
+                    <div class="relative">
+                        <img 
+                            id="main-image" 
+                            src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/7a75ed51-ec74-49ca-a266-e505630dffca.png" 
+                            alt="React admin dashboard template showing modern interface with dark sidebar, data visualization charts, user management tables, and responsive design elements"
+                            class="w-full h-96 object-cover cursor-zoom-in"
+                            onclick="openLightbox(0)"
+                        >
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                                <i class="fas fa-eye mr-1"></i>Live Demo
+                            </span>
+                        </div>
+                        <div class="absolute top-4 right-4">
+                            <button onclick="openLightbox(0)" class="bg-black bg-opacity-50 text-white p-2 rounded-lg hover:bg-opacity-70 transition-colors">
+                                <i class="fas fa-expand text-sm"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Thumbnail Gallery -->
+                <div class="grid grid-cols-4 gap-4 mb-8">
+                    <img 
+                        src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/4e6d63fd-7164-4158-8c88-9472fc987dd2.png" 
+                        alt="Dashboard overview page showing analytics widgets and charts"
+                        class="gallery-thumbnail active w-full h-24 object-cover rounded-lg border-2 border-transparent cursor-pointer"
+                        onclick="changeMainImage(0, this)"
+                    >
+                    <img 
+                        src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/d837623d-8865-4fe7-a68a-f03bb262b27c.png" 
+                        alt="User management interface with data tables and user profiles"
+                        class="gallery-thumbnail w-full h-24 object-cover rounded-lg border-2 border-transparent cursor-pointer"
+                        onclick="changeMainImage(1, this)"
+                    >
+                    <img 
+                        src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/62c4e0ad-dfbe-4be1-9d71-38083511438a.png" 
+                        alt="Dark mode version of the dashboard with purple accent colors"
+                        class="gallery-thumbnail w-full h-24 object-cover rounded-lg border-2 border-transparent cursor-pointer"
+                        onclick="changeMainImage(2, this)"
+                    >
+                    <img 
+                        src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/18b8a2ea-522a-4d00-b5a0-0013f87c1c2c.png" 
+                        alt="Mobile responsive view of the dashboard on tablet and phone devices"
+                        class="gallery-thumbnail w-full h-24 object-cover rounded-lg border-2 border-transparent cursor-pointer"
+                        onclick="changeMainImage(3, this)"
+                    >
+                </div>
+
+                <!-- Demo Links -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
+                    <a href="#" onclick="openDemo('live')" class="bg-gradient-to-r from-green-500 to-green-600 text-white p-4 rounded-lg hover:from-green-600 hover:to-green-700 transition-all text-center">
+                        <i class="fas fa-eye text-xl mb-2"></i>
+                        <div class="font-semibold">Live Demo</div>
+                        <div class="text-sm opacity-90">Interactive Preview</div>
+                    </a>
+                    <a href="#" onclick="openDemo('figma')" class="bg-gradient-to-r from-purple-500 to-purple-600 text-white p-4 rounded-lg hover:from-purple-600 hover:to-purple-700 transition-all text-center">
+                        <i class="fab fa-figma text-xl mb-2"></i>
+                        <div class="font-semibold">Figma File</div>
+                        <div class="text-sm opacity-90">Design System</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Product Info & Purchase -->
+            <div class="lg:col-span-1">
+                <div class="sticky-sidebar space-y-6">
+                    <!-- Product Header -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                        <div class="flex items-center space-x-3 mb-4">
+                            <span class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-sm font-medium">
+                                Premium Template
+                            </span>
+                            <div class="flex items-center space-x-1">
+                                <div class="flex rating-stars">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <span class="text-sm text-gray-500 ml-2">(4.8)</span>
+                            </div>
+                        </div>
+                        
+                        <h1 class="text-2xl font-bold mb-2">React Admin Dashboard Template</h1>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4">Complete dashboard solution with dark mode, charts, and responsive design</p>
+                        
+                        <div class="flex items-center justify-between mb-6">
+                            <div>
+                                <div class="text-3xl font-bold text-primary-600">$49</div>
+                                <div class="text-sm text-gray-500 line-through">$89</div>
+                            </div>
+                            <div class="price-badge text-white px-3 py-1 rounded-full text-sm font-medium">
+                                45% OFF
+                            </div>
+                        </div>
+
+                        <div class="space-y-3 mb-6">
+                            <button onclick="purchaseResource()" class="w-full bg-primary-600 text-white py-3 px-6 rounded-lg hover:bg-primary-700 transition-colors font-semibold">
+                                <i class="fas fa-shopping-cart mr-2"></i>Purchase & Download
+                            </button>
+                            
+                            <button onclick="addToCart()" class="w-full bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 py-3 px-6 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors font-semibold">
+                                <i class="fas fa-plus mr-2"></i>Add to Cart
+                            </button>
+                        </div>
+
+                        <div class="text-center text-sm text-gray-500 mb-4">
+                            <i class="fas fa-shield-alt mr-1"></i>30-day money-back guarantee
+                        </div>
+
+                        <div class="border-t dark:border-gray-700 pt-4">
+                            <div class="flex items-center space-x-3 mb-3">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/3506af7d-df7b-44cf-9bd2-6975a5542b94.png" alt="Profile picture of Sarah Chen, React developer and template creator" class="w-10 h-10 rounded-full">
+                                <div>
+                                    <div class="font-semibold">Sarah Chen</div>
+                                    <div class="text-sm text-gray-500">Template Creator</div>
+                                </div>
+                                <button class="creator-badge text-white px-3 py-1 rounded-full text-xs font-medium ml-auto">
+                                    Pro
+                                </button>
+                            </div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">
+                                Expert React developer with 5+ years creating premium dashboard templates
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Stats -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                        <h3 class="font-semibold mb-4">Template Stats</h3>
+                        <div class="space-y-3">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600 dark:text-gray-400">Downloads</span>
+                                <span class="font-semibold">2,847</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600 dark:text-gray-400">Last Updated</span>
+                                <span class="font-semibold">1 week ago</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600 dark:text-gray-400">Version</span>
+                                <span class="font-semibold">v3.2.1</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600 dark:text-gray-400">File Size</span>
+                                <span class="font-semibold">15.2 MB</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600 dark:text-gray-400">License</span>
+                                <span class="font-semibold">Commercial</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tech Stack -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                        <h3 class="font-semibold mb-4">Tech Stack</h3>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div class="flex items-center space-x-2 bg-gray-50 dark:bg-gray-700 p-2 rounded">
+                                <i class="fab fa-react text-blue-500"></i>
+                                <span class="text-sm">React 18</span>
+                            </div>
+                            <div class="flex items-center space-x-2 bg-gray-50 dark:bg-gray-700 p-2 rounded">
+                                <i class="fas fa-code text-blue-600"></i>
+                                <span class="text-sm">TypeScript</span>
+                            </div>
+                            <div class="flex items-center space-x-2 bg-gray-50 dark:bg-gray-700 p-2 rounded">
+                                <i class="fas fa-wind text-teal-500"></i>
+                                <span class="text-sm">Tailwind</span>
+                            </div>
+                            <div class="flex items-center space-x-2 bg-gray-50 dark:bg-gray-700 p-2 rounded">
+                                <i class="fas fa-route text-red-500"></i>
+                                <span class="text-sm">React Router</span>
+                            </div>
+                            <div class="flex items-center space-x-2 bg-gray-50 dark:bg-gray-700 p-2 rounded">
+                                <i class="fas fa-chart-bar text-green-500"></i>
+                                <span class="text-sm">Chart.js</span>
+                            </div>
+                            <div class="flex items-center space-x-2 bg-gray-50 dark:bg-gray-700 p-2 rounded">
+                                <i class="fas fa-database text-purple-500"></i>
+                                <span class="text-sm">Redux</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- System Requirements -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                        <h3 class="font-semibold mb-4">Requirements</h3>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex items-center space-x-2">
+                                <i class="fab fa-node-js text-green-500"></i>
+                                <span>Node.js 16+</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i class="fab fa-npm text-red-500"></i>
+                                <span>npm or yarn</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-code text-blue-500"></i>
+                                <span>Modern browser</span>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <i class="fas fa-memory text-gray-500"></i>
+                                <span>4GB RAM minimum</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Detailed Information Tabs -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg mt-8">
+            <div class="border-b dark:border-gray-700">
+                <nav class="flex space-x-8 px-6">
+                    <button onclick="switchTab('features')" class="tab-button active py-4 px-2 border-b-2 border-transparent font-medium">
+                        <i class="fas fa-list mr-2"></i>Features
+                    </button>
+                    <button onclick="switchTab('description')" class="tab-button py-4 px-2 border-b-2 border-transparent font-medium">
+                        <i class="fas fa-file-alt mr-2"></i>Description
+                    </button>
+                    <button onclick="switchTab('reviews')" class="tab-button py-4 px-2 border-b-2 border-transparent font-medium">
+                        <i class="fas fa-star mr-2"></i>Reviews (127)
+                    </button>
+                    <button onclick="switchTab('discussion')" class="tab-button py-4 px-2 border-b-2 border-transparent font-medium">
+                        <i class="fas fa-comments mr-2"></i>Discussion
+                    </button>
+                    <button onclick="switchTab('changelog')" class="tab-button py-4 px-2 border-b-2 border-transparent font-medium">
+                        <i class="fas fa-history mr-2"></i>Changelog
+                    </button>
+                </nav>
+            </div>
+            
+            <div class="p-6">
+                <!-- Features Tab -->
+                <div id="features-tab" class="tab-content active">
+                    <h3 class="text-xl font-bold mb-6">Template Features</h3>
+                    <div class="feature-grid">
+                        <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                            <div class="flex items-center space-x-3 mb-3">
+                                <div class="w-10 h-10 bg-blue-500 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-mobile-alt text-white"></i>
+                                </div>
+                                <h4 class="font-semibold">Fully Responsive</h4>
+                            </div>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Optimized for desktop, tablet, and mobile devices with adaptive layouts</p>
+                        </div>
+                        
+                        <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                            <div class="flex items-center space-x-3 mb-3">
+                                <div class="w-10 h-10 bg-purple-500 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-moon text-white"></i>
+                                </div>
+                                <h4 class="font-semibold">Dark Mode</h4>
+                            </div>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Built-in dark mode with smooth transitions and user preference saving</p>
+                        </div>
+                        
+                        <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                            <div class="flex items-center space-x-3 mb-3">
+                                <div class="w-10 h-10 bg-green-500 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-chart-line text-white"></i>
+                                </div>
+                                <h4 class="font-semibold">Advanced Charts</h4>
+                            </div>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Interactive charts and graphs using Chart.js with real-time data support</p>
+                        </div>
+                        
+                        <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                            <div class="flex items-center space-x-3 mb-3">
+                                <div class="w-10 h-10 bg-red-500 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-users text-white"></i>
+                                </div>
+                                <h4 class="font-semibold">User Management</h4>
+                            </div>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Complete user management system with roles, permissions, and profiles</p>
+                        </div>
+                        
+                        <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                            <div class="flex items-center space-x-3 mb-3">
+                                <div class="w-10 h-10 bg-yellow-500 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-shield-alt text-white"></i>
+                                </div>
+                                <h4 class="font-semibold">Authentication</h4>
+                            </div>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">JWT authentication with login, register, and password reset flows</p>
+                        </div>
+                        
+                        <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                            <div class="flex items-center space-x-3 mb-3">
+                                <div class="w-10 h-10 bg-indigo-500 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-code text-white"></i>
+                                </div>
+                                <h4 class="font-semibold">Clean Code</h4>
+                            </div>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Well-structured, documented code following React best practices</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Description Tab -->
+                <div id="description-tab" class="tab-content">
+                    <div class="prose dark:prose-invert max-w-none">
+                        <h3 class="text-xl font-bold mb-6">About This Template</h3>
+                        
+                        <p class="text-gray-600 dark:text-gray-400 mb-6">
+                            The React Admin Dashboard Template is a comprehensive solution for building modern, professional admin interfaces. 
+                            Built with the latest React 18 features and TypeScript for type safety, this template provides everything you need 
+                            to create a fully functional dashboard application.
+                        </p>
+
+                        <h4 class="text-lg font-semibold mb-4">What's Included</h4>
+                        <ul class="list-disc list-inside space-y-2 text-gray-600 dark:text-gray-400 mb-6">
+                            <li>50+ pre-built components and pages</li>
+                            <li>Complete authentication system</li>
+                            <li>User management interface</li>
+                            <li>Data visualization with Chart.js</li>
+                            <li>E-commerce dashboard pages</li>
+                            <li>Calendar and task management</li>
+                            <li>File manager interface</li>
+                            <li>Settings and configuration pages</li>
+                            <li>Responsive email templates</li>
+                            <li>Comprehensive documentation</li>
+                        </ul>
+
+                        <h4 class="text-lg font-semibold mb-4">Perfect For</h4>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                            <div class="bg-blue-50 dark:bg-blue-900 p-4 rounded-lg">
+                                <h5 class="font-semibold mb-2">SaaS Applications</h5>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Perfect foundation for software-as-a-service admin panels</p>
+                            </div>
+                            <div class="bg-green-50 dark:bg-green-900 p-4 rounded-lg">
+                                <h5 class="font-semibold mb-2">E-commerce Backends</h5>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Comprehensive order and inventory management systems</p>
+                            </div>
+                            <div class="bg-purple-50 dark:bg-purple-900 p-4 rounded-lg">
+                                <h5 class="font-semibold mb-2">CRM Systems</h5>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Customer relationship management with analytics</p>
+                            </div>
+                            <div class="bg-orange-50 dark:bg-orange-900 p-4 rounded-lg">
+                                <h5 class="font-semibold mb-2">Analytics Dashboards</h5>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Data visualization and reporting interfaces</p>
+                            </div>
+                        </div>
+
+                        <h4 class="text-lg font-semibold mb-4">Installation & Setup</h4>
+                        <div class="bg-gray-900 text-green-400 p-4 rounded-lg font-mono text-sm mb-4">
+                            <div class="mb-2"># Clone the repository</div>
+                            <div class="mb-2">git clone https://github.com/devhub/react-admin-template.git</div>
+                            <div class="mb-2"># Install dependencies</div>
+                            <div class="mb-2">npm install</div>
+                            <div class="mb-2"># Start development server</div>
+                            <div>npm start</div>
+                        </div>
+
+                        <p class="text-gray-600 dark:text-gray-400">
+                            The template includes detailed documentation with setup instructions, component usage examples, 
+                            and customization guides to help you get started quickly.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Reviews Tab -->
+                <div id="reviews-tab" class="tab-content">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-xl font-bold">Customer Reviews</h3>
+                        <button onclick="openReviewModal()" class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors">
+                            Write Review
+                        </button>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div class="text-center">
+                            <div class="text-4xl font-bold text-primary-600 mb-2">4.8</div>
+                            <div class="flex justify-center rating-stars mb-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Based on 127 reviews</p>
+                        </div>
+                        
+                        <div class="col-span-2">
+                            <div class="space-y-2">
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-sm w-8">5</span>
+                                    <div class="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                        <div class="bg-yellow-400 h-2 rounded-full" style="width: 82%"></div>
+                                    </div>
+                                    <span class="text-sm text-gray-600 dark:text-gray-400 w-12">104</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-sm w-8">4</span>
+                                    <div class="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                        <div class="bg-yellow-400 h-2 rounded-full" style="width: 12%"></div>
+                                    </div>
+                                    <span class="text-sm text-gray-600 dark:text-gray-400 w-12">15</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-sm w-8">3</span>
+                                    <div class="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                        <div class="bg-yellow-400 h-2 rounded-full" style="width: 4%"></div>
+                                    </div>
+                                    <span class="text-sm text-gray-600 dark:text-gray-400 w-12">5</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-sm w-8">2</span>
+                                    <div class="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                        <div class="bg-yellow-400 h-2 rounded-full" style="width: 1%"></div>
+                                    </div>
+                                    <span class="text-sm text-gray-600 dark:text-gray-400 w-12">2</span>
+                                </div>
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-sm w-8">1</span>
+                                    <div class="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                        <div class="bg-yellow-400 h-2 rounded-full" style="width: 1%"></div>
+                                    </div>
+                                    <span class="text-sm text-gray-600 dark:text-gray-400 w-12">1</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-6" id="reviews-container">
+                        <!-- Reviews will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Discussion Tab -->
+                <div id="discussion-tab" class="tab-content">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-xl font-bold">Community Discussion</h3>
+                        <button onclick="openCommentModal()" class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors">
+                            Start Discussion
+                        </button>
+                    </div>
+                    
+                    <div class="space-y-6" id="discussion-container">
+                        <!-- Discussion threads will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Changelog Tab -->
+                <div id="changelog-tab" class="tab-content">
+                    <h3 class="text-xl font-bold mb-6">Version History</h3>
+                    <div class="space-y-6" id="changelog-container">
+                        <!-- Changelog will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Resources -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 mt-8">
+            <h3 class="text-xl font-bold mb-6">Related Resources</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6" id="related-resources">
+                <!-- Related resources will be populated by JavaScript -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Lightbox for Image Gallery -->
+    <div id="lightbox-overlay" class="hidden fixed inset-0 zoom-overlay z-50 flex items-center justify-center p-4">
+        <div class="relative max-w-5xl w-full">
+            <button onclick="closeLightbox()" class="absolute top-4 right-4 bg-black bg-opacity-50 text-white p-2 rounded-lg hover:bg-opacity-70 z-10">
+                <i class="fas fa-times"></i>
+            </button>
+            <button onclick="previousImage()" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-lg hover:bg-opacity-70 z-10">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button onclick="nextImage()" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-lg hover:bg-opacity-70 z-10">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            <img id="lightbox-image" src="" alt="" class="w-full h-auto rounded-lg">
+        </div>
+    </div>
+
+    <!-- Review Modal -->
+    <div id="review-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-lg max-w-md w-full p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold">Write a Review</h3>
+                <button onclick="closeReviewModal()" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form onsubmit="submitReview(event)">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2">Rating</label>
+                    <div class="flex space-x-1 text-2xl" id="rating-input">
+                        <i class="far fa-star cursor-pointer hover:text-yellow-400" onclick="setRating(1)"></i>
+                        <i class="far fa-star cursor-pointer hover:text-yellow-400" onclick="setRating(2)"></i>
+                        <i class="far fa-star cursor-pointer hover:text-yellow-400" onclick="setRating(3)"></i>
+                        <i class="far fa-star cursor-pointer hover:text-yellow-400" onclick="setRating(4)"></i>
+                        <i class="far fa-star cursor-pointer hover:text-yellow-400" onclick="setRating(5)"></i>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="review-title" class="block text-sm font-medium mb-2">Review Title</label>
+                    <input 
+                        type="text" 
+                        id="review-title" 
+                        class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600"
+                        placeholder="Excellent template!"
+                        required
+                    >
+                </div>
+                
+                <div class="mb-6">
+                    <label for="review-content" class="block text-sm font-medium mb-2">Your Review</label>
+                    <textarea 
+                        id="review-content" 
+                        rows="4" 
+                        class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600"
+                        placeholder="Share your experience with this template..."
+                        required
+                    ></textarea>
+                </div>
+                
+                <div class="flex space-x-4">
+                    <button type="submit" class="flex-1 bg-primary-600 text-white py-2 px-4 rounded-lg hover:bg-primary-700 transition-colors">
+                        Submit Review
+                    </button>
+                    <button type="button" onclick="closeReviewModal()" class="flex-1 bg-gray-300 dark:bg-gray-600 py-2 px-4 rounded-lg hover:bg-gray-400 dark:hover:bg-gray-700 transition-colors">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // State
+        let isDarkMode = false;
+        let currentImageIndex = 0;
+        let currentRating = 0;
+        let isWishlisted = false;
+
+        // Gallery images
+        const galleryImages = [
+            {
+                src: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/6f0e8e35-ba3e-4e6c-8efa-f6a0ed60b88f.png",
+                alt: "React admin dashboard template showing modern interface with dark sidebar, data visualization charts, user management tables, and responsive design elements"
+            },
+            {
+                src: "https://placehold.co/800x600",
+                alt: "User management interface with data tables, user profiles, role assignments, and activity tracking features"
+            },
+            {
+                src: "https://placehold.co/800x600",
+                alt: "Dark mode version of the dashboard showcasing purple accent colors, elegant typography, and enhanced visual hierarchy"
+            },
+            {
+                src: "https://placehold.co/800x600",
+                alt: "Mobile responsive design showing how the dashboard adapts perfectly to tablet and smartphone screen sizes"
+            }
+        ];
+
+        // Sample data
+        const sampleReviews = [
+            {
+                id: 1,
+                author: "Michael Rodriguez",
+                avatar: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/7f7a1748-30e5-4539-b6b6-857c562db305.png",
+                avatarAlt: "Profile picture of Michael Rodriguez, full-stack developer",
+                rating: 5,
+                title: "Outstanding template!",
+                content: "This is hands down the best React admin template I've purchased. The code quality is exceptional, documentation is thorough, and the design is modern and professional. Saved me weeks of development time.",
+                date: "3 days ago",
+                helpful: 23,
+                verified: true
+            },
+            {
+                id: 2,
+                author: "Emma Johnson",
+                avatar: "https://placehold.co/40x40",
+                avatarAlt: "Profile picture of Emma Johnson, UI/UX designer",
+                rating: 5,
+                title: "Perfect for SaaS projects",
+                content: "Used this template for our SaaS dashboard and it was perfect. The dark mode implementation is flawless, and the component library is comprehensive. Highly recommend!",
+                date: "1 week ago",
+                helpful: 18,
+                verified: true
+            },
+            {
+                id: 3,
+                author: "David Park",
+                avatar: "https://placehold.co/40x40",
+                avatarAlt: "Profile picture of David Park, startup founder",
+                rating: 4,
+                title: "Great value for money",
+                content: "Excellent template with lots of features. The authentication system works great out of the box. Only minor issue was some customization needed for our specific use case.",
+                date: "2 weeks ago",
+                helpful: 12,
+                verified: false
+            }
+        ];
+
+        const sampleDiscussion = [
+            {
+                id: 1,
+                author: "Lisa Chen",
+                avatar: "https://placehold.co/40x40",
+                avatarAlt: "Profile picture of Lisa Chen, frontend developer",
+                content: "Has anyone successfully integrated this template with NextJS? Looking for guidance on the best approach.",
+                date: "2 days ago",
+                replies: [
+                    {
+                        author: "Sarah (Creator)",
+                        avatar: "https://placehold.co/40x40",
+                        avatarAlt: "Profile picture of Sarah Chen, template creator",
+                        content: "Yes! I'm working on a NextJS version. Will be released as a free update next month. For now, you can manually port the components.",
+                        date: "1 day ago",
+                        isCreator: true
+                    }
+                ]
+            },
+            {
+                id: 2,
+                author: "James Wilson",
+                avatar: "https://placehold.co/40x40",
+                avatarAlt: "Profile picture of James Wilson, backend developer",
+                content: "The API integration examples are really helpful. Are there plans to add GraphQL examples as well?",
+                date: "1 week ago",
+                replies: []
+            }
+        ];
+
+        const changelog = [
+            {
+                version: "v3.2.1",
+                date: "1 week ago",
+                type: "patch",
+                changes: [
+                    "Fixed dark mode toggle persistence",
+                    "Updated Chart.js to latest version",
+                    "Improved mobile navigation performance",
+                    "Minor bug fixes and improvements"
+                ]
+            },
+            {
+                version: "v3.2.0",
+                date: "3 weeks ago",
+                type: "minor",
+                changes: [
+                    "Added new calendar component",
+                    "Implemented file manager interface",
+                    "Enhanced user profile pages",
+                    "Added email template examples",
+                    "Improved TypeScript definitions"
+                ]
+            },
+            {
+                version: "v3.1.0",
+                date: "2 months ago",
+                type: "minor",
+                changes: [
+                    "Major UI refresh with updated design system",
+                    "Added dark mode support",
+                    "New dashboard analytics widgets",
+                    "Enhanced responsive design",
+                    "Performance optimizations"
+                ]
+            }
+        ];
+
+        const relatedResources = [
+            {
+                id: 2,
+                title: "Vue Admin Template",
+                price: "$39",
+                rating: 4.7,
+                imageUrl: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/075a3e3c-081e-4bff-8e83-25a150d96351.png",
+                imageAlt: "Vue.js admin dashboard template with modern design and comprehensive component library"
+            },
+            {
+                id: 3,
+                title: "Mobile App UI Kit",
+                price: "$29",
+                rating: 4.9,
+                imageUrl: "https://placehold.co/300x200",
+                imageAlt: "Mobile app UI kit with React Native components and modern design patterns"
+            },
+            {
+                id: 4,
+                title: "Dashboard Icon Set",
+                price: "Free",
+                rating: 4.8,
+                imageUrl: "https://placehold.co/300x200",
+                imageAlt: "Professional icon set designed specifically for dashboard and admin interfaces"
+            },
+            {
+                id: 5,
+                title: "Landing Page Template",
+                price: "$19",
+                rating: 4.6,
+                imageUrl: "https://placehold.co/300x200",
+                imageAlt: "Modern landing page template with conversion-optimized design and animations"
+            }
+        ];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            initializePage();
+            renderReviews();
+            renderDiscussion();
+            renderChangelog();
+            renderRelatedResources();
+        });
+
+        function initializePage() {
+            if (localStorage.getItem('darkMode') === 'true') {
+                isDarkMode = true;
+                document.documentElement.classList.add('dark');
+            }
+        }
+
+        function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', isDarkMode);
+        }
+
+        function toggleWishlist() {
+            isWishlisted = !isWishlisted;
+            const btn = document.getElementById('wishlist-btn');
+            const icon = btn.querySelector('i');
+            
+            if (isWishlisted) {
+                icon.className = 'fas fa-heart text-xl text-red-500';
+                showNotification('Added to wishlist!');
+            } else {
+                icon.className = 'far fa-heart text-xl';
+                showNotification('Removed from wishlist');
+            }
+        }
+
+        function shareResource() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'React Admin Dashboard Template - DevHub',
+                    text: 'Check out this amazing admin dashboard template!',
+                    url: window.location.href
+                });
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                showNotification('Link copied to clipboard!');
+            }
+        }
+
+        function changeMainImage(index, thumbnail) {
+            const mainImage = document.getElementById('main-image');
+            mainImage.src = galleryImages[index].src;
+            mainImage.alt = galleryImages[index].alt;
+            
+            // Update thumbnail active state
+            document.querySelectorAll('.gallery-thumbnail').forEach(thumb => {
+                thumb.classList.remove('active');
+            });
+            thumbnail.classList.add('active');
+            
+            currentImageIndex = index;
+        }
+
+        function openLightbox(index) {
+            currentImageIndex = index;
+            const lightbox = document.getElementById('lightbox-overlay');
+            const lightboxImage = document.getElementById('lightbox-image');
+            
+            lightboxImage.src = galleryImages[index].src;
+            lightboxImage.alt = galleryImages[index].alt;
+            lightbox.classList.remove('hidden');
+        }
+
+        function closeLightbox() {
+            document.getElementById('lightbox-overlay').classList.add('hidden');
+        }
+
+        function previousImage() {
+            currentImageIndex = currentImageIndex > 0 ? currentImageIndex - 1 : galleryImages.length - 1;
+            const lightboxImage = document.getElementById('lightbox-image');
+            lightboxImage.src = galleryImages[currentImageIndex].src;
+            lightboxImage.alt = galleryImages[currentImageIndex].alt;
+        }
+
+        function nextImage() {
+            currentImageIndex = currentImageIndex < galleryImages.length - 1 ? currentImageIndex + 1 : 0;
+            const lightboxImage = document.getElementById('lightbox-image');
+            lightboxImage.src = galleryImages[currentImageIndex].src;
+            lightboxImage.alt = galleryImages[currentImageIndex].alt;
+        }
+
+        function switchTab(tab) {
+            // Update tab buttons
+            const buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update tab content
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(tab + '-tab').classList.add('active');
+        }
+
+        function purchaseResource() {
+            showNotification('Redirecting to checkout...');
+            // Simulate purchase flow
+            setTimeout(() => {
+                showNotification('Purchase completed! Download link sent to your email.');
+            }, 2000);
+        }
+
+        function addToCart() {
+            showNotification('Added to cart successfully!');
+        }
+
+        function openDemo(type) {
+            if (type === 'live') {
+                showNotification('Opening live demo...');
+                setTimeout(() => {
+                    window.open('https://demo.devhub.com/react-admin', '_blank');
+                }, 500);
+            } else if (type === 'figma') {
+                showNotification('Opening Figma file...');
+                setTimeout(() => {
+                    window.open('https://figma.com/file/react-admin-template', '_blank');
+                }, 500);
+            }
+        }
+
+        function renderReviews() {
+            const container = document.getElementById('reviews-container');
+            container.innerHTML = sampleReviews.map(review => `
+                <div class="border-b dark:border-gray-700 pb-6 last:border-b-0">
+                    <div class="flex items-start space-x-4">
+                        <img src="${review.avatar}" alt="${review.avatarAlt}" class="w-12 h-12 rounded-full">
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="flex items-center space-x-3">
+                                    <h4 class="font-semibold">${review.author}</h4>
+                                    ${review.verified ? '<span class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full text-xs">Verified Purchase</span>' : ''}
+                                    <div class="flex rating-stars text-sm">
+                                        ${Array(5).fill().map((_, i) => `<i class="fas fa-star ${i < review.rating ? '' : 'text-gray-300'}"></i>`).join('')}
+                                    </div>
+                                </div>
+                                <span class="text-sm text-gray-500">${review.date}</span>
+                            </div>
+                            <h5 class="font-medium mb-2">${review.title}</h5>
+                            <p class="text-gray-600 dark:text-gray-400 mb-3">${review.content}</p>
+                            <div class="flex items-center space-x-4">
+                                <button class="text-sm text-gray-500 hover:text-primary-600 transition-colors">
+                                    <i class="fas fa-thumbs-up mr-1"></i>Helpful (${review.helpful})
+                                </button>
+                                <button class="text-sm text-gray-500 hover:text-primary-600 transition-colors">
+                                    <i class="fas fa-reply mr-1"></i>Reply
+                                </button>
+                                <button class="text-sm text-gray-500 hover:text-red-600 transition-colors">
+                                    <i class="fas fa-flag mr-1"></i>Report
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderDiscussion() {
+            const container = document.getElementById('discussion-container');
+            container.innerHTML = sampleDiscussion.map(thread => `
+                <div class="border-b dark:border-gray-700 pb-6 last:border-b-0">
+                    <div class="flex items-start space-x-4 mb-4">
+                        <img src="${thread.avatar}" alt="${thread.avatarAlt}" class="w-10 h-10 rounded-full">
+                        <div class="flex-1">
+                            <div class="flex items-center space-x-3 mb-2">
+                                <h4 class="font-semibold">${thread.author}</h4>
+                                <span class="text-sm text-gray-500">${thread.date}</span>
+                            </div>
+                            <p class="text-gray-600 dark:text-gray-400">${thread.content}</p>
+                        </div>
+                    </div>
+                    
+                    ${thread.replies.length > 0 ? `
+                        <div class="comment-thread">
+                            ${thread.replies.map(reply => `
+                                <div class="flex items-start space-x-4 mb-3">
+                                    <img src="${reply.avatar}" alt="${reply.avatarAlt}" class="w-8 h-8 rounded-full">
+                                    <div class="flex-1">
+                                        <div class="flex items-center space-x-3 mb-1">
+                                            <h5 class="font-medium text-sm">${reply.author}</h5>
+                                            ${reply.isCreator ? '<span class="creator-badge text-white px-2 py-1 rounded-full text-xs">Creator</span>' : ''}
+                                            <span class="text-xs text-gray-500">${reply.date}</span>
+                                        </div>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400">${reply.content}</p>
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    ` : ''}
+                    
+                    <button class="text-sm text-primary-600 hover:text-primary-700 font-medium">
+                        <i class="fas fa-reply mr-1"></i>Reply to this thread
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function renderChangelog() {
+            const container = document.getElementById('changelog-container');
+            container.innerHTML = changelog.map(version => `
+                <div class="border-l-4 border-primary-500 pl-6 pb-6">
+                    <div class="flex items-center space-x-3 mb-3">
+                        <h4 class="text-lg font-semibold">${version.version}</h4>
+                        <span class="bg-${version.type === 'major' ? 'red' : version.type === 'minor' ? 'blue' : 'green'}-100 dark:bg-${version.type === 'major' ? 'red' : version.type === 'minor' ? 'blue' : 'green'}-900 text-${version.type === 'major' ? 'red' : version.type === 'minor' ? 'blue' : 'green'}-800 dark:text-${version.type === 'major' ? 'red' : version.type === 'minor' ? 'blue' : 'green'}-200 px-2 py-1 rounded-full text-xs font-medium">
+                            ${version.type}
+                        </span>
+                        <span class="text-sm text-gray-500">${version.date}</span>
+                    </div>
+                    <ul class="space-y-1">
+                        ${version.changes.map(change => `
+                            <li class="text-gray-600 dark:text-gray-400 text-sm flex items-start space-x-2">
+                                <i class="fas fa-check text-green-500 mt-1 text-xs"></i>
+                                <span>${change}</span>
+                            </li>
+                        `).join('')}
+                    </ul>
+                </div>
+            `).join('');
+        }
+
+        function renderRelatedResources() {
+            const container = document.getElementById('related-resources');
+            container.innerHTML = relatedResources.map(resource => `
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg overflow-hidden card-hover cursor-pointer">
+                    <img src="${resource.imageUrl}" alt="${resource.imageAlt}" class="w-full h-32 object-cover">
+                    <div class="p-4">
+                        <h4 class="font-semibold mb-2">${resource.title}</h4>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-1">
+                                <div class="flex rating-stars text-xs">
+                                    ${Array(5).fill().map((_, i) => `<i class="fas fa-star ${i < Math.floor(resource.rating) ? '' : 'text-gray-300'}"></i>`).join('')}
+                                </div>
+                                <span class="text-xs text-gray-500">${resource.rating}</span>
+                            </div>
+                            <span class="font-bold text-primary-600">${resource.price}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openReviewModal() {
+            document.getElementById('review-modal').classList.remove('hidden');
+        }
+
+        function closeReviewModal() {
+            document.getElementById('review-modal').classList.add('hidden');
+            currentRating = 0;
+            updateRatingDisplay();
+        }
+
+        function setRating(rating) {
+            currentRating = rating;
+            updateRatingDisplay();
+        }
+
+        function updateRatingDisplay() {
+            const stars = document.querySelectorAll('#rating-input i');
+            stars.forEach((star, index) => {
+                if (index < currentRating) {
+                    star.className = 'fas fa-star cursor-pointer text-yellow-400';
+                } else {
+                    star.className = 'far fa-star cursor-pointer hover:text-yellow-400';
+                }
+            });
+        }
+
+        function submitReview(event) {
+            event.preventDefault();
+            if (currentRating === 0) {
+                showNotification('Please select a rating');
+                return;
+            }
+            
+            showNotification('Review submitted successfully!');
+            closeReviewModal();
+            
+            // Reset form
+            document.getElementById('review-title').value = '';
+            document.getElementById('review-content').value = '';
+            currentRating = 0;
+        }
+
+        function openCommentModal() {
+            showNotification('Comment form would open here');
+        }
+
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-4 right-4 bg-primary-600 text-white px-6 py-3 rounded-lg shadow-lg z-50 transition-all duration-300';
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            // Remove notification after 3 seconds
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                notification.style.transform = 'translateX(100%)';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 300);
+            }, 3000);
+        }
+
+        // Close modals when clicking outside
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('fixed') && e.target.classList.contains('inset-0')) {
+                closeLightbox();
+                closeReviewModal();
+            }
+        });
+
+        // Escape key to close modals
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeLightbox();
+                closeReviewModal();
+            }
+        });
+    </script>
+</body>
+</html>
+

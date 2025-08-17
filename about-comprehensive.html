@@ -1,0 +1,1326 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About DevHub - Our Story, Team & Mission</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a'
+                        }
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'ui-sans-serif', 'system-ui']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-gradient::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.3), transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.15), transparent 50%),
+                        radial-gradient(circle at 40% 40%, rgba(240, 147, 251, 0.2), transparent 50%);
+            animation: floating 10s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(2deg); }
+        }
+        
+        .story-card {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-left: 4px solid #3b82f6;
+        }
+        
+        .dark .story-card {
+            background: linear-gradient(145deg, #1f2937, #111827);
+        }
+        
+        .story-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dark .story-card:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .team-card {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .dark .team-card {
+            background: linear-gradient(145deg, #1f2937, #111827);
+        }
+        
+        .team-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+            transition: left 0.8s ease;
+        }
+        
+        .team-card:hover::before {
+            left: 100%;
+        }
+        
+        .team-card:hover {
+            transform: translateY(-12px) scale(1.05);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+        
+        .dark .team-card:hover {
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+        }
+        
+        .value-card {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border: 2px solid #7dd3fc;
+            transition: all 0.4s ease;
+            position: relative;
+        }
+        
+        .dark .value-card {
+            background: linear-gradient(135deg, #0c4a6e, #075985);
+            border-color: #0284c7;
+        }
+        
+        .value-card:hover {
+            transform: translateY(-8px) rotate(1deg);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
+        }
+        
+        .milestone-card {
+            background: linear-gradient(135deg, #fef7cd, #fde047);
+            border: 2px solid #eab308;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .milestone-card::before {
+            content: '✨';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 2rem;
+            animation: sparkle 3s ease-in-out infinite;
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { transform: rotate(0deg) scale(1); opacity: 1; }
+            25% { transform: rotate(90deg) scale(1.2); opacity: 0.8; }
+            50% { transform: rotate(180deg) scale(1.1); opacity: 1; }
+            75% { transform: rotate(270deg) scale(1.2); opacity: 0.8; }
+        }
+        
+        .dark .milestone-card {
+            background: linear-gradient(135deg, #92400e, #b45309);
+            border-color: #d97706;
+        }
+        
+        .timeline-container {
+            position: relative;
+        }
+        
+        .timeline-container::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, #3b82f6, #8b5cf6, #ec4899);
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        
+        .timeline-item {
+            position: relative;
+            margin-bottom: 4rem;
+            opacity: 0;
+            animation: slideInTimeline 0.8s ease-out forwards;
+        }
+        
+        .timeline-item:nth-child(even) {
+            animation-delay: 0.3s;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            animation-delay: 0.1s;
+        }
+        
+        @keyframes slideInTimeline {
+            to {
+                opacity: 1;
+            }
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            top: 2rem;
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-radius: 50%;
+            transform: translateX(-50%);
+            border: 4px solid white;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3);
+            z-index: 10;
+        }
+        
+        .dark .timeline-dot {
+            border-color: #1f2937;
+        }
+        
+        .timeline-content {
+            width: 45%;
+            padding: 2rem;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .dark .timeline-content {
+            background: #1f2937;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: auto;
+        }
+        
+        .stats-counter {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: counterGlow 3s ease-in-out infinite;
+        }
+        
+        @keyframes counterGlow {
+            0%, 100% { filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.6)); }
+            50% { filter: drop-shadow(0 0 16px rgba(139, 92, 246, 0.8)); }
+        }
+        
+        .culture-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .culture-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="2" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .investor-logo {
+            filter: grayscale(100%);
+            opacity: 0.6;
+            transition: all 0.3s ease;
+        }
+        
+        .investor-logo:hover {
+            filter: grayscale(0%);
+            opacity: 1;
+            transform: scale(1.1);
+        }
+        
+        .quote-card {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            border-left: 4px solid #8b5cf6;
+            position: relative;
+        }
+        
+        .dark .quote-card {
+            background: linear-gradient(135deg, #1e293b, #334155);
+        }
+        
+        .quote-card::before {
+            content: '"';
+            position: absolute;
+            top: -1rem;
+            left: 1rem;
+            font-size: 4rem;
+            color: #8b5cf6;
+            line-height: 1;
+        }
+        
+        .social-proof {
+            background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+            border: 2px solid #10b981;
+        }
+        
+        .dark .social-proof {
+            background: linear-gradient(135deg, #064e3b, #065f46);
+        }
+        
+        .office-image {
+            border-radius: 1rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+        }
+        
+        .office-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+        
+        .career-card {
+            background: linear-gradient(135deg, #fefbff, #f3e8ff);
+            border: 2px dashed #c084fc;
+            transition: all 0.3s ease;
+        }
+        
+        .dark .career-card {
+            background: linear-gradient(135deg, #581c87, #6b21a8);
+            border-color: #a855f7;
+        }
+        
+        .career-card:hover {
+            border-style: solid;
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(192, 132, 252, 0.3);
+        }
+        
+        .mission-text {
+            background: linear-gradient(135deg, #667eea, #764ba2, #f093fb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 200%;
+            animation: gradientShift 4s ease-in-out infinite;
+        }
+        
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+        
+        .achievement-badge {
+            background: linear-gradient(45deg, #fbbf24, #f59e0b);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .achievement-badge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: shine 3s infinite;
+        }
+        
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+        
+        .contact-cta {
+            background: linear-gradient(135deg, #1e3a8a, #3730a3);
+            color: white;
+            position: relative;
+        }
+        
+        .contact-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .parallax-element {
+            will-change: transform;
+        }
+        
+        .number-counter {
+            font-weight: 900;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 3px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+            z-index: 100;
+            transition: width 0.1s ease;
+        }
+        
+        .impact-metric {
+            background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+            border: 2px solid #10b981;
+            transition: all 0.3s ease;
+        }
+        
+        .dark .impact-metric {
+            background: linear-gradient(135deg, #064e3b, #065f46);
+        }
+        
+        .impact-metric:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
+        }
+        
+        .award-card {
+            background: linear-gradient(135deg, #fef3c7, #fbbf24);
+            border: 2px solid #f59e0b;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .dark .award-card {
+            background: linear-gradient(135deg, #92400e, #b45309);
+        }
+        
+        .award-card::before {
+            content: '🏆';
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            font-size: 2rem;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 53%, 80%, 100% { transform: translate3d(0,0,0); }
+            40%, 43% { transform: translate3d(0,-10px,0); }
+            70% { transform: translate3d(0,-5px,0); }
+            90% { transform: translate3d(0,-2px,0); }
+        }
+        
+        .office-location {
+            background: linear-gradient(135deg, #f0f9ff, #dbeafe);
+            border: 1px solid #93c5fd;
+            transition: all 0.3s ease;
+        }
+        
+        .dark .office-location {
+            background: linear-gradient(135deg, #1e3a8a, #1e40af);
+            border-color: #3b82f6;
+        }
+        
+        .office-location:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.2);
+        }
+        
+        .diversity-stat {
+            background: linear-gradient(45deg, #ec4899, #be185d);
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            border-radius: 1rem;
+        }
+        
+        .sustainability-card {
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            border: 2px solid #22c55e;
+        }
+        
+        .dark .sustainability-card {
+            background: linear-gradient(135deg, #052e16, #065f46);
+        }
+        
+        .press-mention {
+            background: linear-gradient(135deg, #fefbff, #f3e8ff);
+            border: 1px solid #e879f9;
+            transition: all 0.3s ease;
+        }
+        
+        .dark .press-mention {
+            background: linear-gradient(135deg, #581c87, #6b21a8);
+        }
+        
+        .press-mention:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 20px rgba(232, 121, 249, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scroll-progress"></div>
+
+    <!-- Header -->
+    <header class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-lg shadow-lg sticky top-0 z-50 transition-all duration-300">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo & Brand -->
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="flex items-center space-x-2">
+                        <div class="w-12 h-12 bg-gradient-to-r from-primary-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-code text-white text-lg"></i>
+                        </div>
+                        <h1 class="text-3xl font-bold bg-gradient-to-r from-primary-500 to-purple-600 bg-clip-text text-transparent">
+                            DevHub
+                        </h1>
+                    </a>
+                </div>
+
+                <!-- Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 transition-colors font-medium">Home</a>
+                    <a href="#" class="text-primary-600 font-bold">About</a>
+                    <a href="community-enhanced.html" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 transition-colors font-medium">Community</a>
+                    <a href="pricing-functional.html" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 transition-colors font-medium">Pricing</a>
+                    <a href="help-support.html" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 transition-colors font-medium">Support</a>
+                </nav>
+
+                <!-- Actions -->
+                <div class="flex items-center space-x-4">
+                    <!-- Dark Mode Toggle -->
+                    <button onclick="toggleDarkMode()" class="p-3 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-moon dark:hidden text-lg"></i>
+                        <i class="fas fa-sun hidden dark:block text-lg"></i>
+                    </button>
+
+                    <!-- Get Started -->
+                    <a href="index.html" class="bg-primary-600 text-white px-6 py-2 rounded-lg hover:bg-primary-700 transition-colors font-semibold">
+                        <i class="fas fa-rocket mr-2"></i>Get Started
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient text-white py-24 relative">
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-5xl mx-auto text-center">
+                <h2 class="text-5xl md:text-7xl font-black mb-8">
+                    We're Building the Future of 
+                    <span class="mission-text">Web Development</span>
+                </h2>
+                <p class="text-xl md:text-2xl mb-12 opacity-90 leading-relaxed max-w-4xl mx-auto">
+                    DevHub started with a simple belief: developers deserve better tools. 
+                    Today, we're empowering 50,000+ creators worldwide to build exceptional digital experiences 
+                    that shape the future of the web.
+                </p>
+                
+                <!-- Hero Stats with Live Counters -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16">
+                    <div class="text-center">
+                        <div class="number-counter text-4xl md:text-5xl font-black mb-2" data-target="52847" id="counter-developers">0</div>
+                        <div class="text-blue-200 font-medium">Active Developers</div>
+                        <div class="text-xs text-blue-300 mt-1">+150 this week</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="number-counter text-4xl md:text-5xl font-black mb-2" data-target="15247" id="counter-components">0</div>
+                        <div class="text-blue-200 font-medium">Components</div>
+                        <div class="text-xs text-blue-300 mt-1">+23 this week</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="number-counter text-4xl md:text-5xl font-black mb-2" data-target="189" id="counter-countries">0</div>
+                        <div class="text-blue-200 font-medium">Countries</div>
+                        <div class="text-xs text-blue-300 mt-1">Global reach</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="number-counter text-4xl md:text-5xl font-black mb-2" data-target="99.98" id="counter-uptime">0</div>
+                        <div class="text-blue-200 font-medium">% Uptime</div>
+                        <div class="text-xs text-blue-300 mt-1">Last 12 months</div>
+                    </div>
+                </div>
+
+                <!-- Mission Statement -->
+                <div class="mt-16 max-w-3xl mx-auto">
+                    <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20">
+                        <h3 class="text-2xl font-bold mb-4">Our Mission</h3>
+                        <p class="text-lg leading-relaxed opacity-95">
+                            To democratize great design and empower every developer to create beautiful, 
+                            functional user interfaces without the complexity. We believe that exceptional 
+                            design should be accessible to all, not just those with design backgrounds.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Company Impact Section -->
+    <section class="py-20 -mt-12 relative z-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 text-gray-800 dark:text-gray-100">Our Impact</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+                    Measuring our success by the success of developers and teams using DevHub
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                <div class="impact-metric rounded-2xl p-6 text-center">
+                    <i class="fas fa-download text-4xl text-green-600 mb-4"></i>
+                    <div class="text-3xl font-black text-gray-800 dark:text-gray-100 mb-2">2.8M+</div>
+                    <div class="text-gray-600 dark:text-gray-400 font-medium">Total Downloads</div>
+                    <div class="text-sm text-green-600 mt-2">↑ 45% this quarter</div>
+                </div>
+                
+                <div class="impact-metric rounded-2xl p-6 text-center">
+                    <i class="fas fa-clock text-4xl text-blue-600 mb-4"></i>
+                    <div class="text-3xl font-black text-gray-800 dark:text-gray-100 mb-2">847K</div>
+                    <div class="text-gray-600 dark:text-gray-400 font-medium">Hours Saved</div>
+                    <div class="text-sm text-blue-600 mt-2">For developers worldwide</div>
+                </div>
+                
+                <div class="impact-metric rounded-2xl p-6 text-center">
+                    <i class="fas fa-building text-4xl text-purple-600 mb-4"></i>
+                    <div class="text-3xl font-black text-gray-800 dark:text-gray-100 mb-2">2,400+</div>
+                    <div class="text-gray-600 dark:text-gray-400 font-medium">Companies</div>
+                    <div class="text-sm text-purple-600 mt-2">From startups to Fortune 500</div>
+                </div>
+                
+                <div class="impact-metric rounded-2xl p-6 text-center">
+                    <i class="fas fa-dollar-sign text-4xl text-orange-600 mb-4"></i>
+                    <div class="text-3xl font-black text-gray-800 dark:text-gray-100 mb-2">$12M+</div>
+                    <div class="text-gray-600 dark:text-gray-400 font-medium">Cost Savings</div>
+                    <div class="text-sm text-orange-600 mt-2">In development time</div>
+                </div>
+            </div>
+
+            <!-- Customer Testimonials -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="quote-card rounded-2xl p-8">
+                    <div class="relative z-10">
+                        <p class="text-lg italic leading-relaxed text-gray-700 dark:text-gray-300 mb-6">
+                            DevHub transformed how we approach frontend development. What used to take our team weeks 
+                            now takes days. The quality and consistency is unmatched.
+                        </p>
+                        <div class="flex items-center space-x-4">
+                            <img src="https://placehold.co/60x60" alt="Profile of Jennifer Walsh, CTO at TechFlow Inc" class="w-15 h-15 rounded-full">
+                            <div>
+                                <div class="font-bold text-gray-800 dark:text-gray-100">Jennifer Walsh</div>
+                                <div class="text-gray-600 dark:text-gray-400">CTO, TechFlow Inc.</div>
+                                <div class="text-sm text-primary-600">Series B Startup • 50+ employees</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="quote-card rounded-2xl p-8">
+                    <div class="relative z-10">
+                        <p class="text-lg italic leading-relaxed text-gray-700 dark:text-gray-300 mb-6">
+                            As a Fortune 500 company, we needed enterprise-grade reliability. DevHub delivers that 
+                            plus the innovation speed of a startup. It's the perfect combination.
+                        </p>
+                        <div class="flex items-center space-x-4">
+                            <img src="https://placehold.co/60x60" alt="Profile of Marcus Johnson, VP Engineering at GlobalTech Corp" class="w-15 h-15 rounded-full">
+                            <div>
+                                <div class="font-bold text-gray-800 dark:text-gray-100">Marcus Johnson</div>
+                                <div class="text-gray-600 dark:text-gray-400">VP Engineering, GlobalTech Corp</div>
+                                <div class="text-sm text-primary-600">Fortune 500 • 10,000+ employees</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="py-20 bg-gray-100 dark:bg-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 text-gray-800 dark:text-gray-100">Our Journey</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400">
+                    Key milestones that shaped DevHub into what it is today
+                </p>
+            </div>
+
+            <div class="timeline-container max-w-6xl mx-auto">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="achievement-badge px-4 py-2 rounded-full text-sm font-bold mb-4 inline-block">
+                            March 2021
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-gray-100">DevHub Founded</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4">
+                            Alex Chen launches DevHub as a weekend project to solve the component sharing problem. 
+                            First 100 components uploaded by founding team.
+                        </p>
+                        <div class="flex items-center space-x-4 text-sm">
+                            <span class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded">100 components</span>
+                            <span class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded">3 founders</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="achievement-badge px-4 py-2 rounded-full text-sm font-bold mb-4 inline-block">
+                            August 2021
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-gray-100">First 1,000 Users</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4">
+                            Platform reaches 1,000 registered developers. Community-driven growth through word-of-mouth 
+                            and developer forums. React components prove most popular.
+                        </p>
+                        <div class="flex items-center space-x-4 text-sm">
+                            <span class="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-2 py-1 rounded">1K users</span>
+                            <span class="bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200 px-2 py-1 rounded">500 components</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="achievement-badge px-4 py-2 rounded-full text-sm font-bold mb-4 inline-block">
+                            February 2022
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-gray-100">Seed Funding Round</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4">
+                            Raised $2.5M seed round led by Accel Partners. Funding used to expand team, 
+                            improve infrastructure, and launch premium features.
+                        </p>
+                        <div class="flex items-center space-x-4 text-sm">
+                            <span class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded">$2.5M raised</span>
+                            <span class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded">10 employees</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="achievement-badge px-4 py-2 rounded-full text-sm font-bold mb-4 inline-block">
+                            September 2022
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-gray-100">API Launch</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4">
+                            Public API released enabling developers to programmatically access DevHub. 
+                            CLI tools and integrations follow. Developer adoption accelerates.
+                        </p>
+                        <div class="flex items-center space-x-4 text-sm">
+                            <span class="bg-indigo-100 dark:bg-indigo-900 text-indigo-800 dark:text-indigo-200 px-2 py-1 rounded">API v1.0</span>
+                            <span class="bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 px-2 py-1 rounded">10K users</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="achievement-badge px-4 py-2 rounded-full text-sm font-bold mb-4 inline-block">
+                            June 2023
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-gray-100">Series A Funding</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4">
+                            $15M Series A led by Sequoia Capital. International expansion begins with offices 
+                            in London and Singapore. Team grows to 45 people.
+                        </p>
+                        <div class="flex items-center space-x-4 text-sm">
+                            <span class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded">$15M Series A</span>
+                            <span class="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-2 py-1 rounded">3 offices</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="achievement-badge px-4 py-2 rounded-full text-sm font-bold mb-4 inline-block">
+                            January 2024
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-gray-100">AI-Powered Features</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4">
+                            Launch of AI component generation, smart suggestions, and automated code optimization. 
+                            Platform reaches 50,000 active developers across 180+ countries.
+                        </p>
+                        <div class="flex items-center space-x-4 text-sm">
+                            <span class="bg-yellow-100 dark:bg-yellow-900 text-yellow-800 dark:text-yellow-200 px-2 py-1 rounded">AI Features</span>
+                            <span class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded">50K users</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 text-gray-800 dark:text-gray-100">Meet Our Team</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+                    The passionate individuals behind DevHub's success - designers, developers, and dreamers 
+                    working together to shape the future of web development.
+                </p>
+            </div>
+
+            <!-- Leadership Team -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold text-center mb-12 text-gray-800 dark:text-gray-100">Leadership Team</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8" id="leadership-team">
+                    <!-- Leadership team will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Engineering Team -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold text-center mb-12 text-gray-800 dark:text-gray-100">Engineering Team</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="engineering-team">
+                    <!-- Engineering team will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Design Team -->
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold text-center mb-12 text-gray-800 dark:text-gray-100">Design Team</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="design-team">
+                    <!-- Design team will be populated by JavaScript -->
+                </div>
+            </div>
+
+            <!-- Team Stats -->
+            <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-xl">
+                <h3 class="text-2xl font-bold text-center mb-8 text-gray-800 dark:text-gray-100">Team Diversity & Culture</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+                    <div class="diversity-stat rounded-xl">
+                        <div class="text-2xl font-bold">48%</div>
+                        <div class="text-sm">Women in Tech Roles</div>
+                    </div>
+                    <div class="diversity-stat rounded-xl">
+                        <div class="text-2xl font-bold">23</div>
+                        <div class="text-sm">Countries Represented</div>
+                    </div>
+                    <div class="diversity-stat rounded-xl">
+                        <div class="text-2xl font-bold">37</div>
+                        <div class="text-sm">Average Age</div>
+                    </div>
+                    <div class="diversity-stat rounded-xl">
+                        <div class="text-2xl font-bold">15</div>
+                        <div class="text-sm">Languages Spoken</div>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="culture-card rounded-xl p-6 text-center relative">
+                        <div class="relative z-10">
+                            <i class="fas fa-home text-3xl mb-3"></i>
+                            <h4 class="font-bold text-lg mb-2">Remote-First</h4>
+                            <p class="text-sm opacity-90">75% of team works remotely across global time zones</p>
+                        </div>
+                    </div>
+                    <div class="culture-card rounded-xl p-6 text-center relative">
+                        <div class="relative z-10">
+                            <i class="fas fa-heart text-3xl mb-3"></i>
+                            <h4 class="font-bold text-lg mb-2">Work-Life Balance</h4>
+                            <p class="text-sm opacity-90">Unlimited PTO, flexible hours, mental health support</p>
+                        </div>
+                    </div>
+                    <div class="culture-card rounded-xl p-6 text-center relative">
+                        <div class="relative z-10">
+                            <i class="fas fa-graduation-cap text-3xl mb-3"></i>
+                            <h4 class="font-bold text-lg mb-2">Continuous Learning</h4>
+                            <p class="text-sm opacity-90">$5K/year learning budget per employee</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Investors & Partners Section -->
+    <section class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 text-gray-800 dark:text-gray-100">Investors & Partners</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400">
+                    Backed by world-class investors who believe in our mission
+                </p>
+            </div>
+
+            <!-- Funding Rounds -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                <div class="milestone-card rounded-xl p-6 text-center">
+                    <h4 class="text-xl font-bold mb-2 text-gray-800 dark:text-gray-100">Seed Round</h4>
+                    <div class="text-3xl font-black text-gray-800 dark:text-gray-100 mb-2">$2.5M</div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">February 2022 • Led by Accel Partners</p>
+                    <div class="text-xs text-gray-500">Pre-money valuation: $10M</div>
+                </div>
+                
+                <div class="milestone-card rounded-xl p-6 text-center">
+                    <h4 class="text-xl font-bold mb-2 text-gray-800 dark:text-gray-100">Series A</h4>
+                    <div class="text-3xl font-black text-gray-800 dark:text-gray-100 mb-2">$15M</div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">June 2023 • Led by Sequoia Capital</p>
+                    <div class="text-xs text-gray-500">Pre-money valuation: $75M</div>
+                </div>
+                
+                <div class="milestone-card rounded-xl p-6 text-center">
+                    <h4 class="text-xl font-bold mb-2 text-gray-800 dark:text-gray-100">Series B</h4>
+                    <div class="text-3xl font-black text-gray-800 dark:text-gray-100 mb-2">$45M</div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-4">March 2024 • Led by Andreessen Horowitz</p>
+                    <div class="text-xs text-gray-500">Pre-money valuation: $350M</div>
+                </div>
+            </div>
+
+            <!-- Investor Logos -->
+            <div class="text-center mb-12">
+                <h3 class="text-xl font-bold mb-8 text-gray-800 dark:text-gray-100">Backed by Leading Investors</h3>
+                <div class="flex flex-wrap justify-center items-center gap-8">
+                    <img src="https://placehold.co/150x60" alt="Sequoia Capital venture capital firm logo" class="investor-logo h-12">
+                    <img src="https://placehold.co/150x60" alt="Andreessen Horowitz (a16z) venture capital firm logo" class="investor-logo h-12">
+                    <img src="https://placehold.co/150x60" alt="Accel Partners venture capital firm logo" class="investor-logo h-12">
+                    <img src="https://placehold.co/150x60" alt="Index Ventures venture capital firm logo" class="investor-logo h-12">
+                    <img src="https://placehold.co/150x60" alt="FirstMark Capital venture capital firm logo" class="investor-logo h-12">
+                    <img src="https://placehold.co/150x60" alt="Bessemer Venture Partners venture capital firm logo" class="investor-logo h-12">
+                </div>
+            </div>
+
+            <!-- Strategic Partners -->
+            <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-xl">
+                <h3 class="text-2xl font-bold text-center mb-8 text-gray-800 dark:text-gray-100">Strategic Technology Partners</h3>
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                    <div class="text-center p-4 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                        <img src="https://placehold.co/80x80" alt="React framework logo and official partnership" class="w-16 h-16 mx-auto mb-2">
+                        <div class="text-sm font-medium text-gray-800 dark:text-gray-100">React</div>
+                        <div class="text-xs text-gray-500">Official Partner</div>
+                    </div>
+                    <div class="text-center p-4 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                        <img src="https://placehold.co/80x80" alt="Vue.js framework logo and strategic partnership" class="w-16 h-16 mx-auto mb-2">
+                        <div class="text-sm font-medium text-gray-800 dark:text-gray-100">Vue.js</div>
+                        <div class="text-xs text-gray-500">Strategic Partner</div>
+                    </div>
+                    <div class="text-center p-4 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                        <img src="https://placehold.co/80x80" alt="Vercel platform logo and deployment integration" class="w-16 h-16 mx-auto mb-2">
+                        <div class="text-sm font-medium text-gray-800 dark:text-gray-100">Vercel</div>
+                        <div class="text-xs text-gray-500">Integration Partner</div>
+                    </div>
+                    <div class="text-center p-4 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                        <img src="https://placehold.co/80x80" alt="Figma design tool logo and design system integration" class="w-16 h-16 mx-auto mb-2">
+                        <div class="text-sm font-medium text-gray-800 dark:text-gray-100">Figma</div>
+                        <div class="text-xs text-gray-500">Design Partner</div>
+                    </div>
+                    <div class="text-center p-4 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                        <img src="https://placehold.co/80x80" alt="GitHub platform logo and repository integration" class="w-16 h-16 mx-auto mb-2">
+                        <div class="text-sm font-medium text-gray-800 dark:text-gray-100">GitHub</div>
+                        <div class="text-xs text-gray-500">Integration Partner</div>
+                    </div>
+                    <div class="text-center p-4 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors">
+                        <img src="https://placehold.co/80x80" alt="AWS cloud services logo and infrastructure partnership" class="w-16 h-16 mx-auto mb-2">
+                        <div class="text-sm font-medium text-gray-800 dark:text-gray-100">AWS</div>
+                        <div class="text-xs text-gray-500">Infrastructure Partner</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Awards & Recognition Section -->
+    <section class="py-20 bg-gray-100 dark:bg-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 text-gray-800 dark:text-gray-100">Awards & Recognition</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400">
+                    Industry recognition for innovation and excellence
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="award-card rounded-xl p-6">
+                    <div class="relative z-10">
+                        <h4 class="text-xl font-bold mb-2 text-gray-800 dark:text-gray-100">Product Hunt #1</h4>
+                        <p class="text-gray-700 dark:text-gray-200 text-sm mb-4">
+                            Featured as Product of the Day with 2,400+ upvotes and 800+ comments from the developer community.
+                        </p>
+                        <div class="text-xs text-gray-600 dark:text-gray-400">March 2023</div>
+                    </div>
+                </div>
+                
+                <div class="award-card rounded-xl p-6">
+                    <div class="relative z-10">
+                        <h4 class="text-xl font-bold mb-2 text-gray-800 dark:text-gray-100">TechCrunch Startup Spotlight</h4>
+                        <p class="text-gray-700 dark:text-gray-200 text-sm mb-4">
+                            Featured in TechCrunch's "Startups to Watch" for revolutionizing developer tools and workflow.
+                        </p>
+                        <div class="text-xs text-gray-600 dark:text-gray-400">August 2023</div>
+                    </div>
+                </div>
+                
+                <div class="award-card rounded-xl p-6">
+                    <div class="relative z-10">
+                        <h4 class="text-xl font-bold mb-2 text-gray-800 dark:text-gray-100">Developer Choice Awards</h4>
+                        <p class="text-gray-700 dark:text-gray-200 text-sm mb-4">
+                            Won "Best Developer Tool" at the 2023 Developer Choice Awards, voted by 50,000+ developers.
+                        </p>
+                        <div class="text-xs text-gray-600 dark:text-gray-400">December 2023</div>
+                    </div>
+                </div>
+                
+                <div class="award-card rounded-xl p-6">
+                    <div class="relative z-10">
+                        <h4 class="text-xl font-bold mb-2 text-gray-800 dark:text-gray-100">Fast Company Innovation</h4>
+                        <p class="text-gray-700 dark:text-gray-200 text-sm mb-4">
+                            Named in Fast Company's "Most Innovative Companies" list for transforming web development.
+                        </p>
+                        <div class="text-xs text-gray-600 dark:text-gray-400">January 2024</div>
+                    </div>
+                </div>
+                
+                <div class="award-card rounded-xl p-6">
+                    <div class="relative z-10">
+                        <h4 class="text-xl font-bold mb-2 text-gray-800 dark:text-gray-100">GitHub Star Project</h4>
+                        <p class="text-gray-700 dark:text-gray-200 text-sm mb-4">
+                            Official GitHub Star Project with 45K+ stars and active contribution from open source community.
+                        </p>
+                        <div class="text-xs text-gray-600 dark:text-gray-400">Ongoing</div>
+                    </div>
+                </div>
+                
+                <div class="award-card rounded-xl p-6">
+                    <div class="relative z-10">
+                        <h4 class="text-xl font-bold mb-2 text-gray-800 dark:text-gray-100">Y Combinator Top Company</h4>
+                        <p class="text-gray-700 dark:text-gray-200 text-sm mb-4">
+                            Recognized as one of Y Combinator's top companies for developer tools and SaaS innovation.
+                        </p>
+                        <div class="text-xs text-gray-600 dark:text-gray-400">February 2024</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Office Locations Section -->
+    <section class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 text-gray-800 dark:text-gray-100">Global Presence</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400">
+                    Our offices around the world, serving developers in every timezone
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                <div class="office-location rounded-xl p-6 text-center">
+                    <img src="https://placehold.co/300x200" alt="DevHub San Francisco headquarters office with modern workspace and city view" class="w-full h-32 object-cover rounded-lg mb-4">
+                    <h3 class="text-xl font-bold mb-2 text-gray-800 dark:text-gray-100">San Francisco 🇺🇸</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">Headquarters • 25 employees</p>
+                    <div class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                        <div>📍 SOMA District, California</div>
+                        <div>🏢 Engineering, Product, Design</div>
+                        <div>📞 +1 (415) 555-0123</div>
+                    </div>
+                </div>
+                
+                <div class="office-location rounded-xl p-6 text-center">
+                    <img src="https://placehold.co/300x200" alt="DevHub London office with modern British architecture and collaborative spaces" class="w-full h-32 object-cover rounded-lg mb-4">
+                    <h3 class="text-xl font-bold mb-2 text-gray-800 dark:text-gray-100">London 🇬🇧</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">EMEA Operations • 15 employees</p>
+                    <div class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                        <div>📍 Shoreditch, London</div>
+                        <div>🏢 Sales, Marketing, Support</div>
+                        <div>📞 +44 20 7123 4567</div>
+                    </div>
+                </div>
+                
+                <div class="office-location rounded-xl p-6 text-center">
+                    <img src="https://placehold.co/300x200" alt="DevHub Singapore office with modern Asian design and tech hub atmosphere" class="w-full h-32 object-cover rounded-lg mb-4">
+                    <h3 class="text-xl font-bold mb-2 text-gray-800 dark:text-gray-100">Singapore 🇸🇬</h3>
+                    <p class="text-gray-600 dark:text-gray-400 text-sm mb-4">APAC Hub • 12 employees</p>
+                    <div class="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+                        <div>📍 Marina Bay, Singapore</div>
+                        <div>🏢 Engineering, DevRel</div>
+                        <div>📞 +65 6123 4567</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Global Stats -->
+            <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-xl">
+                <h3 class="text-2xl font-bold text-center mb-8 text-gray-800 dark:text-gray-100">Our Global Reach</h3>
+                <div class="grid grid-cols-2 md:grid-cols-5 gap-6 text-center">
+                    <div>
+                        <div class="text-3xl font-bold text-blue-600 mb-2">189</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400">Countries Served</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-green-600 mb-2">24/7</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400">Global Support</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-purple-600 mb-2">15</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400">Languages</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-orange-600 mb-2">50ms</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400">Avg Latency</div>
+                    </div>
+                    <div>
+                        <div class="text-3xl font-bold text-red-600 mb-2">99.9%</div>
+                        <div class="text-sm text-gray-600 dark:text-gray-400">Global SLA</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sustainability & Social Impact -->
+    <section class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 text-gray-800 dark:text-gray-100">Sustainability & Impact</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400">
+                    Our commitment to environmental responsibility and social good
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+                <div class="sustainability-card rounded-2xl p-8">
+                    <h3 class="text-2xl font-bold mb-6 text-gray-800 dark:text-gray-100">Environmental Commitment</h3>
+                    <div class="space-y-6">
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-leaf text-white"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold text-gray-800 dark:text-gray-100">Carbon Neutral</div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400">100% renewable energy powered infrastructure</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-recycle text-white"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold text-gray-800 dark:text-gray-100">Zero Waste Offices</div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400">Comprehensive recycling and composting programs</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="w-12 h-12 bg-green-500 rounded-full flex items-center justify-center">
+                                <i class="fas fa-tree text-white"></i>
+                            </div>
+                            <div>
+                                <div class="font-bold text-gray-800 dark:text-gray-100">Tree Planting Program</div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400">1 tree planted per 100 component downloads</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="social-proof rounded-xl p-6">
+                        <h4 class="text-xl font-bold mb-4 text-gray-800 dark:text-gray-100">Social Impact</h4>
+                        <div class="grid grid-cols-2 gap-4 text-center">
+                            <div>
+                                <div class="text-2xl font-bold text-green-600">$2.5M</div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400">Donated to coding education</div>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold text-green-600">5,000+</div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400">Students helped globally</div>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold text-green-600">50+</div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400">Nonprofit partnerships</div>
+                            </div>
+                            <div>
+                                <div class="text-2xl font-bold text-green-600">100%</div>
+                                <div class="text-sm text-gray-600 dark:text-gray-400">Free for students</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="social-proof rounded-xl p-6">
+                        <h4 class="text-xl font-bold mb-4 text-gray-800 dark:text-gray-100">Diversity & Inclusion</h4>
+                        <div class="space-y-3 text-sm">
+                            <div class="flex justify-between">
+                                <span>Women in Leadership</span>
+                                <span class="font-bold text-green-600">60%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Underrepresented Groups</span>
+                                <span class="font-bold text-green-600">45%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Remote Team Members</span>
+                                <span class="font-bold text-green-600">75%</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Countries Represented</span>
+                                <span class="font-bold text-green-600">23</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Press & Media Section -->
+    <section class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 text-gray-800 dark:text-gray-100">Press & Media</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400">
+                    What the industry is saying about DevHub
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
+                <div class="press-mention rounded-xl p-6">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <img src="https://placehold.co/40x40" alt="TechCrunch media publication logo" class="w-10 h-10">
+                        <div>
+                            <div class="font-bold text-gray-800 dark:text-gray-100">TechCrunch</div>
+                            <div class="text-sm text-gray-500">March 2024</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 dark:text-gray-300 text-sm italic">
+                        "DevHub is revolutionizing how developers approach UI development. 
+                        Their AI-powered component generation is a game-changer."
+                    </p>
+                </div>
+                
+                <div class="press-mention rounded-xl p-6">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <img src="https://placehold.co/40x40" alt="The Verge technology publication logo" class="w-10 h-10">
+                        <div>
+                            <div class="font-bold text-gray-800 dark:text-gray-100">The Verge</div>
+                            <div class="text-sm text-gray-500">February 2024</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 dark:text-gray-300 text-sm italic">
+                        "With DevHub, the future of collaborative development is here. 
+                        A must-have tool for any serious development team."
+                    </p>
+                </div>
+                
+                <div class="press-mention rounded-xl p-6">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <img src="https://placehold.co/40x40" alt="Wired technology magazine logo" class="w-10 h-10">
+                        <div>
+                            <div class="font-bold text-gray-800 dark:text-gray-100">Wired</div>
+                            <div class="text-sm text-gray-500">January 2024</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 dark:text-gray-300 text-sm italic">
+                        "DevHub's approach to democratizing design is exactly what the 
+                        development community needs. Brilliant execution."
+                    </p>
+                </div>
+                
+                <div class="press-mention rounded-xl p-6">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <img src="https://placehold.co/40x40" alt="Forbes business publication logo" class="w-10 h-10">
+                        <div>
+                            <div class="font-bold text-gray-800 dark:text-gray-100">Forbes</div>
+                            <div class="text-sm text-gray-500">December 2023</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 dark:text-gray-300 text-sm italic">
+                        "A startup that's actually solving real problems for developers. 
+                        DevHub's growth trajectory is impressive and sustainable."
+                    </p>
+                </div>
+                
+                <div class="press-mention rounded-xl p-6">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <img src="https://placehold.co/40x40" alt="VentureBeat technology news logo" class="w-10 h-10">
+                        <div>
+                            <div class="font-bold text-gray-800 dark:text-gray-100">VentureBeat</div>
+                            <div class="text-sm text-gray-500">November 2023</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 dark:text-gray-300 text-sm italic">
+                        "The Netflix of UI components. DevHub is creating a new category 
+                        in developer tools with their innovative marketplace approach."
+                    </p>
+                </div>
+                
+                <div class="press-mention rounded-xl p-6">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <img src="https://placehold.co/40x40" alt="Developer Weekly publication logo" class="w-10 h-10">
+                        <div>
+                            <div class="font-bold text-gray-800 dark:text-gray-100">Developer Weekly</div>
+                            <div class="text-sm text-gray-500">October 2023</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 dark:text-gray-300 text-sm italic">
+                        "DevHub has become an essential part of our development workflow. 
+                        The time savings are real and measurable."
+                    </p>
+                </div>
+            </div>
+
+            <!-- Press Kit -->
+            <div class="text-center">
+                <div class="bg-gray-100 dark:bg-gray-700 rounded-xl p-6 max-w-2xl mx-auto">
+                    <h3 class="text-xl font-bold mb-4 text-gray-800 dark:text-gray-100">Media & Press Inquiries</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">
+                        For press inquiries, interviews, or media kit requests, please contact our media team.
+                    </p>
+                    <div class="flex flex-col md:flex-row gap-4 justify-center">
+                        <button onclick="downloadPressKit()" class="bg-primary-600 text-white px-6 py-2 rounded-lg hover:bg-primary-700 transition-colors">
+                            <i class="fas fa-download mr-2"></i>Download Press Kit
+                        </button>
+                        <button onclick="contactPress()" class="bg-gray-600 text-white px-6 py-2 rounded-lg hover:bg-gray-700 transition-colors">
+                            <i class="fas fa-envelope mr-2"></i>Contact Press Team
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>

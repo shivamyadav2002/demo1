@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results - DevHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a'
+                        }
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'ui-sans-serif', 'system-ui']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .search-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+        }
+        
+        .search-card {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid transparent;
+        }
+        
+        .dark .search-card {
+            background: linear-gradient(145deg, #1f2937, #111827);
+        }
+        
+        .search-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            border-color: #3b82f6;
+        }
+        
+        .dark .search-card:hover {
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+        }
+        
+        .filter-chip {
+            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+            color: #3730a3;
+            border: 1px solid #c7d2fe;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .filter-chip:hover {
+            background: linear-gradient(135deg, #3730a3, #4338ca);
+            color: white;
+            transform: translateY(-1px);
+        }
+        
+        .filter-chip.active {
+            background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+            color: white;
+            border-color: #1d4ed8;
+        }
+        
+        .dark .filter-chip {
+            background: linear-gradient(135deg, #312e81, #3730a3);
+            color: #e0e7ff;
+            border-color: #3730a3;
+        }
+        
+        .dark .filter-chip:hover {
+            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+            color: #3730a3;
+        }
+        
+        .search-highlight {
+            background: linear-gradient(90deg, #fbbf24, #f59e0b);
+            padding: 0.125rem 0.25rem;
+            border-radius: 0.25rem;
+            color: #92400e;
+            font-weight: 600;
+        }
+        
+        .view-mode-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .view-mode-btn.active {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .view-mode-btn:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+        
+        .result-item {
+            animation: fadeInUp 0.5s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .search-suggestion {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border: 1px solid #f59e0b;
+            transition: all 0.3s ease;
+        }
+        
+        .dark .search-suggestion {
+            background: linear-gradient(135deg, #92400e, #b45309);
+            border-color: #d97706;
+        }
+        
+        .search-suggestion:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(245, 158, 11, 0.3);
+        }
+        
+        .no-results {
+            background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+        }
+        
+        .dark .no-results {
+            background: linear-gradient(135deg, #374151, #4b5563);
+        }
+        
+        .loading-skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+        
+        .dark .loading-skeleton {
+            background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
+            background-size: 200% 100%;
+        }
+        
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        
+        .search-stats {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border-left: 4px solid #0ea5e9;
+        }
+        
+        .dark .search-stats {
+            background: linear-gradient(135deg, #0c4a6e, #075985);
+        }
+        
+        .trending-search {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 600;
+        }
+        
+        .filter-badge {
+            background: #3b82f6;
+            color: white;
+            animation: pulse 2s infinite;
+        }
+        
+        .quick-filter {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .quick-filter:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+            transform: scale(1.05);
+        }
+        
+        .search-type-tab {
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+        
+        .search-type-tab.active {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            border-bottom-color: #1d4ed8;
+        }
+        
+        .advanced-search-panel {
+            background: linear-gradient(135deg, #fefbff, #f3e8ff);
+            border: 2px dashed #c084fc;
+        }
+        
+        .dark .advanced-search-panel {
+            background: linear-gradient(135deg, #581c87, #6b21a8);
+            border-color: #a855f7;
+        }
+        
+        .masonry-view {
+            column-count: 3;
+            column-gap: 1.5rem;
+        }
+        
+        @media (max-width: 1024px) {
+            .masonry-view {
+                column-count: 2;
+            }
+        }
+        
+        @media (max-width: 640px) {
+            .masonry-view {
+                column-count: 1;
+            }
+        }
+        
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 1.5rem;
+        }
+        
+        .search-autocomplete {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .dark .search-autocomplete {
+            background: #1f2937;
+            border-color: #374151;
+        }
+        
+        .autocomplete-item {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .autocomplete-item:hover {
+            background-color: #f3f4f6;
+        }
+        
+        .dark .autocomplete-item:hover {
+            background-color: #374151;
+        }
+        
+        .result-count-animation {
+            animation: countUp 0.8s ease-out;
+        }
+        
+        @keyframes countUp {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-lg sticky top-0 z-50 transition-colors duration-300">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo & Brand -->
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="flex items-center space-x-2">
+                        <div class="w-10 h-10 bg-gradient-to-r from-primary-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-code text-white text-lg"></i>
+                        </div>
+                        <h1 class="text-2xl font-bold bg-gradient-to-r from-primary-500 to-purple-600 bg-clip-text text-transparent">
+                            DevHub
+                        </h1>
+                    </a>
+                    <div class="hidden md:flex items-center space-x-2 text-gray-500">
+                        <i class="fas fa-chevron-right text-sm"></i>
+                        <span class="text-primary-600">Search Results</span>
+                    </div>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="flex-1 max-w-2xl mx-8 relative">
+                    <input 
+                        type="text" 
+                        placeholder="Search components, templates, resources..." 
+                        class="w-full pl-12 pr-12 py-3 border rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 text-lg"
+                        id="main-search"
+                        value="React Dashboard"
+                        onkeyup="performSearch()"
+                        onfocus="showSearchSuggestions()"
+                        onblur="hideSearchSuggestions()"
+                    >
+                    <i class="fas fa-search absolute left-4 top-4 text-gray-400 text-lg"></i>
+                    <button onclick="clearSearch()" class="absolute right-4 top-4 text-gray-400 hover:text-gray-600">
+                        <i class="fas fa-times"></i>
+                    </button>
+                    
+                    <!-- Search Autocomplete -->
+                    <div id="search-autocomplete" class="search-autocomplete absolute top-full left-0 right-0 mt-2 hidden z-40">
+                        <div class="p-2">
+                            <div class="text-xs font-semibold text-gray-500 px-3 py-2 uppercase tracking-wide">Recent Searches</div>
+                            <div class="autocomplete-item px-3 py-2 rounded" onclick="selectSearch('React Components')">
+                                <i class="fas fa-clock mr-2 text-gray-400"></i>React Components
+                            </div>
+                            <div class="autocomplete-item px-3 py-2 rounded" onclick="selectSearch('Vue Templates')">
+                                <i class="fas fa-clock mr-2 text-gray-400"></i>Vue Templates
+                            </div>
+                            <div class="text-xs font-semibold text-gray-500 px-3 py-2 uppercase tracking-wide mt-2">Trending</div>
+                            <div class="autocomplete-item px-3 py-2 rounded" onclick="selectSearch('Dashboard Components')">
+                                <i class="fas fa-fire mr-2 text-orange-500"></i>Dashboard Components
+                            </div>
+                            <div class="autocomplete-item px-3 py-2 rounded" onclick="selectSearch('Login Forms')">
+                                <i class="fas fa-fire mr-2 text-orange-500"></i>Login Forms
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Header Actions -->
+                <div class="flex items-center space-x-4">
+                    <!-- View Mode Toggle -->
+                    <div class="hidden lg:flex bg-gray-100 dark:bg-gray-700 rounded-lg p-1">
+                        <button onclick="setViewMode('grid')" class="view-mode-btn active px-3 py-1 rounded text-sm font-medium">
+                            <i class="fas fa-th mr-1"></i>Grid
+                        </button>
+                        <button onclick="setViewMode('list')" class="view-mode-btn px-3 py-1 rounded text-sm font-medium">
+                            <i class="fas fa-list mr-1"></i>List
+                        </button>
+                        <button onclick="setViewMode('masonry')" class="view-mode-btn px-3 py-1 rounded text-sm font-medium">
+                            <i class="fas fa-th-large mr-1"></i>Masonry
+                        </button>
+                    </div>
+
+                    <!-- Dark Mode Toggle -->
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:block"></i>
+                    </button>
+
+                    <!-- Back Button -->
+                    <a href="index.html" class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors">
+                        <i class="fas fa-arrow-left mr-2"></i>Back to Hub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Search Results Header -->
+    <section class="search-header text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row items-start justify-between space-y-4 lg:space-y-0">
+                <div>
+                    <h2 class="text-3xl font-bold mb-2">Search Results</h2>
+                    <p class="text-blue-100 text-lg">
+                        Found <span class="result-count-animation font-bold" id="results-count">247</span> results for 
+                        "<span class="font-semibold" id="current-query">React Dashboard</span>"
+                    </p>
+                    <div class="flex items-center space-x-4 mt-4 text-sm">
+                        <span class="text-blue-200">Search took <strong>0.034s</strong></span>
+                        <span class="text-blue-200">•</span>
+                        <span class="text-blue-200">Last updated <strong>2 minutes ago</strong></span>
+                    </div>
+                </div>
+                
+                <!-- Search Types Tabs -->
+                <div class="flex bg-white/10 rounded-lg p-1">
+                    <button onclick="setSearchType('all')" class="search-type-tab active px-4 py-2 rounded text-sm font-semibold">
+                        All (<span id="all-count">247</span>)
+                    </button>
+                    <button onclick="setSearchType('components')" class="search-type-tab px-4 py-2 rounded text-sm font-semibold">
+                        Components (<span id="components-count">156</span>)
+                    </button>
+                    <button onclick="setSearchType('templates')" class="search-type-tab px-4 py-2 rounded text-sm font-semibold">
+                        Templates (<span id="templates-count">67</span>)
+                    </button>
+                    <button onclick="setSearchType('resources')" class="search-type-tab px-4 py-2 rounded text-sm font-semibold">
+                        Resources (<span id="resources-count">24</span>)
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <div class="flex flex-col lg:flex-row gap-8">
+            <!-- Filters Sidebar -->
+            <aside class="lg:w-80">
+                <!-- Quick Filters -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg mb-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-bold text-gray-800 dark:text-gray-100">Quick Filters</h3>
+                        <button onclick="clearAllFilters()" class="text-sm text-primary-600 hover:text-primary-700 font-medium">Clear All</button>
+                    </div>
+                    <div class="flex flex-wrap gap-2" id="quick-filters">
+                        <div class="filter-chip active px-3 py-1 rounded-full text-sm font-medium" onclick="toggleFilter('popular')">
+                            <i class="fas fa-fire mr-1"></i>Popular
+                        </div>
+                        <div class="filter-chip px-3 py-1 rounded-full text-sm font-medium" onclick="toggleFilter('new')">
+                            <i class="fas fa-sparkles mr-1"></i>New
+                        </div>
+                        <div class="filter-chip px-3 py-1 rounded-full text-sm font-medium" onclick="toggleFilter('free')">
+                            <i class="fas fa-gift mr-1"></i>Free
+                        </div>
+                        <div class="filter-chip px-3 py-1 rounded-full text-sm font-medium" onclick="toggleFilter('premium')">
+                            <i class="fas fa-crown mr-1"></i>Premium
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Filters -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg mb-6">
+                    <h3 class="text-lg font-bold mb-4 text-gray-800 dark:text-gray-100">Filters</h3>
+                    
+                    <!-- Category Filter -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Category</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" checked class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500" onchange="updateFilters()">
+                                <span class="ml-2 text-sm">Components (156)</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500" onchange="updateFilters()">
+                                <span class="ml-2 text-sm">Templates (67)</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500" onchange="updateFilters()">
+                                <span class="ml-2 text-sm">Icons (45)</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500" onchange="updateFilters()">
+                                <span class="ml-2 text-sm">Layouts (23)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Technology Filter -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Technology</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center">
+                                <input type="checkbox" checked class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500" onchange="updateFilters()">
+                                <span class="ml-2 text-sm">React (189)</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500" onchange="updateFilters()">
+                                <span class="ml-2 text-sm">Vue (78)</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500" onchange="updateFilters()">
+                                <span class="ml-2 text-sm">Angular (45)</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500" onchange="updateFilters()">
+                                <span class="ml-2 text-sm">HTML/CSS (134)</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="checkbox" class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500" onchange="updateFilters()">
+                                <span class="ml-2 text-sm">TypeScript (98)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Price Filter -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Price</label>
+                        <div class="space-y-2">
+                            <label class="flex items-center">
+                                <input type="radio" name="price" value="all" checked class="w-4 h-4 text-primary-600 border-gray-300 focus:ring-primary-500" onchange="updateFilters()">
+                                <span class="ml-2 text-sm">All Prices</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="price" value="free" class="w-4 h-4 text-primary-600 border-gray-300 focus:ring-primary-500" onchange="updateFilters()">
+                                <span class="ml-2 text-sm">Free (134)</span>
+                            </label>
+                            <label class="flex items-center">
+                                <input type="radio" name="price" value="paid" class="w-4 h-4 text-primary-600 border-gray-300 focus:ring-primary-500" onchange="updateFilters()">
+                                <span class="ml-2 text-sm">Paid (113)</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Rating Filter -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3">Minimum Rating</label>
+                        <input type="range" min="0" max="5" step="0.5" value="4" class="w-full" id="rating-filter" onchange="updateRatingFilter()">
+                        <div class="flex justify-between text-xs text-gray-500 mt-1">
+                            <span>Any</span>
+                            <span>5 stars</span>
+                        </div>
+                        <div class="text-center mt-2">
+                            <span class="text-sm font-medium text-gray-700 dark:text-gray-300" id="rating-display">4.0+ stars</span>
+                        </div>
+                    </div>
+
+                    <!-- Advanced Search Toggle -->
+                    <button onclick="toggleAdvancedSearch()" class="w-full bg-primary-600 text-white py-2 px-4 rounded-lg hover:bg-primary-700 transition-colors font-medium">
+                        <i class="fas fa-sliders-h mr-2"></i>Advanced Search
+                    </button>
+                </div>
+
+                <!-- Search Statistics -->
+                <div class="search-stats rounded-xl p-6 mb-6">
+                    <h3 class="text-lg font-bold mb-4 text-gray-800 dark:text-gray-100">Search Analytics</h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-600 dark:text-gray-400">Total Results</span>
+                            <span class="font-bold text-blue-600" id="total-results">247</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-600 dark:text-gray-400">Exact Matches</span>
+                            <span class="font-bold text-green-600">89</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-600 dark:text-gray-400">Similar Results</span>
+                            <span class="font-bold text-purple-600">158</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-sm text-gray-600 dark:text-gray-400">Avg. Rating</span>
+                            <span class="font-bold text-yellow-600">4.7 ⭐</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trending Searches -->
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-lg">
+                    <h3 class="text-lg font-bold mb-4 text-gray-800 dark:text-gray-100">Trending Searches</h3>
+                    <div class="space-y-2">
+                        <button onclick="selectSearch('React Dashboard')" class="block w-full text-left text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 trending-search">
+                            React Dashboard
+                        </button>
+                        <button onclick="selectSearch('Login Components')" class="block w-full text-left text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 trending-search">
+                            Login Components
+                        </button>
+                        <button onclick="selectSearch('Vue Templates')" class="block w-full text-left text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 trending-search">
+                            Vue Templates
+                        </button>
+                        <button onclick="selectSearch('Navigation Menus')" class="block w-full text-left text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 trending-search">
+                            Navigation Menus
+                        </button>
+                        <button onclick="selectSearch('Icon Sets')" class="block w-full text-left text-sm text-gray-600 dark:text-gray-400 hover:text-primary-600 trending-search">
+                            Icon Sets
+                        </button>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Results Content -->
+            <div class="flex-1">
+                <!-- Results Header -->
+                <div class="flex flex-col md:flex-row items-start md:items-center justify-between mb-6 space-y-4 md:space-y-0">
+                    <div class="flex items-center space-x-4">
+                        <h3 class="text-xl font-bold text-gray-800 dark:text-gray-100">
+                            <span id="results-title">React Dashboard Components</span>
+                        </h3>
+                        <div class="flex items-center space-x-2">
+                            <div class="filter-badge px-2 py-1 rounded-full text-xs font-bold">
+                                <span id="active-filters-count">2</span> filters
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sort Options -->
+                    <div class="flex items-center space-x-4">
+                        <span class="text-sm text-gray-600 dark:text-gray-400">Sort by:</span>
+                        <select class="px-3 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 text-sm" id="sort-select" onchange="updateSort()">
+                            <option value="relevance">Relevance</option>
+                            <option value="popular">Most Popular</option>
+                            <option value="newest">Newest First</option>
+                            <option value="rating">Highest Rated</option>
+                            <option value="downloads">Most Downloaded</option>
+                            <option value="name">Name A-Z</option>
+                        </select>
+                        
+                        <!-- Results per page -->
+                        <select class="px-3 py-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 text-sm" onchange="updateResultsPerPage(this.value)">
+                            <option value="12">12 per page</option>
+                            <option value="24" selected>24 per page</option>
+                            <option value="48">48 per page</option>
+                            <option value="96">96 per page</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Active Filters Display -->
+                <div class="mb-6" id="active-filters-display">
+                    <div class="flex flex-wrap gap-2">
+                        <div class="bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                            Popular
+                            <button onclick="removeFilter('popular')" class="ml-2 hover:text-primary-600">
+                                <i class="fas fa-times text-xs"></i>
+                            </button>
+                        </div>
+                        <div class="bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                            React
+                            <button onclick="removeFilter('react')" class="ml-2 hover:text-primary-600">
+                                <i class="fas fa-times text-xs"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Search Suggestions -->
+                <div class="search-suggestion rounded-xl p-4 mb-6" id="search-suggestions">
+                    <div class="flex items-center space-x-3">
+                        <i class="fas fa-lightbulb text-xl text-yellow-600"></i>
+                        <div>
+                            <div class="font-semibold text-gray-800 dark:text-gray-100">Did you mean:</div>
+                            <div class="flex space-x-2 mt-1">
+                                <button onclick="selectSearch('React Dashboards')" class="text-primary-600 hover:text-primary-700 font-medium text-sm">React Dashboards</button>
+                                <span class="text-gray-400">•</span>
+                                <button onclick="selectSearch('Dashboard Templates')" class="text-primary-600 hover:text-primary-700 font-medium text-sm">Dashboard Templates</button>
+                                <span class="text-gray-400">•</span>
+                                <button onclick="selectSearch('Admin Panels')" class="text-primary-600 hover:text-primary-700 font-medium text-sm">Admin Panels</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Loading State -->
+                <div id="loading-state" class="hidden">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="search-card rounded-xl p-6 shadow-lg">
+                            <div class="loading-skeleton h-48 rounded-lg mb-4"></div>
+                            <div class="loading-skeleton h-4 rounded mb-2"></div>
+                            <div class="loading-skeleton h-4 rounded w-3/4 mb-4"></div>
+                            <div class="flex space-x-2">
+                                <div class="loading-skeleton h-6 w-16 rounded"></div>
+                                <div class="loading-skeleton h-6 w-20 rounded"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Results Grid -->
+                <div id="results-container">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="results-grid">
+                        <!-- Results will be populated by JavaScript -->
+                    </div>
+
+                    <!-- Load More Button -->
+                    <div class="text-center mt-12">
+                        <button onclick="loadMoreResults()" class="bg-primary-600 text-white px-8 py-3 rounded-xl hover:bg-primary-700 transition-colors font-semibold" id="load-more-btn">
+                            <span class="load-more-text">Load More Results</span>
+                            <i class="fas fa-spinner fa-spin ml-2 hidden loading-spinner"></i>
+                        </button>
+                        <p class="text-sm text-gray-500 mt-2">Showing <span id="showing-count">24</span> of <span id="total-count">247</span> results</p>
+                    </div>
+                </div>
+
+                <!-- No Results State -->
+                <div id="no-results" class="no-results rounded-xl p-12 text-center hidden">
+                    <div class="mb-6">
+                        <i class="fas fa-search text-6xl text-gray-400 mb-4"></i>
+                        <h3 class="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-2">No results found</h3>
+                        <p class="text-gray-600 dark:text-gray-400">Try adjusting your search terms or filters</p>
+                    </div>
+                    
+                    <div class="space-y-4">
+                        <div class="text-sm font-semibold text-gray-700 dark:text-gray-300">Suggestions:</div>
+                        <div class="flex flex-wrap justify-center gap-2">
+                            <button onclick="selectSearch('React Components')" class="bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors text-sm">
+                                React Components
+                            </button>
+                            <button onclick="selectSearch('Dashboard Templates')" class="bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors text-sm">
+                                Dashboard Templates
+                            </button>
+                            <button onclick="selectSearch('UI Kits')" class="bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors text-sm">
+                                UI Kits
+                            </button>
+                        </div>
+                        <button onclick="clearAllFilters()" class="bg-primary-600 text-white px-6 py-2 rounded-lg hover:bg-primary-700 transition-colors font-medium">
+                            Clear All Filters
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Advanced Search Modal -->
+    <div id="advanced-search-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl max-w-4xl w-full max-h-90vh overflow-y-auto">
+            <div class="p-8">
+                <div class="flex justify-between items-center mb-8">
+                    <h3 class="text-3xl font-bold text-gray-800 dark:text-gray-100">Advanced Search</h3>
+                    <button onclick="closeAdvancedSearch()" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 text-2xl">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="advanced-search-panel rounded-xl p-6 mb-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Search Term</label>
+                            <input type="text" placeholder="Enter keywords" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600" id="advanced-search-term">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Author</label>
+                            <input type="text" placeholder="Creator name" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Date Range</label>
+                            <select class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600">
+                                <option>Any time</option>
+                                <option>Last week</option>
+                                <option>Last month</option>
+                                <option>Last year</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">File Size</label>
+                            <select class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600">
+                                <option>Any size</option>
+                                <option>Small (&lt; 1MB)</option>
+                                <option>Medium (1-10MB)</option>
+                                <option>Large (&gt; 10MB)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">License</label>
+                            <select class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600">
+                                <option>Any license</option>
+                                <option>Free for commercial use</option>
+                                <option>Attribution required</option>
+                                <option>Personal use only</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Complexity</label>
+                            <select class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600">
+                                <option>Any complexity</option>
+                                <option>Beginner friendly</option>
+                                <option>Intermediate</option>
+                                <option>Advanced</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="flex space-x-4 mt-6">
+                        <button onclick="applyAdvancedSearch()" class="flex-1 bg-primary-600 text-white py-3 px-6 rounded-xl hover:bg-primary-700 transition-colors font-semibold">
+                            <i class="fas fa-search mr-2"></i>Apply Advanced Search
+                        </button>
+                        <button onclick="resetAdvancedSearch()" class="bg-gray-300 dark:bg-gray-600 text-gray-700 dark:text-gray-300 py-3 px-6 rounded-xl hover:bg-gray-400 dark:hover:bg-gray-700 transition-colors font-semibold">
+                            Reset
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State Management
+        let isDarkMode = false;
+        let currentViewMode = 'grid';
+        let currentSearchType = 'all';
+        let currentSort = 'relevance';
+        let activeFilters = ['popular', 'react'];
+        let currentPage = 1;
+        let resultsPerPage = 24;
+        let isLoading = false;
+
+        // Sample search results data
+        const searchResults = [
+            {
+                id: 1,
+                title: 'React Admin Dashboard Pro',
+                description: 'Professional admin dashboard with dark mode, charts, and responsive design',
+                type: 'template',
+                category: 'Dashboard',
+                technology: ['React', 'TypeScript'],
+                author: 'Sarah Chen',
+                authorAvatar: 'https://placehold.co/40x40',
+                rating: 4.9,
+                downloads: 2456,
+                price: 'Free',
+                imageUrl: 'https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/dbc53bb9-e8fe-4da3-805e-f2de97cb12ec.png',
+                imageAlt: 'React admin dashboard template with modern interface and data visualization',
+                tags: ['dashboard', 'admin', 'react', 'charts'],
+                featured: true,
+                new: false,
+                updated: '2 days ago'
+            },
+            {
+                id: 2,
+                title: 'Modern Dashboard Cards',
+                description: 'Collection of beautiful dashboard card components',
+                type: 'component',
+                category: 'Components',
+                technology: ['React', 'Tailwind'],
+                author: 'Mike Chen',
+                authorAvatar: 'https://placehold.co/40x40',
+                rating: 4.7,
+                downloads: 1834,
+                price: 'Free',
+                imageUrl: 'https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/f6c41f52-37e1-4dcf-8c78-e9a6f4a99bc9.png',
+                imageAlt: 'Modern dashboard card components with statistics and charts',
+                tags: ['cards', 'dashboard', 'stats', 'ui'],
+                featured: false,
+                new: true,
+                updated: '1 week ago'
+            },
+            {
+                id: 3,
+                title: 'Dashboard Analytics Widget',
+                description: 'Interactive analytics widget with real-time data',
+                type: 'component',
+                category: 'Components',
+                technology: ['Vue', 'Chart.js'],
+                author: 'Emma Davis',
+                authorAvatar: 'https://placehold.co/40x40',
+                rating: 4.8,
+                downloads: 1267,
+                price: '$19',
+                imageUrl: 'https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/5c3e9df1-e8ad-47aa-8f6b-b4853fbc9c81.png',
+                imageAlt: 'Analytics widget component with interactive charts and real-time data',
+                tags: ['analytics', 'charts', 'widget', 'vue'],
+                featured: false,
+                new: false,
+                updated: '3 days ago'
+            },
+            {
+                id: 4,
+                title: 'React Dashboard Sidebar',
+                description: 'Responsive sidebar navigation for admin dashboards',
+                type: 'component',
+                category: 'Navigation',
+                technology: ['React', 'CSS'],
+                author: 'Alex Rodriguez',
+                authorAvatar: 'https://placehold.co/40x40',
+                rating: 4.6,
+                downloads: 3421,
+                price: 'Free',
+                imageUrl: 'https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b60e18b8-c3ae-4b81-8a29-c6a1b8a7e93d.png',
+                imageAlt: 'Responsive dashboard sidebar navigation with collapsible menu',
+                tags: ['sidebar', 'navigation', 'responsive', 'admin'],
+                featured: true,
+                new: false,
+                updated: '5 days ago'
+            },
+            {
+                id: 5,
+                title: 'Dashboard Theme Switcher',
+                description: 'Dark/light mode toggle component for dashboards',
+                type: 'component',
+                category: 'Components',
+                technology: ['React', 'JavaScript'],
+                author: 'Lisa Wang',
+                authorAvatar: 'https://placehold.co/40x40',
+                rating: 4.5,
+                downloads: 892,
+                price: 'Free',
+                imageUrl: 'https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/8ab2a6c7-9ba7-4d38-a7e4-be3c0c2be63f.png',
+                imageAlt: 'Theme switcher component for dark and light mode toggle',
+                tags: ['theme', 'dark-mode', 'toggle', 'switch'],
+                featured: false,
+                new: true,
+                updated: '1 day ago'
+            },
+            {
+                id: 6,
+                title: 'Full Stack Dashboard Template',
+                description: 'Complete dashboard template with backend integration',
+                type: 'template',
+                category: 'Dashboard',
+                technology: ['React', 'Node.js', 'MongoDB'],
+                author: 'David Kim',
+                authorAvatar: 'https://placehold.co/40x40',
+                rating: 4.9,
+                downloads: 756,
+                price: '$49',
+                imageUrl: 'https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/3e9a8c47-74de-4f3d-9eb1-8bd2fc42a53d.png',
+                imageAlt: 'Full-stack dashboard template with backend API integration',
+                tags: ['fullstack', 'backend', 'api', 'complete'],
+                featured: true,
+                new: false,
+                updated: '1 week ago'
+            }
+        ];
+
+        // FAQ data
+        const faqData = [
+            {
+                question: "How does search ranking work?",
+                answer: "Our search algorithm considers relevance, popularity, ratings, and recency. Featured items and exact matches appear first, followed by partial matches and related content."
+            },
+            {
+                question: "Can I save my search filters?",
+                answer: "Yes! Pro and Business plan users can save custom search filters and get notified when new items match their criteria."
+            },
+            {
+                question: "What makes a result 'featured'?",
+                answer: "Featured results are hand-picked by our team for exceptional quality, popularity, or unique value. They represent the best examples in each category."
+            },
+            {
+                question: "How often is the search index updated?",
+                answer: "Our search index is updated in real-time. New uploads appear in search results within minutes of being published."
+            }
+        ];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            initializePage();
+            renderResults();
+            updateSearchStats();
+            populateFAQ();
+            renderActiveFilters();
+        });
+
+        function initializePage() {
+            if (localStorage.getItem('darkMode') === 'true') {
+                isDarkMode = true;
+                document.documentElement.classList.add('dark');
+            }
+            
+            // Set initial search query from URL or default
+            const urlParams = new URLSearchParams(window.location.search);
+            const query = urlParams.get('q') || 'React Dashboard';
+            document.getElementById('main-search').value = query;
+            document.getElementById('current-query').textContent = query;
+        }
+
+        function renderResults() {
+            const container = document.getElementById('results-grid');
+            const filteredResults = getFilteredResults();
+            
+            container.innerHTML = filteredResults.map((result, index) => `
+                <div class="search-card rounded-xl shadow-lg overflow-hidden result-item cursor-pointer" style="animation-delay: ${index * 0.1}s" onclick="openResult(${result.id})">
+                    <div class="relative">
+                        <img src="${result.imageUrl}" alt="${result.imageAlt}" class="w-full h-48 object-cover">
+                        <div class="absolute top-3 left-3 flex space-x-2">
+                            ${result.featured ? '<span class="bg-yellow-400 text-yellow-900 px-2 py-1 rounded-full text-xs font-bold">Featured</span>' : ''}
+                            ${result.new ? '<span class="bg-green-400 text-green-900 px-2 py-1 rounded-full text-xs font-bold">New</span>' : ''}
+                        </div>
+                        <div class="absolute top-3 right-3">
+                            <span class="bg-black bg-opacity-60 text-white px-2 py-1 rounded-full text-xs font-semibold">${result.price}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="p-6">
+                        <div class="flex items-center space-x-2 mb-3">
+                            <span class="bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200 px-2 py-1 rounded-full text-xs font-medium">${result.category}</span>
+                            ${result.technology.map(tech => 
+                                `<span class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded text-xs">${tech}</span>`
+                            ).join('')}
+                        </div>
+                        
+                        <h3 class="text-lg font-bold mb-2 text-gray-800 dark:text-gray-100 hover:text-primary-600 transition-colors">
+                            ${highlightSearchTerm(result.title)}
+                        </h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm mb-4 line-clamp-2">
+                            ${highlightSearchTerm(result.description)}
+                        </p>
+                        
+                        <div class="flex flex-wrap gap-1 mb-4">
+                            ${result.tags.slice(0, 3).map(tag => 
+                                `<span class="bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-300 px-2 py-1 rounded text-xs cursor-pointer hover:bg-blue-100 dark:hover:bg-blue-800" onclick="event.stopPropagation(); searchByTag('${tag}')">${tag}</span>`
+                            ).join('')}
+                            ${result.tags.length > 3 ? `<span class="text-xs text-gray-500">+${result.tags.length - 3} more</span>` : ''}
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <img src="${result.authorAvatar}" alt="Profile of ${result.author}" class="w-6 h-6 rounded-full">
+                                <span class="text-sm text-gray-600 dark:text-gray-400">${result.author}</span>
+                            </div>
+                            <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                <div class="flex items-center text-yellow-500">
+                                    <i class="fas fa-star mr-1"></i>
+                                    <span>${result.rating}</span>
+                                </div>
+                                <span><i class="fas fa-download mr-1"></i>${result.downloads}</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-4 pt-4 border-t dark:border-gray-700">
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs text-gray-500">Updated ${result.updated}</span>
+                                <button onclick="event.stopPropagation(); toggleFavorite(${result.id})" class="text-gray-400 hover:text-red-500 transition-colors">
+                                    <i class="far fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Update results count
+            updateResultsCount(filteredResults.length);
+        }
+
+        function getFilteredResults() {
+            let filtered = [...searchResults];
+            
+            // Apply search query filter
+            const query = document.getElementById('main-search').value.toLowerCase();
+            if (query) {
+                filtered = filtered.filter(result => 
+                    result.title.toLowerCase().includes(query) ||
+                    result.description.toLowerCase().includes(query) ||
+                    result.tags.some(tag => tag.toLowerCase().includes(query)) ||
+                    result.author.toLowerCase().includes(query)
+                );
+            }
+            
+            // Apply type filter
+            if (currentSearchType !== 'all') {
+                filtered = filtered.filter(result => result.type === currentSearchType);
+            }
+            
+            // Apply active filters
+            if (activeFilters.includes('popular')) {
+                filtered = filtered.filter(result => result.downloads > 1000);
+            }
+            if (activeFilters.includes('new')) {
+                filtered = filtered.filter(result => result.new);
+            }
+            if (activeFilters.includes('free')) {
+                filtered = filtered.filter(result => result.price === 'Free');
+            }
+            if (activeFilters.includes('premium')) {
+                filtered = filtered.filter(result => result.price !== 'Free');
+            }
+            
+            // Apply technology filters
+            const checkedTech = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'))
+                .map(cb => cb.nextElementSibling.textContent.split(' ')[0])
+                .filter(tech => ['React', 'Vue', 'Angular', 'HTML/CSS', 'TypeScript'].includes(tech));
+            
+            if (checkedTech.length > 0) {
+                filtered = filtered.filter(result => 
+                    result.technology.some(tech => checkedTech.includes(tech))
+                );
+            }
+            
+            // Apply rating filter
+            const minRating = parseFloat(document.getElementById('rating-filter').value);
+            filtered = filtered.filter(result => result.rating >= minRating);
+            
+            // Apply sorting
+            switch (currentSort) {
+                case 'popular':
+                    filtered.sort((a, b) => b.downloads - a.downloads);
+                    break;
+                case 'newest':
+                    filtered.sort((a, b) => new Date(b.updated) - new Date(a.updated));
+                    break;
+                case 'rating':
+                    filtered.sort((a, b) => b.rating - a.rating);
+                    break;
+                case 'downloads':
+                    filtered.sort((a, b) => b.downloads - a.downloads);
+                    break;
+                case 'name':
+                    filtered.sort((a, b) => a.title.localeCompare(b.title));
+                    break;
+                case 'relevance':
+                default:
+                    // Keep original order for relevance
+                    break;
+            }
+            
+            return filtered;
+        }
+
+        function highlightSearchTerm(text) {
+            const query = document.getElementById('main-search').value.toLowerCase();
+            if (!query) return text;
+            
+            const regex = new RegExp(`(${query})`, 'gi');
+            return text.replace(regex, '<span class="search-highlight">$1</span>');
+        }
+
+        function updateResultsCount(count) {
+            document.getElementById('results-count').textContent = count;
+            document.getElementById('total-results').textContent = count;
+            document.getElementById('total-count').textContent = count;
+            document.getElementById('showing-count').textContent = Math.min(resultsPerPage, count);
+            
+            // Update type-specific counts
+            const typeFilter = (type) => searchResults.filter(r => type === 'all' ? true : r.type === type).length;
+            document.getElementById('all-count').textContent = searchResults.length;
+            document.getElementById('components-count').textContent = typeFilter('component');
+            document.getElementById('templates-count').textContent = typeFilter('template');
+            document.getElementById('resources-count').textContent = typeFilter('resource');
+            
+            // Show/hide no results
+            if (count === 0) {
+                document.getElementById('results-container').classList.add('hidden');
+                document.getElementById('no-results').classList.remove('hidden');
+            } else {
+                document.getElementById('results-container').classList.remove('hidden');
+                document.getElementById('no-results').classList.add('hidden');
+            }
+        }
+
+        function updateSearchStats() {
+            const filtered = getFilteredResults();
+            const exactMatches = filtered.filter(r => r.featured).length;
+            const avgRating = filtered.reduce((sum, r) => sum + r.rating, 0) / filtered.length;
+            
+            document.getElementById('total-results').textContent = filtered.length;
+            
+            // Update stats in sidebar
+            const statsElements = document.querySelectorAll('.search-stats .font-bold');
+            if (statsElements.length >= 4) {
+                statsElements[1].textContent = exactMatches;
+                statsElements[2].textContent = filtered.length - exactMatches;
+                statsElements[3].textContent = avgRating.toFixed(1) + ' ⭐';
+            }
+        }
+
+        function performSearch() {
+            const query = document.getElementById('main-search').value;
+            document.getElementById('current-query').textContent = query || 'All Items';
+            
+            // Show loading state briefly
+            showLoadingState();
+            
+            setTimeout(() => {
+                renderResults();
+                updateSearchStats();
+                hideLoadingState();
+                
+                if (query) {
+                    showNotification(`Found ${getFilteredResults().length} results for "${query}"`, 'success');
+                }
+            }, 500);
+        }
+
+        function selectSearch(searchTerm) {
+            document.getElementById('main-search').value = searchTerm;
+            hideSearchSuggestions();
+            performSearch();
+        }
+
+        function searchByTag(tag) {
+            document.getElementById('main-search').value = tag;
+            performSearch();
+        }
+
+        function showSearchSuggestions() {
+            document.getElementById('search-autocomplete').classList.remove('hidden');
+        }
+
+        function hideSearchSuggestions() {
+            setTimeout(() => {
+                document.getElementById('search-autocomplete').classList.add('hidden');
+            }, 200);
+        }
+
+        function clearSearch() {
+            document.getElementById('main-search').value = '';
+            document.getElementById('current-query').textContent = 'All Items';
+            performSearch();
+        }
+
+        function toggleFilter(filterType) {
+            const filterElement = event.target;
+            
+            if (activeFilters.includes(filterType)) {
+                activeFilters = activeFilters.filter(f => f !== filterType);
+                filterElement.classList.remove('active');
+            } else {
+                activeFilters.push(filterType);
+                filterElement.classList.add('active');
+            }
+            
+            updateActiveFiltersCount();
+            performSearch();
+        }
+
+        function updateActiveFiltersCount() {
+            document.getElementById('active-filters-count').textContent = activeFilters.length;
+        }
+
+        function removeFilter(filterType) {
+            activeFilters = activeFilters.filter(f => f !== filterType);
+            
+            // Update UI
+            const filterChip = document.querySelector(`[onclick="toggleFilter('${filterType}')"]`);
+            if (filterChip) {
+                filterChip.classList.remove('active');
+            }
+            
+            updateActiveFiltersCount();
+            performSearch();
+            renderActiveFilters();
+        }
+
+        function renderActiveFilters() {
+            const container = document.getElementById('active-filters-display');
+            
+            if (activeFilters.length === 0) {
+                container.innerHTML = '';
+                return;
+            }
+            
+            container.innerHTML = `
+                <div class="flex flex-wrap gap-2">
+                    ${activeFilters.map(filter => `
+                        <div class="bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                            ${filter.charAt(0).toUpperCase() + filter.slice(1)}
+                            <button onclick="removeFilter('${filter}')" class="ml-2 hover:text-primary-600">
+                                <i class="fas fa-times text-xs"></i>
+                            </button>
+                        </div>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function clearAllFilters() {
+            activeFilters = [];
+            
+            // Reset UI
+            document.querySelectorAll('.filter-chip').forEach(chip => {
+                chip.classList.remove('active');
+            });
+            
+            document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                cb.checked = false;
+            });
+            
+            document.querySelectorAll('input[type="radio"]').forEach(radio => {
+                if (radio.value === 'all') radio.checked = true;
+                else radio.checked = false;
+            });
+            
+            document.getElementById('rating-filter').value = 0;
+            updateRatingFilter();
+            updateActiveFiltersCount();
+            renderActiveFilters();
+            performSearch();
+            
+            showNotification('All filters cleared', 'info');
+        }
+
+        function updateFilters() {
+            performSearch();
+        }
+
+        function updateRatingFilter() {
+            const value = document.getElementById('rating-filter').value;
+            document.getElementById('rating-display').textContent = value > 0 ? `${value}+ stars` : 'Any rating';
+            performSearch();
+        }
+
+        function setViewMode(mode) {
+            currentViewMode = mode;
+            
+            // Update button states
+            document.querySelectorAll('.view-mode-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update grid layout
+            const grid = document.getElementById('results-grid');
+            grid.className = 'grid grid-cols-1 gap-6';
+            
+            switch (mode) {
+                case 'grid':
+                    grid.className += ' md:grid-cols-2 lg:grid-cols-3';
+                    break;
+                case 'list':
+                    grid.className += ' max-w-4xl';
+                    break;
+                case 'masonry':
+                    grid.className = 'masonry-view';
+                    break;
+            }
+            
+            renderResults();
+            showNotification(`Switched to ${mode} view`, 'info');
+        }
+
+        function setSearchType(type) {
+            currentSearchType = type;
+            
+            // Update tab states
+            document.querySelectorAll('.search-type-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            performSearch();
+            showNotification(`Filtering by ${type === 'all' ? 'all types' : type}`, 'info');
+        }
+
+        function updateSort() {
+            currentSort = document.getElementById('sort-select').value;
+            performSearch();
+            showNotification(`Sorted by ${currentSort}`, 'info');
+        }
+
+        function updateResultsPerPage(count) {
+            resultsPerPage = parseInt(count);
+            performSearch();
+            showNotification(`Showing ${count} results per page`, 'info');
+        }
+
+        function loadMoreResults() {
+            const btn = document.getElementById('load-more-btn');
+            const text = btn.querySelector('.load-more-text');
+            const spinner = btn.querySelector('.loading-spinner');
+            
+            // Show loading state
+            text.textContent = 'Loading...';
+            spinner.classList.remove('hidden');
+            btn.disabled = true;
+            
+            // Simulate loading
+            setTimeout(() => {
+                currentPage++;
+                
+                // Hide loading state
+                text.textContent = 'Load More Results';
+                spinner.classList.add('hidden');
+                btn.disabled = false;
+                
+                // Add more results (simulate)
+                const newResults = getFilteredResults().slice(currentPage * resultsPerPage, (currentPage + 1) * resultsPerPage);
+                
+                if (newResults.length === 0) {
+                    btn.style.display = 'none';
+                    showNotification('No more results to load', 'info');
+                } else {
+                    showNotification(`Loaded ${newResults.length} more results`, 'success');
+                }
+            }, 1500);
+        }
+
+        function openResult(id) {
+            const result = searchResults.find(r => r.id === id);
+            if (result) {
+                showNotification(`Opening ${result.title}...`, 'info');
+                // In a real app, navigate to detail page
+                setTimeout(() => {
+                    if (result.type === 'template') {
+                        window.location.href = 'resource-detail.html';
+                    } else {
+                        window.location.href = 'asset-detail.html';
+                    }
+                }, 1000);
+            }
+        }
+
+        function toggleFavorite(id) {
+            showNotification('Added to favorites!', 'success');
+            // In a real app, toggle favorite state
+        }
+
+        function showLoadingState() {
+            document.getElementById('loading-state').classList.remove('hidden');
+            document.getElementById('results-grid').classList.add('hidden');
+        }
+
+        function hideLoadingState() {
+            document.getElementById('loading-state').classList.add('hidden');
+            document.getElementById('results-grid').classList.remove('hidden');
+        }
+
+        function toggleAdvancedSearch() {
+            document.getElementById('advanced-search-modal').classList.remove('hidden');
+        }
+
+        function closeAdvancedSearch() {
+            document.getElementById('advanced-search-modal').classList.add('hidden');
+        }
+
+        function applyAdvancedSearch() {
+            const searchTerm = document.getElementById('advanced-search-term').value;
+            if (searchTerm) {
+                document.getElementById('main-search').value = searchTerm;
+                performSearch();
+            }
+            closeAdvancedSearch();
+            showNotification('Advanced search filters applied', 'success');
+        }
+
+        function resetAdvancedSearch() {
+            document.getElementById('advanced-search-term').value = '';
+            showNotification('Advanced search reset', 'info');
+        }
+
+        function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', isDarkMode);
+        }
+
+        function populateFAQ() {
+            // This would populate FAQ section if added to the page
+        }
+
+        function showNotification(message, type = 'info') {
+            const colors = {
+                info: 'bg-blue-500',
+                success: 'bg-green-500',
+                warning: 'bg-yellow-500',
+                error: 'bg-red-500'
+            };
+            
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 ${colors[type]} text-white px-6 py-3 rounded-lg shadow-lg z-50 transition-all duration-300 transform translate-x-full`;
+            notification.innerHTML = `
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-info-circle"></i>
+                    <span class="font-medium">${message}</span>
+                    <button onclick="this.parentElement.parentElement.remove()" class="ml-2 text-white hover:text-gray-200">
+                        <i class="fas fa-times text-xs"></i>
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.remove('translate-x-full');
+            }, 100);
+            
+            setTimeout(() => {
+                notification.classList.add('translate-x-full');
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 4000);
+        }
+
+        // Initialize active filters display
+        renderActiveFilters();
+
+        // Close modal when clicking outside
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('bg-black')) {
+                closeAdvancedSearch();
+            }
+        });
+
+        // Escape key to close modal
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeAdvancedSearch();
+            }
+        });
+
+        // Search on Enter key
+        document.getElementById('main-search').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                hideSearchSuggestions();
+                performSearch();
+            }
+        });
+    </script>
+</body>
+</html>
+

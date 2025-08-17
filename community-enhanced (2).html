@@ -1,0 +1,2016 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Community & Blog - DevHub (Enhanced Dynamic)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .tab-button.active {
+            background-color: #3b82f6;
+            color: white;
+            border-bottom-color: #3b82f6;
+        }
+        .masonry {
+            columns: 3;
+            column-gap: 1.5rem;
+        }
+        @media (max-width: 768px) {
+            .masonry {
+                columns: 1;
+            }
+        }
+        @media (max-width: 1024px) and (min-width: 769px) {
+            .masonry {
+                columns: 2;
+            }
+        }
+        .featured-post {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+            border: 2px solid #3b82f6;
+        }
+        .author-badge {
+            background: linear-gradient(45deg, #10b981, #059669);
+        }
+        .expert-badge {
+            background: linear-gradient(45deg, #f59e0b, #d97706);
+        }
+        .community-stats {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+        .discussion-thread {
+            border-left: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .discussion-thread:hover {
+            border-left-color: #3b82f6;
+            background-color: rgba(59, 130, 246, 0.05);
+        }
+        .dark .discussion-thread:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+        .reading-time {
+            background: rgba(59, 130, 246, 0.1);
+            color: #3b82f6;
+        }
+        .category-tag {
+            transition: all 0.3s ease;
+        }
+        .category-tag:hover {
+            transform: scale(1.05);
+        }
+        .newsletter-bg {
+            background: linear-gradient(135deg, #1e3a8a, #3730a3);
+        }
+        .modal-backdrop {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+        }
+        .live-indicator {
+            animation: pulse 2s infinite;
+            background: #ef4444;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .counter-animation {
+            transition: all 0.3s ease;
+        }
+        .new-content {
+            animation: slideInUp 0.5s ease-out;
+        }
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .notification-dot {
+            animation: bounce 1s infinite;
+        }
+        @keyframes bounce {
+            0%, 20%, 53%, 80%, 100% {
+                transform: translate3d(0,0,0);
+            }
+            40%, 43% {
+                transform: translate3d(0,-30px,0);
+            }
+            70% {
+                transform: translate3d(0,-15px,0);
+            }
+            90% {
+                transform: translate3d(0,-4px,0);
+            }
+        }
+        .activity-item {
+            opacity: 0;
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .typing-indicator {
+            display: inline-flex;
+            align-items: center;
+        }
+        .typing-dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: #3b82f6;
+            margin: 0 1px;
+            animation: typing 1.4s infinite;
+        }
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing {
+            0%, 60%, 100% { transform: scale(1); opacity: 0.7; }
+            30% { transform: scale(1.2); opacity: 1; }
+        }
+        .online-users {
+            background: linear-gradient(45deg, #10b981, #059669);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            animation: pulse 3s infinite;
+        }
+        .loading-skeleton {
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
+        .dark .loading-skeleton {
+            background: linear-gradient(90deg, #374151 25%, #4b5563 50%, #374151 75%);
+            background-size: 200% 100%;
+        }
+        @keyframes loading {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+        .filter-active {
+            background: #3b82f6 !important;
+            color: white !important;
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-lg sticky top-0 z-50 transition-colors duration-300">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo & Brand -->
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="flex items-center space-x-2">
+                        <div class="w-10 h-10 bg-gradient-to-r from-primary-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-code text-white text-lg"></i>
+                        </div>
+                        <h1 class="text-2xl font-bold bg-gradient-to-r from-primary-500 to-purple-600 bg-clip-text text-transparent">
+                            DevHub
+                        </h1>
+                    </a>
+                    <div class="hidden md:flex items-center space-x-2 text-gray-500">
+                        <i class="fas fa-chevron-right text-sm"></i>
+                        <span class="text-primary-600">Community</span>
+                        <div class="live-indicator w-2 h-2 rounded-full ml-2"></div>
+                        <span class="text-xs text-gray-500">LIVE</span>
+                    </div>
+                </div>
+
+                <!-- Navigation & Actions -->
+                <div class="flex items-center space-x-4">
+                    <!-- Online Users Count -->
+                    <div class="online-users" id="online-users">
+                        <i class="fas fa-users mr-1"></i>
+                        <span id="online-count">2,847</span> online
+                    </div>
+
+                    <!-- Search Bar -->
+                    <div class="relative hidden lg:block">
+                        <input 
+                            type="text" 
+                            placeholder="Search articles, discussions..." 
+                            class="pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 w-64"
+                            id="community-search"
+                        >
+                        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                    </div>
+
+                    <!-- Write Article Button -->
+                    <button onclick="openWriteModal()" class="hidden md:flex items-center space-x-2 bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors">
+                        <i class="fas fa-pen"></i>
+                        <span>Write Article</span>
+                    </button>
+
+                    <!-- Dark Mode Toggle -->
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:block"></i>
+                    </button>
+
+                    <!-- Back to Hub -->
+                    <a href="index.html" class="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-4 py-2 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">
+                        <i class="fas fa-arrow-left mr-2"></i>Back to Hub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="community-stats text-white py-16">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-4">DevHub Community</h2>
+            <p class="text-xl md:text-2xl mb-8 opacity-90 max-w-2xl mx-auto">
+                Join thousands of developers sharing knowledge, inspiration, and building the future of web development together.
+            </p>
+            
+            <!-- Community Stats -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+                <div class="text-center">
+                    <div class="text-3xl font-bold mb-2 counter-animation" id="members-count">15,247</div>
+                    <div class="text-sm opacity-75">Community Members</div>
+                    <div class="text-xs opacity-60 mt-1">
+                        +<span id="members-growth" class="text-green-300">23</span> today
+                    </div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold mb-2 counter-animation" id="articles-count">1,289</div>
+                    <div class="text-sm opacity-75">Articles Published</div>
+                    <div class="text-xs opacity-60 mt-1">
+                        +<span id="articles-growth" class="text-green-300">7</span> today
+                    </div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold mb-2 counter-animation" id="discussions-count">8,934</div>
+                    <div class="text-sm opacity-75">Discussions</div>
+                    <div class="text-xs opacity-60 mt-1">
+                        +<span id="discussions-growth" class="text-green-300">42</span> today
+                    </div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold mb-2 counter-animation" id="snippets-count">45,683</div>
+                    <div class="text-sm opacity-75">Code Snippets Shared</div>
+                    <div class="text-xs opacity-60 mt-1">
+                        +<span id="snippets-growth" class="text-green-300">156</span> today
+                    </div>
+                </div>
+            </div>
+
+            <!-- Live Activity Feed -->
+            <div class="mt-8 bg-black bg-opacity-20 rounded-lg p-4 max-w-2xl mx-auto">
+                <div class="flex items-center justify-center mb-3">
+                    <div class="live-indicator w-2 h-2 rounded-full mr-2"></div>
+                    <span class="text-sm font-medium">Live Activity</span>
+                </div>
+                <div id="live-activity" class="text-sm space-y-1 h-16 overflow-hidden">
+                    <div class="opacity-75">Loading live updates...</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Real-time Notifications -->
+    <div id="notifications-container" class="fixed bottom-4 right-4 z-50 space-y-2">
+        <!-- Notifications will be added here dynamically -->
+    </div>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-12">
+        <!-- Content Navigation -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg mb-8">
+            <div class="border-b dark:border-gray-700">
+                <nav class="flex space-x-8 px-6">
+                    <button onclick="switchTab('articles')" class="tab-button active py-4 px-2 border-b-2 border-transparent font-medium relative">
+                        <i class="fas fa-newspaper mr-2"></i>Articles
+                        <span class="notification-dot absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full" id="articles-notification"></span>
+                    </button>
+                    <button onclick="switchTab('tutorials')" class="tab-button py-4 px-2 border-b-2 border-transparent font-medium relative">
+                        <i class="fas fa-graduation-cap mr-2"></i>Tutorials
+                        <span class="notification-dot absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full hidden" id="tutorials-notification"></span>
+                    </button>
+                    <button onclick="switchTab('discussions')" class="tab-button py-4 px-2 border-b-2 border-transparent font-medium relative">
+                        <i class="fas fa-comments mr-2"></i>Discussions
+                        <span class="notification-dot absolute -top-1 -right-1 w-2 h-2 bg-red-500 rounded-full" id="discussions-notification"></span>
+                    </button>
+                    <button onclick="switchTab('showcase')" class="tab-button py-4 px-2 border-b-2 border-transparent font-medium">
+                        <i class="fas fa-star mr-2"></i>Showcase
+                    </button>
+                    <button onclick="switchTab('events')" class="tab-button py-4 px-2 border-b-2 border-transparent font-medium">
+                        <i class="fas fa-calendar mr-2"></i>Events
+                    </button>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Articles Section -->
+        <section id="articles-tab" class="tab-content active">
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                <!-- Main Articles Feed -->
+                <div class="lg:col-span-3">
+                    <!-- New Content Notification -->
+                    <div id="new-articles-notification" class="hidden bg-primary-100 dark:bg-primary-900 border border-primary-200 dark:border-primary-800 rounded-lg p-4 mb-6 cursor-pointer" onclick="loadNewArticles()">
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-2 h-2 bg-primary-500 rounded-full animate-pulse"></div>
+                                <span class="text-primary-800 dark:text-primary-200 font-medium">
+                                    <span id="new-articles-count">3</span> new articles available
+                                </span>
+                            </div>
+                            <span class="text-primary-600 dark:text-primary-400 text-sm">Click to load</span>
+                        </div>
+                    </div>
+
+                    <!-- Featured Article -->
+                    <div class="featured-post rounded-lg p-6 mb-8">
+                        <div class="flex items-center space-x-2 mb-4">
+                            <span class="bg-yellow-400 text-yellow-900 px-3 py-1 rounded-full text-sm font-medium">
+                                <i class="fas fa-star mr-1"></i>Featured
+                            </span>
+                            <span class="reading-time px-3 py-1 rounded-full text-sm font-medium">8 min read</span>
+                            <div class="flex items-center space-x-1 text-sm text-gray-500">
+                                <i class="fas fa-eye"></i>
+                                <span id="featured-views" class="counter-animation">12,456</span>
+                                <span class="text-green-500 text-xs">↑ Live</span>
+                            </div>
+                        </div>
+                        <h2 class="text-3xl font-bold mb-4 cursor-pointer hover:text-primary-600 transition-colors" onclick="openArticle(1)">
+                            The Future of React: What's Coming in 2024 and Beyond
+                        </h2>
+                        <p class="text-gray-600 dark:text-gray-400 mb-6 text-lg">
+                            Explore the latest developments in React ecosystem, from Server Components to concurrent features, 
+                            and how they'll shape the future of web development. A comprehensive guide for modern developers.
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/11906fce-6be9-45e5-a207-7e654dc55878.png" alt="Profile picture of Sarah Johnson, React expert and technical writer at DevHub" class="w-10 h-10 rounded-full">
+                                <div>
+                                    <div class="font-semibold">Sarah Johnson</div>
+                                    <div class="text-sm text-gray-500">React Expert • 3 days ago</div>
+                                </div>
+                                <span class="expert-badge text-white px-2 py-1 rounded-full text-xs font-medium">Expert</span>
+                            </div>
+                            <div class="flex items-center space-x-4 text-gray-500">
+                                <span class="typing-indicator hidden">
+                                    <span class="typing-dot"></span>
+                                    <span class="typing-dot"></span>
+                                    <span class="typing-dot"></span>
+                                    <span class="ml-2 text-xs">Someone is typing...</span>
+                                </span>
+                                <span><i class="fas fa-heart mr-1"></i><span id="featured-likes">342</span></span>
+                                <span><i class="fas fa-comment mr-1"></i><span id="featured-comments">89</span></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Article Grid -->
+                    <div class="space-y-6" id="articles-grid">
+                        <!-- Articles will be populated by JavaScript -->
+                    </div>
+
+                    <!-- Loading Skeleton -->
+                    <div id="articles-loading" class="hidden space-y-6">
+                        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
+                            <div class="loading-skeleton h-4 rounded mb-4"></div>
+                            <div class="loading-skeleton h-6 rounded mb-4 w-3/4"></div>
+                            <div class="loading-skeleton h-16 rounded mb-4"></div>
+                            <div class="flex space-x-2">
+                                <div class="loading-skeleton h-6 w-16 rounded"></div>
+                                <div class="loading-skeleton h-6 w-20 rounded"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Load More Button -->
+                    <div class="text-center mt-8">
+                        <button onclick="loadMoreArticles()" class="bg-primary-600 text-white px-6 py-3 rounded-lg hover:bg-primary-700 transition-colors" id="load-more-articles">
+                            <span class="button-text">Load More Articles</span>
+                            <i class="fas fa-spinner fa-spin ml-2 hidden loading-spinner"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="lg:col-span-1">
+                    <!-- Live Stats -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg p-6 mb-6 shadow-lg">
+                        <h3 class="text-xl font-bold mb-4">Community Activity</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm">Articles Today</span>
+                                <span class="font-bold text-primary-600" id="articles-today">7</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm">Active Discussions</span>
+                                <span class="font-bold text-green-600" id="active-discussions">23</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm">New Members</span>
+                                <span class="font-bold text-purple-600" id="new-members">12</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span class="text-sm">Online Now</span>
+                                <span class="font-bold text-orange-600" id="sidebar-online">2,847</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Categories -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg p-6 mb-6 shadow-lg">
+                        <h3 class="text-xl font-bold mb-4">Categories</h3>
+                        <div class="space-y-2" id="categories-list">
+                            <!-- Categories will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Trending Tags -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg p-6 mb-6 shadow-lg">
+                        <h3 class="text-xl font-bold mb-4">Trending Tags</h3>
+                        <div class="flex flex-wrap gap-2" id="trending-tags">
+                            <!-- Tags will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Top Contributors -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg p-6 mb-6 shadow-lg">
+                        <h3 class="text-xl font-bold mb-4">Top Contributors</h3>
+                        <div class="space-y-3" id="top-contributors">
+                            <!-- Contributors will be populated by JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Newsletter Signup -->
+                    <div class="newsletter-bg text-white rounded-lg p-6 shadow-lg">
+                        <h3 class="text-xl font-bold mb-4">Stay Updated</h3>
+                        <p class="mb-4 opacity-90">Get weekly digest of best articles and tutorials</p>
+                        <div class="space-y-3">
+                            <input 
+                                type="email" 
+                                placeholder="Your email address"
+                                class="w-full px-3 py-2 rounded-lg text-gray-900"
+                                id="newsletter-email"
+                            >
+                            <button onclick="subscribeNewsletter()" class="w-full bg-white text-primary-600 py-2 px-4 rounded-lg hover:bg-gray-100 transition-colors font-semibold">
+                                Subscribe
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tutorials Section -->
+        <section id="tutorials-tab" class="tab-content">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold mb-4">Learning Tutorials</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                    Step-by-step guides to master modern web development techniques and tools
+                </p>
+            </div>
+
+            <!-- Tutorial Filters -->
+            <div class="flex flex-wrap justify-center gap-4 mb-8">
+                <button onclick="filterTutorials('all')" class="tutorial-filter active px-6 py-2 rounded-full bg-primary-600 text-white">All Tutorials</button>
+                <button onclick="filterTutorials('beginner')" class="tutorial-filter px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">Beginner</button>
+                <button onclick="filterTutorials('intermediate')" class="tutorial-filter px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">Intermediate</button>
+                <button onclick="filterTutorials('advanced')" class="tutorial-filter px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">Advanced</button>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="tutorials-grid">
+                <!-- Tutorials will be populated by JavaScript -->
+            </div>
+
+            <!-- Load More Tutorials -->
+            <div class="text-center mt-8">
+                <button onclick="loadMoreTutorials()" class="bg-primary-600 text-white px-6 py-3 rounded-lg hover:bg-primary-700 transition-colors" id="load-more-tutorials">
+                    <span class="button-text">Load More Tutorials</span>
+                    <i class="fas fa-spinner fa-spin ml-2 hidden loading-spinner"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- Discussions Section -->
+        <section id="discussions-tab" class="tab-content">
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-3xl font-bold">Community Discussions</h2>
+                <button onclick="openDiscussionModal()" class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors">
+                    <i class="fas fa-plus mr-2"></i>Start Discussion
+                </button>
+            </div>
+
+            <!-- Discussion Categories -->
+            <div class="flex flex-wrap gap-4 mb-8">
+                <button onclick="filterDiscussions('all')" class="discussion-filter active px-4 py-2 rounded-lg bg-primary-600 text-white">All</button>
+                <button onclick="filterDiscussions('help')" class="discussion-filter px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">Help & Support</button>
+                <button onclick="filterDiscussions('showcase')" class="discussion-filter px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">Show & Tell</button>
+                <button onclick="filterDiscussions('feedback')" class="discussion-filter px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">Feedback</button>
+                <button onclick="filterDiscussions('general')" class="discussion-filter px-4 py-2 rounded-lg bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">General</button>
+            </div>
+
+            <div class="space-y-6" id="discussions-grid">
+                <!-- Discussions will be populated by JavaScript -->
+            </div>
+
+            <!-- Load More Discussions -->
+            <div class="text-center mt-8">
+                <button onclick="loadMoreDiscussions()" class="bg-primary-600 text-white px-6 py-3 rounded-lg hover:bg-primary-700 transition-colors" id="load-more-discussions">
+                    <span class="button-text">Load More Discussions</span>
+                    <i class="fas fa-spinner fa-spin ml-2 hidden loading-spinner"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- Showcase Section -->
+        <section id="showcase-tab" class="tab-content">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold mb-4">Community Showcase</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                    Discover amazing projects built by our community members
+                </p>
+            </div>
+
+            <!-- Showcase Filters -->
+            <div class="flex flex-wrap justify-center gap-4 mb-8">
+                <button onclick="filterShowcase('all')" class="showcase-filter active px-6 py-2 rounded-full bg-primary-600 text-white">All Projects</button>
+                <button onclick="filterShowcase('web')" class="showcase-filter px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">Web Apps</button>
+                <button onclick="filterShowcase('mobile')" class="showcase-filter px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">Mobile Apps</button>
+                <button onclick="filterShowcase('ui')" class="showcase-filter px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">UI/UX Design</button>
+                <button onclick="filterShowcase('tools')" class="showcase-filter px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors">Dev Tools</button>
+            </div>
+
+            <div class="masonry" id="showcase-grid">
+                <!-- Showcase items will be populated by JavaScript -->
+            </div>
+
+            <!-- Load More Showcase -->
+            <div class="text-center mt-8">
+                <button onclick="loadMoreShowcase()" class="bg-primary-600 text-white px-6 py-3 rounded-lg hover:bg-primary-700 transition-colors" id="load-more-showcase">
+                    <span class="button-text">Load More Projects</span>
+                    <i class="fas fa-spinner fa-spin ml-2 hidden loading-spinner"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- Events Section -->
+        <section id="events-tab" class="tab-content">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold mb-4">Community Events</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                    Join webinars, workshops, and meetups with fellow developers
+                </p>
+            </div>
+
+            <!-- Upcoming Events -->
+            <div class="mb-12">
+                <h3 class="text-2xl font-bold mb-6">Upcoming Events</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="upcoming-events">
+                    <!-- Upcoming events will be populated by JavaScript -->
+                </div>
+                
+                <!-- Load More Upcoming Events -->
+                <div class="text-center mt-8">
+                    <button onclick="loadMoreEvents('upcoming')" class="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors" id="load-more-upcoming">
+                        <span class="button-text">Load More Upcoming Events</span>
+                        <i class="fas fa-spinner fa-spin ml-2 hidden loading-spinner"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Past Events -->
+            <div>
+                <h3 class="text-2xl font-bold mb-6">Past Events</h3>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="past-events">
+                    <!-- Past events will be populated by JavaScript -->
+                </div>
+                
+                <!-- Load More Past Events -->
+                <div class="text-center mt-8">
+                    <button onclick="loadMoreEvents('past')" class="bg-gray-600 text-white px-6 py-3 rounded-lg hover:bg-gray-700 transition-colors" id="load-more-past">
+                        <span class="button-text">Load More Past Events</span>
+                        <i class="fas fa-spinner fa-spin ml-2 hidden loading-spinner"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Write Article Modal -->
+    <div id="write-modal" class="hidden fixed inset-0 modal-backdrop z-50 flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-lg max-w-4xl w-full max-h-90vh overflow-y-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold">Write New Article</h3>
+                    <button onclick="closeWriteModal()" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <form id="article-form" class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Article Title</label>
+                        <input type="text" placeholder="Enter compelling title" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600" required>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Category</label>
+                            <select class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600">
+                                <option>React & JavaScript</option>
+                                <option>UI/UX Design</option>
+                                <option>Backend Development</option>
+                                <option>DevOps & Tools</option>
+                                <option>Career & Industry</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-2">Reading Time (minutes)</label>
+                            <input type="number" placeholder="5" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600">
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Summary</label>
+                        <textarea rows="3" placeholder="Brief summary of your article..." class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600" required></textarea>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Tags</label>
+                        <input type="text" placeholder="react, javascript, tutorial" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Article Content</label>
+                        <textarea rows="15" placeholder="Write your article content here using Markdown..." class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 font-mono" required></textarea>
+                        <p class="text-sm text-gray-500 mt-1">Supports Markdown formatting</p>
+                    </div>
+                    
+                    <div class="flex space-x-4">
+                        <button type="button" onclick="saveAsDraft()" class="flex-1 bg-gray-600 text-white py-3 px-6 rounded-lg hover:bg-gray-700 transition-colors">
+                            Save as Draft
+                        </button>
+                        <button type="submit" class="flex-1 bg-primary-600 text-white py-3 px-6 rounded-lg hover:bg-primary-700 transition-colors">
+                            Publish Article
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Start Discussion Modal -->
+    <div id="discussion-modal" class="hidden fixed inset-0 modal-backdrop z-50 flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-lg max-w-2xl w-full">
+            <div class="p-6">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-2xl font-bold">Start New Discussion</h3>
+                    <button onclick="closeDiscussionModal()" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                        <i class="fas fa-times text-xl"></i>
+                    </button>
+                </div>
+                
+                <form id="discussion-form" class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Discussion Title</label>
+                        <input type="text" placeholder="What would you like to discuss?" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600" required>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Category</label>
+                        <select class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600">
+                            <option>Help & Support</option>
+                            <option>Show & Tell</option>
+                            <option>Feedback</option>
+                            <option>General</option>
+                        </select>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Description</label>
+                        <textarea rows="6" placeholder="Provide details about your discussion..." class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600" required></textarea>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Tags</label>
+                        <input type="text" placeholder="help, react, bug" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600">
+                    </div>
+                    
+                    <div class="flex space-x-4">
+                        <button type="button" onclick="closeDiscussionModal()" class="flex-1 bg-gray-300 dark:bg-gray-600 py-3 px-6 rounded-lg hover:bg-gray-400 dark:hover:bg-gray-700 transition-colors">
+                            Cancel
+                        </button>
+                        <button type="submit" class="flex-1 bg-primary-600 text-white py-3 px-6 rounded-lg hover:bg-primary-700 transition-colors">
+                            Start Discussion
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State Management
+        let isDarkMode = false;
+        let currentTab = 'articles';
+        let updateIntervals = {};
+        let liveActivityMessages = [];
+        let newArticlesCount = 0;
+        let currentFilters = {
+            articles: 'all',
+            tutorials: 'all',
+            discussions: 'all',
+            showcase: 'all'
+        };
+        let pageIndices = {
+            articles: 0,
+            tutorials: 0,
+            discussions: 0,
+            showcase: 0,
+            upcomingEvents: 0,
+            pastEvents: 0
+        };
+
+        // Base counters for live updates
+        let communityStats = {
+            members: 15247,
+            articles: 1289,
+            discussions: 8934,
+            snippets: 45683,
+            onlineUsers: 2847,
+            membersGrowth: 23,
+            articlesGrowth: 7,
+            discussionsGrowth: 42,
+            snippetsGrowth: 156,
+            articlesToday: 7,
+            activeDiscussions: 23,
+            newMembers: 12
+        };
+
+        // Extended Sample Data
+        const allArticles = [
+            {
+                id: 2,
+                title: "Building Responsive Components with Tailwind CSS",
+                summary: "Learn advanced Tailwind CSS techniques for creating truly responsive components that work across all devices.",
+                author: "Mike Chen",
+                authorAvatar: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/98b46262-45f8-4b79-ae3c-7d85dbb55051.png",
+                authorAvatarAlt: "Profile picture of Mike Chen, CSS specialist and frontend developer",
+                category: "UI/UX Design",
+                readTime: "6 min read",
+                views: 8247,
+                likes: 156,
+                comments: 34,
+                date: "5 days ago",
+                tags: ["CSS", "Tailwind", "Responsive"],
+                featured: false
+            },
+            {
+                id: 3,
+                title: "State Management in React: Redux vs Zustand vs Context",
+                summary: "A comprehensive comparison of different state management solutions for React applications in 2024.",
+                author: "Emma Davis",
+                authorAvatar: "https://placehold.co/40x40",
+                authorAvatarAlt: "Profile picture of Emma Davis, React developer and state management expert",
+                category: "React & JavaScript",
+                readTime: "12 min read",
+                views: 15743,
+                likes: 298,
+                comments: 67,
+                date: "1 week ago",
+                tags: ["React", "State Management", "Redux", "Zustand"],
+                featured: false
+            },
+            {
+                id: 4,
+                title: "The Art of API Design: RESTful Best Practices",
+                summary: "Master the principles of designing clean, maintainable, and scalable REST APIs that developers love to use.",
+                author: "Alex Rodriguez",
+                authorAvatar: "https://placehold.co/40x40",
+                authorAvatarAlt: "Profile picture of Alex Rodriguez, backend engineer and API design consultant",
+                category: "Backend Development",
+                readTime: "10 min read",
+                views: 6934,
+                likes: 189,
+                comments: 45,
+                date: "1 week ago",
+                tags: ["API", "REST", "Backend", "Design"],
+                featured: false
+            },
+            {
+                id: 5,
+                title: "Mastering TypeScript: Advanced Types and Patterns",
+                summary: "Deep dive into TypeScript's advanced type system, utility types, and design patterns for scalable applications.",
+                author: "David Kim",
+                authorAvatar: "https://placehold.co/40x40",
+                authorAvatarAlt: "Profile picture of David Kim, TypeScript expert and software architect",
+                category: "React & JavaScript",
+                readTime: "15 min read",
+                views: 9834,
+                likes: 267,
+                comments: 78,
+                date: "2 weeks ago",
+                tags: ["TypeScript", "Advanced", "Patterns"],
+                featured: false
+            },
+            {
+                id: 6,
+                title: "CSS Animations: From Basics to Advanced Techniques",
+                summary: "Create stunning web animations using CSS transitions, keyframes, and modern animation libraries.",
+                author: "Lisa Wang",
+                authorAvatar: "https://placehold.co/40x40",
+                authorAvatarAlt: "Profile picture of Lisa Wang, animation specialist and creative developer",
+                category: "UI/UX Design",
+                readTime: "9 min read",
+                views: 7456,
+                likes: 134,
+                comments: 29,
+                date: "2 weeks ago",
+                tags: ["CSS", "Animation", "UI"],
+                featured: false
+            },
+            {
+                id: 7,
+                title: "Docker for Frontend Developers: A Complete Guide",
+                summary: "Learn how to containerize your frontend applications and streamline your development workflow with Docker.",
+                author: "Carlos Martinez",
+                authorAvatar: "https://placehold.co/40x40",
+                authorAvatarAlt: "Profile picture of Carlos Martinez, DevOps engineer and Docker expert",
+                category: "DevOps & Tools",
+                readTime: "11 min read",
+                views: 5623,
+                likes: 98,
+                comments: 23,
+                date: "3 weeks ago",
+                tags: ["Docker", "DevOps", "Containerization"],
+                featured: false
+            }
+        ];
+
+        const allTutorials = [
+            {
+                id: 1,
+                title: "React Hooks Complete Guide",
+                description: "Master all React hooks with practical examples and real-world use cases",
+                level: "intermediate",
+                duration: "45 min",
+                author: "Sarah Johnson",
+                imageUrl: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/509ce7a4-8338-4182-a9e3-e725a7313ff5.png",
+                imageAlt: "React hooks tutorial showing useState, useEffect, and custom hooks in action",
+                rating: 4.9,
+                students: 12345
+            },
+            {
+                id: 2,
+                title: "CSS Grid Layout Mastery",
+                description: "Learn CSS Grid from basics to advanced layouts with hands-on projects",
+                level: "beginner",
+                duration: "30 min",
+                author: "Mike Chen",
+                imageUrl: "https://placehold.co/400x300",
+                imageAlt: "CSS Grid tutorial interface showing various grid layout examples and code",
+                rating: 4.8,
+                students: 8743
+            },
+            {
+                id: 3,
+                title: "Node.js Authentication System",
+                description: "Build secure authentication with JWT, bcrypt, and best security practices",
+                level: "advanced",
+                duration: "60 min",
+                author: "Alex Rodriguez",
+                imageUrl: "https://placehold.co/400x300",
+                imageAlt: "Node.js authentication tutorial showing JWT implementation and security setup",
+                rating: 4.7,
+                students: 5234
+            },
+            {
+                id: 4,
+                title: "Vue 3 Composition API Deep Dive",
+                description: "Master Vue 3's Composition API with real-world examples and best practices",
+                level: "intermediate",
+                duration: "40 min",
+                author: "Marie Dubois",
+                imageUrl: "https://placehold.co/400x300",
+                imageAlt: "Vue 3 Composition API tutorial showing reactive data and component composition",
+                rating: 4.6,
+                students: 6789
+            },
+            {
+                id: 5,
+                title: "MongoDB Aggregation Pipeline",
+                description: "Learn advanced MongoDB queries and data aggregation techniques",
+                level: "advanced",
+                duration: "50 min",
+                author: "Raj Patel",
+                imageUrl: "https://placehold.co/400x300",
+                imageAlt: "MongoDB aggregation tutorial showing complex query operations and data processing",
+                rating: 4.5,
+                students: 3456
+            },
+            {
+                id: 6,
+                title: "JavaScript ES2024 New Features",
+                description: "Explore the latest JavaScript features and how to use them in modern applications",
+                level: "beginner",
+                duration: "25 min",
+                author: "Tom Wilson",
+                imageUrl: "https://placehold.co/400x300",
+                imageAlt: "JavaScript ES2024 features tutorial showing new syntax and API improvements",
+                rating: 4.8,
+                students: 9876
+            }
+        ];
+
+        const allDiscussions = [
+            {
+                id: 1,
+                title: "Best practices for handling async operations in React?",
+                author: "DevNewbie123",
+                category: "help",
+                replies: 23,
+                views: 1234,
+                lastActivity: "2 hours ago",
+                tags: ["React", "Async", "Best Practices"],
+                solved: false
+            },
+            {
+                id: 2,
+                title: "Show off: Built a real-time chat app with WebSockets",
+                author: "CodeMaster99",
+                category: "showcase",
+                replies: 45,
+                views: 3876,
+                lastActivity: "5 hours ago",
+                tags: ["WebSocket", "Real-time", "Chat"],
+                solved: false
+            },
+            {
+                id: 3,
+                title: "Feedback wanted: New UI component library",
+                author: "UIExplorer",
+                category: "feedback",
+                replies: 12,
+                views: 892,
+                lastActivity: "1 day ago",
+                tags: ["UI", "Components", "Feedback"],
+                solved: false
+            },
+            {
+                id: 4,
+                title: "How to optimize React app performance?",
+                author: "PerformanceGuru",
+                category: "help",
+                replies: 34,
+                views: 2345,
+                lastActivity: "3 hours ago",
+                tags: ["React", "Performance", "Optimization"],
+                solved: true
+            },
+            {
+                id: 5,
+                title: "My journey from designer to developer",
+                author: "DesignToDev",
+                category: "general",
+                replies: 67,
+                views: 4567,
+                lastActivity: "6 hours ago",
+                tags: ["Career", "Journey", "Experience"],
+                solved: false
+            },
+            {
+                id: 6,
+                title: "New CSS features in 2024 - what do you think?",
+                author: "CSSEnthusiast",
+                category: "general",
+                replies: 18,
+                views: 1567,
+                lastActivity: "1 day ago",
+                tags: ["CSS", "2024", "Features"],
+                solved: false
+            }
+        ];
+
+        const allShowcaseProjects = [
+            {
+                id: 1,
+                title: "TaskFlow - Project Management App",
+                description: "A beautiful project management tool built with React and Node.js",
+                author: "Jessica Wong",
+                category: "web",
+                imageUrl: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/97593802-2e16-441f-9a57-329d3a3fa1c7.png",
+                imageAlt: "TaskFlow project management app showing kanban boards, task tracking, and team collaboration features",
+                likes: 234,
+                views: 5634,
+                tech: ["React", "Node.js", "MongoDB"]
+            },
+            {
+                id: 2,
+                title: "Fitness Tracker Mobile App",
+                description: "Cross-platform fitness app with workout tracking and nutrition plans",
+                author: "Carlos Silva",
+                category: "mobile",
+                imageUrl: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/24069971-34c8-4e1d-b65c-a603c2ffeac8.png",
+                imageAlt: "Fitness tracker mobile app interface showing workout logs, progress charts, and nutrition tracking",
+                likes: 189,
+                views: 4234,
+                tech: ["React Native", "Firebase", "Redux"]
+            },
+            {
+                id: 3,
+                title: "Dashboard Design System",
+                description: "Complete design system for admin dashboards with 100+ components",
+                author: "Maria Garcia",
+                category: "ui",
+                imageUrl: "https://placehold.co/400x300",
+                imageAlt: "Dashboard design system showing component library, color schemes, and typography guidelines",
+                likes: 412,
+                views: 8934,
+                tech: ["Figma", "Design Tokens", "Storybook"]
+            },
+            {
+                id: 4,
+                title: "AI Code Assistant",
+                description: "VS Code extension that helps write better code using AI",
+                author: "Tech Innovator",
+                category: "tools",
+                imageUrl: "https://placehold.co/400x300",
+                imageAlt: "AI code assistant extension interface showing intelligent code suggestions and refactoring",
+                likes: 567,
+                views: 12456,
+                tech: ["TypeScript", "VS Code API", "OpenAI"]
+            },
+            {
+                id: 5,
+                title: "E-commerce Platform",
+                description: "Full-stack e-commerce solution with payment integration",
+                author: "Shop Builder",
+                category: "web",
+                imageUrl: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/3226e61e-570f-4c1f-a603-4212312b3db6.png",
+                imageAlt: "E-commerce platform showing product catalog, shopping cart, and checkout process",
+                likes: 298,
+                views: 7890,
+                tech: ["Next.js", "Stripe", "PostgreSQL"]
+            },
+            {
+                id: 6,
+                title: "Weather App Widget",
+                description: "Beautiful weather widget for mobile applications",
+                author: "UI Creator",
+                category: "mobile",
+                imageUrl: "https://placehold.co/300x400",
+                imageAlt: "Weather app widget showing current conditions, forecasts, and animated weather icons",
+                likes: 167,
+                views: 3456,
+                tech: ["Flutter", "Weather API", "Animations"]
+            }
+        ];
+
+        const allUpcomingEvents = [
+            {
+                id: 1,
+                title: "React Performance Optimization Workshop",
+                date: "March 25, 2024",
+                time: "2:00 PM EST",
+                type: "Workshop",
+                speaker: "Dan Abramov",
+                attendees: 456,
+                imageUrl: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/d85624e2-c87f-4130-bbba-dabb4f26c966.png",
+                imageAlt: "React performance workshop banner with speaker photo and optimization techniques preview"
+            },
+            {
+                id: 2,
+                title: "UI/UX Design Trends for 2024",
+                date: "March 30, 2024",
+                time: "3:00 PM EST",
+                type: "Webinar",
+                speaker: "Sarah Chen",
+                attendees: 234,
+                imageUrl: "https://placehold.co/400x200",
+                imageAlt: "UI/UX design trends webinar banner showcasing modern design elements and 2024 predictions"
+            },
+            {
+                id: 3,
+                title: "TypeScript Advanced Patterns Masterclass",
+                date: "April 5, 2024",
+                time: "1:00 PM EST",
+                type: "Masterclass",
+                speaker: "Anders Hejlsberg",
+                attendees: 789,
+                imageUrl: "https://placehold.co/400x200",
+                imageAlt: "TypeScript masterclass banner showing advanced type patterns and real-world examples"
+            },
+            {
+                id: 4,
+                title: "Building Scalable APIs with GraphQL",
+                date: "April 12, 2024",
+                time: "4:00 PM EST",
+                type: "Workshop",
+                speaker: "Lee Byron",
+                attendees: 345,
+                imageUrl: "https://placehold.co/400x200",
+                imageAlt: "GraphQL workshop banner showing schema design and query optimization techniques"
+            }
+        ];
+
+        const allPastEvents = [
+            {
+                id: 1,
+                title: "JavaScript Frameworks Comparison",
+                date: "March 15, 2024",
+                speaker: "John Doe",
+                type: "Workshop",
+                imageUrl: "https://placehold.co/400x200",
+                imageAlt: "Past event recording of JavaScript frameworks comparison workshop"
+            },
+            {
+                id: 2,
+                title: "CSS Grid vs Flexbox: When to Use What",
+                date: "March 10, 2024",
+                speaker: "Rachel Andrew",
+                type: "Webinar",
+                imageUrl: "https://placehold.co/400x200",
+                imageAlt: "CSS layout workshop comparing Grid and Flexbox with practical examples"
+            },
+            {
+                id: 3,
+                title: "Node.js Security Best Practices",
+                date: "March 5, 2024",
+                speaker: "Security Expert",
+                type: "Security Talk",
+                imageUrl: "https://placehold.co/400x200",
+                imageAlt: "Node.js security workshop covering authentication, validation, and vulnerability prevention"
+            }
+        ];
+
+        // Activity templates and data
+        const activityTemplates = [
+            "{user} just published a new article about {topic}",
+            "{user} started a discussion on {topic}",
+            "{user} shared a code snippet for {topic}",
+            "{user} joined the community",
+            "{user} liked an article about {topic}",
+            "{user} commented on {topic} discussion",
+            "New tutorial on {topic} is trending",
+            "{user} uploaded a showcase project",
+            "{user} answered a question about {topic}",
+            "Weekly {topic} challenge started"
+        ];
+
+        const users = ["DevMaster99", "CodeNinja", "ReactPro", "VueExpert", "JSWizard", "CSSGuru", "NodeDev", "PythonCoder", "UIDesigner", "FullStackDev", "TypeScriptPro", "GraphQLGuru", "DockerExpert", "CloudArchitect", "SecurityPro"];
+        const topics = ["React Hooks", "CSS Grid", "Node.js", "TypeScript", "Vue 3", "Next.js", "GraphQL", "Docker", "AWS", "MongoDB", "Tailwind CSS", "Python", "Machine Learning", "API Design", "Performance", "Security"];
+
+        // Categories data
+        const categoriesData = [
+            { name: "React & JavaScript", count: 245, articles: 245, filter: "React & JavaScript" },
+            { name: "UI/UX Design", count: 189, articles: 189, filter: "UI/UX Design" },
+            { name: "Backend Development", count: 156, articles: 156, filter: "Backend Development" },
+            { name: "DevOps & Tools", count: 98, articles: 98, filter: "DevOps & Tools" },
+            { name: "Career & Industry", count: 87, articles: 87, filter: "Career & Industry" }
+        ];
+
+        // Contributors data
+        const contributorsData = [
+            { name: "Sarah Johnson", avatar: "https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/cd0cf404-7ffe-4c6d-9f84-1c6d157ac5f2.png", avatarAlt: "Profile of Sarah Johnson, top contributor", articles: 23, badge: "Expert", specialty: "React & Performance" },
+            { name: "Mike Chen", avatar: "https://placehold.co/32x32", avatarAlt: "Profile of Mike Chen, community contributor", articles: 18, badge: "Pro", specialty: "CSS & Design" },
+            { name: "Emma Davis", avatar: "https://placehold.co/32x32", avatarAlt: "Profile of Emma Davis, tutorial creator", articles: 15, badge: "Author", specialty: "State Management" },
+            { name: "Alex Rodriguez", avatar: "https://placehold.co/32x32", avatarAlt: "Profile of Alex Rodriguez, backend specialist", articles: 19, badge: "Expert", specialty: "Backend & APIs" },
+            { name: "David Kim", avatar: "https://placehold.co/32x32", avatarAlt: "Profile of David Kim, TypeScript expert", articles: 14, badge: "Pro", specialty: "TypeScript & Architecture" }
+        ];
+
+        // Currently displayed data
+        let displayedArticles = [];
+        let displayedTutorials = [];
+        let displayedDiscussions = [];
+        let displayedShowcase = [];
+        let displayedUpcomingEvents = [];
+        let displayedPastEvents = [];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            initializePage();
+            loadInitialData();
+            renderSidebar();
+            startLiveUpdates();
+        });
+
+        function initializePage() {
+            if (localStorage.getItem('darkMode') === 'true') {
+                isDarkMode = true;
+                document.documentElement.classList.add('dark');
+            }
+        }
+
+        function loadInitialData() {
+            // Load initial content for each section
+            displayedArticles = allArticles.slice(0, 3);
+            displayedTutorials = allTutorials.slice(0, 3);
+            displayedDiscussions = allDiscussions.slice(0, 3);
+            displayedShowcase = allShowcaseProjects.slice(0, 3);
+            displayedUpcomingEvents = allUpcomingEvents.slice(0, 2);
+            displayedPastEvents = allPastEvents.slice(0, 1);
+
+            pageIndices.articles = 3;
+            pageIndices.tutorials = 3;
+            pageIndices.discussions = 3;
+            pageIndices.showcase = 3;
+            pageIndices.upcomingEvents = 2;
+            pageIndices.pastEvents = 1;
+
+            renderAllContent();
+        }
+
+        function renderAllContent() {
+            renderArticles();
+            renderTutorials();
+            renderDiscussions();
+            renderShowcase();
+            renderEvents();
+        }
+
+        function startLiveUpdates() {
+            // Update community stats every 5 seconds
+            updateIntervals.stats = setInterval(updateCommunityStats, 5000);
+            
+            // Update live activity every 3 seconds
+            updateIntervals.activity = setInterval(updateLiveActivity, 3000);
+            
+            // Update article views/likes every 2 seconds
+            updateIntervals.engagement = setInterval(updateEngagementStats, 2000);
+            
+            // Show new content notifications randomly
+            updateIntervals.newContent = setInterval(showNewContentNotification, 15000);
+            
+            // Update online user count every 10 seconds
+            updateIntervals.onlineUsers = setInterval(updateOnlineUsers, 10000);
+            
+            // Show typing indicators randomly
+            updateIntervals.typing = setInterval(showTypingIndicator, 8000);
+        }
+
+        function updateCommunityStats() {
+            // Randomly increment counters
+            if (Math.random() > 0.3) {
+                communityStats.members += Math.floor(Math.random() * 3) + 1;
+                updateCounter('members-count', communityStats.members);
+                communityStats.membersGrowth++;
+                updateCounter('members-growth', communityStats.membersGrowth);
+            }
+            
+            if (Math.random() > 0.7) {
+                communityStats.articles++;
+                updateCounter('articles-count', communityStats.articles);
+                communityStats.articlesGrowth++;
+                updateCounter('articles-growth', communityStats.articlesGrowth);
+                communityStats.articlesToday++;
+                updateCounter('articles-today', communityStats.articlesToday);
+            }
+            
+            if (Math.random() > 0.5) {
+                communityStats.discussions += Math.floor(Math.random() * 2) + 1;
+                updateCounter('discussions-count', communityStats.discussions);
+                communityStats.discussionsGrowth += Math.floor(Math.random() * 2) + 1;
+                updateCounter('discussions-growth', communityStats.discussionsGrowth);
+            }
+            
+            if (Math.random() > 0.4) {
+                communityStats.snippets += Math.floor(Math.random() * 5) + 1;
+                updateCounter('snippets-count', communityStats.snippets);
+                communityStats.snippetsGrowth += Math.floor(Math.random() * 3) + 1;
+                updateCounter('snippets-growth', communityStats.snippetsGrowth);
+            }
+            
+            // Update sidebar stats
+            if (Math.random() > 0.6) {
+                communityStats.activeDiscussions += Math.floor(Math.random() * 2);
+                updateCounter('active-discussions', communityStats.activeDiscussions);
+            }
+            
+            if (Math.random() > 0.8) {
+                communityStats.newMembers++;
+                updateCounter('new-members', communityStats.newMembers);
+            }
+        }
+
+        function updateLiveActivity() {
+            const randomTemplate = activityTemplates[Math.floor(Math.random() * activityTemplates.length)];
+            const randomUser = users[Math.floor(Math.random() * users.length)];
+            const randomTopic = topics[Math.floor(Math.random() * topics.length)];
+            
+            const message = randomTemplate.replace('{user}', randomUser).replace('{topic}', randomTopic);
+            
+            liveActivityMessages.unshift(message);
+            if (liveActivityMessages.length > 3) {
+                liveActivityMessages.pop();
+            }
+            
+            const activityContainer = document.getElementById('live-activity');
+            activityContainer.innerHTML = liveActivityMessages.map((msg, index) => 
+                `<div class="activity-item opacity-${100 - (index * 30)} text-xs" style="animation-delay: ${index * 0.1}s">${msg}</div>`
+            ).join('');
+        }
+
+        function updateEngagementStats() {
+            // Update featured article stats
+            const featuredViews = document.getElementById('featured-views');
+            const featuredLikes = document.getElementById('featured-likes');
+            const featuredComments = document.getElementById('featured-comments');
+            
+            if (Math.random() > 0.3 && featuredViews) {
+                const currentViews = parseInt(featuredViews.textContent.replace(/,/g, ''));
+                const newViews = currentViews + Math.floor(Math.random() * 10) + 1;
+                updateCounterWithCommas('featured-views', newViews);
+            }
+            
+            if (Math.random() > 0.8 && featuredLikes) {
+                const currentLikes = parseInt(featuredLikes.textContent);
+                updateCounter('featured-likes', currentLikes + 1);
+            }
+            
+            if (Math.random() > 0.9 && featuredComments) {
+                const currentComments = parseInt(featuredComments.textContent);
+                updateCounter('featured-comments', currentComments + 1);
+            }
+        }
+
+        function updateOnlineUsers() {
+            const variation = Math.floor(Math.random() * 20) - 10;
+            communityStats.onlineUsers += variation;
+            
+            if (communityStats.onlineUsers < 2000) communityStats.onlineUsers = 2000;
+            if (communityStats.onlineUsers > 4000) communityStats.onlineUsers = 4000;
+            
+            updateCounterWithCommas('online-count', communityStats.onlineUsers);
+            updateCounterWithCommas('sidebar-online', communityStats.onlineUsers);
+        }
+
+        function showNewContentNotification() {
+            if (Math.random() > 0.6) {
+                newArticlesCount += Math.floor(Math.random() * 3) + 1;
+                document.getElementById('new-articles-count').textContent = newArticlesCount;
+                document.getElementById('new-articles-notification').classList.remove('hidden');
+                document.getElementById('articles-notification').classList.remove('hidden');
+                showRealtimeNotification('New articles available!', 'info');
+            }
+            
+            if (Math.random() > 0.8) {
+                document.getElementById('discussions-notification').classList.remove('hidden');
+                showRealtimeNotification('New discussion started!', 'success');
+            }
+        }
+
+        function showTypingIndicator() {
+            const typingElements = document.querySelectorAll('.typing-indicator');
+            const randomElement = typingElements[Math.floor(Math.random() * typingElements.length)];
+            
+            if (randomElement && Math.random() > 0.7) {
+                randomElement.classList.remove('hidden');
+                setTimeout(() => {
+                    randomElement.classList.add('hidden');
+                }, 3000);
+            }
+        }
+
+        // Load More Functions
+        function loadMoreArticles() {
+            showLoadingState('load-more-articles');
+            
+            setTimeout(() => {
+                const nextBatch = allArticles.slice(pageIndices.articles, pageIndices.articles + 3);
+                if (nextBatch.length > 0) {
+                    displayedArticles.push(...nextBatch);
+                    pageIndices.articles += nextBatch.length;
+                    renderArticles();
+                    showRealtimeNotification(`Loaded ${nextBatch.length} more articles!`, 'success');
+                } else {
+                    showRealtimeNotification('No more articles to load', 'info');
+                }
+                hideLoadingState('load-more-articles');
+            }, 1500);
+        }
+
+        function loadMoreTutorials() {
+            showLoadingState('load-more-tutorials');
+            
+            setTimeout(() => {
+                const nextBatch = allTutorials.slice(pageIndices.tutorials, pageIndices.tutorials + 3);
+                if (nextBatch.length > 0) {
+                    displayedTutorials.push(...nextBatch);
+                    pageIndices.tutorials += nextBatch.length;
+                    renderTutorials();
+                    showRealtimeNotification(`Loaded ${nextBatch.length} more tutorials!`, 'success');
+                } else {
+                    showRealtimeNotification('No more tutorials to load', 'info');
+                }
+                hideLoadingState('load-more-tutorials');
+            }, 1500);
+        }
+
+        function loadMoreDiscussions() {
+            showLoadingState('load-more-discussions');
+            
+            setTimeout(() => {
+                const nextBatch = allDiscussions.slice(pageIndices.discussions, pageIndices.discussions + 3);
+                if (nextBatch.length > 0) {
+                    displayedDiscussions.push(...nextBatch);
+                    pageIndices.discussions += nextBatch.length;
+                    renderDiscussions();
+                    showRealtimeNotification(`Loaded ${nextBatch.length} more discussions!`, 'success');
+                } else {
+                    showRealtimeNotification('No more discussions to load', 'info');
+                }
+                hideLoadingState('load-more-discussions');
+            }, 1500);
+        }
+
+        function loadMoreShowcase() {
+            showLoadingState('load-more-showcase');
+            
+            setTimeout(() => {
+                const nextBatch = allShowcaseProjects.slice(pageIndices.showcase, pageIndices.showcase + 3);
+                if (nextBatch.length > 0) {
+                    displayedShowcase.push(...nextBatch);
+                    pageIndices.showcase += nextBatch.length;
+                    renderShowcase();
+                    showRealtimeNotification(`Loaded ${nextBatch.length} more projects!`, 'success');
+                } else {
+                    showRealtimeNotification('No more projects to load', 'info');
+                }
+                hideLoadingState('load-more-showcase');
+            }, 1500);
+        }
+
+        function loadMoreEvents(type) {
+            const buttonId = type === 'upcoming' ? 'load-more-upcoming' : 'load-more-past';
+            showLoadingState(buttonId);
+            
+            setTimeout(() => {
+                if (type === 'upcoming') {
+                    const nextBatch = allUpcomingEvents.slice(pageIndices.upcomingEvents, pageIndices.upcomingEvents + 2);
+                    if (nextBatch.length > 0) {
+                        displayedUpcomingEvents.push(...nextBatch);
+                        pageIndices.upcomingEvents += nextBatch.length;
+                        renderEvents();
+                        showRealtimeNotification(`Loaded ${nextBatch.length} more upcoming events!`, 'success');
+                    } else {
+                        showRealtimeNotification('No more upcoming events to load', 'info');
+                    }
+                } else {
+                    const nextBatch = allPastEvents.slice(pageIndices.pastEvents, pageIndices.pastEvents + 2);
+                    if (nextBatch.length > 0) {
+                        displayedPastEvents.push(...nextBatch);
+                        pageIndices.pastEvents += nextBatch.length;
+                        renderEvents();
+                        showRealtimeNotification(`Loaded ${nextBatch.length} more past events!`, 'success');
+                    } else {
+                        showRealtimeNotification('No more past events to load', 'info');
+                    }
+                }
+                hideLoadingState(buttonId);
+            }, 1500);
+        }
+
+        function showLoadingState(buttonId) {
+            const button = document.getElementById(buttonId);
+            const buttonText = button.querySelector('.button-text');
+            const spinner = button.querySelector('.loading-spinner');
+            
+            buttonText.textContent = 'Loading...';
+            spinner.classList.remove('hidden');
+            button.disabled = true;
+            button.classList.add('opacity-75');
+        }
+
+        function hideLoadingState(buttonId) {
+            const button = document.getElementById(buttonId);
+            const buttonText = button.querySelector('.button-text');
+            const spinner = button.querySelector('.loading-spinner');
+            
+            // Reset button text based on button type
+            if (buttonId.includes('articles')) buttonText.textContent = 'Load More Articles';
+            else if (buttonId.includes('tutorials')) buttonText.textContent = 'Load More Tutorials';
+            else if (buttonId.includes('discussions')) buttonText.textContent = 'Load More Discussions';
+            else if (buttonId.includes('showcase')) buttonText.textContent = 'Load More Projects';
+            else if (buttonId.includes('upcoming')) buttonText.textContent = 'Load More Upcoming Events';
+            else if (buttonId.includes('past')) buttonText.textContent = 'Load More Past Events';
+            
+            spinner.classList.add('hidden');
+            button.disabled = false;
+            button.classList.remove('opacity-75');
+        }
+
+        // Filter Functions
+        function filterByCategory(categoryName) {
+            currentFilters.articles = categoryName;
+            
+            if (categoryName === 'all') {
+                displayedArticles = allArticles.slice(0, pageIndices.articles);
+            } else {
+                displayedArticles = allArticles.filter(article => article.category === categoryName).slice(0, pageIndices.articles);
+            }
+            
+            renderArticles();
+            showRealtimeNotification(`Filtered articles by ${categoryName}`, 'info');
+        }
+
+        function filterByTag(tagName) {
+            displayedArticles = allArticles.filter(article => 
+                article.tags.some(tag => tag.toLowerCase().includes(tagName.toLowerCase()))
+            ).slice(0, pageIndices.articles);
+            
+            renderArticles();
+            showRealtimeNotification(`Showing articles tagged with "${tagName}"`, 'info');
+        }
+
+        function showContributorArticles(contributorName) {
+            displayedArticles = allArticles.filter(article => article.author === contributorName);
+            renderArticles();
+            showRealtimeNotification(`Showing articles by ${contributorName}`, 'info');
+        }
+
+        function filterTutorials(level) {
+            document.querySelectorAll('.tutorial-filter').forEach(btn => {
+                btn.classList.remove('active', 'bg-primary-600', 'text-white');
+                btn.classList.add('bg-gray-200', 'dark:bg-gray-700');
+            });
+            
+            event.target.classList.add('active', 'bg-primary-600', 'text-white');
+            event.target.classList.remove('bg-gray-200', 'dark:bg-gray-700');
+            
+            if (level === 'all') {
+                displayedTutorials = allTutorials.slice(0, pageIndices.tutorials);
+            } else {
+                displayedTutorials = allTutorials.filter(tutorial => tutorial.level === level);
+            }
+            
+            renderTutorials();
+            showRealtimeNotification(`Filtering tutorials by ${level} level`, 'info');
+        }
+
+        function filterDiscussions(category) {
+            document.querySelectorAll('.discussion-filter').forEach(btn => {
+                btn.classList.remove('active', 'bg-primary-600', 'text-white');
+                btn.classList.add('bg-gray-200', 'dark:bg-gray-700');
+            });
+            
+            event.target.classList.add('active', 'bg-primary-600', 'text-white');
+            event.target.classList.remove('bg-gray-200', 'dark:bg-gray-700');
+            
+            if (category === 'all') {
+                displayedDiscussions = allDiscussions.slice(0, pageIndices.discussions);
+            } else {
+                displayedDiscussions = allDiscussions.filter(discussion => discussion.category === category);
+            }
+            
+            renderDiscussions();
+            showRealtimeNotification(`Filtering discussions by ${category} category`, 'info');
+        }
+
+        function filterShowcase(category) {
+            document.querySelectorAll('.showcase-filter').forEach(btn => {
+                btn.classList.remove('active', 'bg-primary-600', 'text-white');
+                btn.classList.add('bg-gray-200', 'dark:bg-gray-700');
+            });
+            
+            event.target.classList.add('active', 'bg-primary-600', 'text-white');
+            event.target.classList.remove('bg-gray-200', 'dark:bg-gray-700');
+            
+            if (category === 'all') {
+                displayedShowcase = allShowcaseProjects.slice(0, pageIndices.showcase);
+            } else {
+                displayedShowcase = allShowcaseProjects.filter(project => project.category === category);
+            }
+            
+            renderShowcase();
+            showRealtimeNotification(`Filtering showcase by ${category} projects`, 'info');
+        }
+
+        function loadNewArticles() {
+            document.getElementById('new-articles-notification').classList.add('hidden');
+            document.getElementById('articles-notification').classList.add('hidden');
+            newArticlesCount = 0;
+            showRealtimeNotification('New articles loaded!', 'success');
+        }
+
+        // Render Functions
+        function renderArticles() {
+            const container = document.getElementById('articles-grid');
+            container.innerHTML = displayedArticles.map((article, index) => `
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg card-hover cursor-pointer new-content" data-article-id="${article.id}" onclick="openArticle(${article.id})" style="animation-delay: ${index * 0.1}s">
+                    <div class="flex items-center space-x-2 mb-3">
+                        <span class="bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200 px-3 py-1 rounded-full text-sm font-medium">${article.category}</span>
+                        <span class="reading-time px-3 py-1 rounded-full text-sm font-medium">${article.readTime}</span>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 hover:text-primary-600 transition-colors">${article.title}</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4">${article.summary}</p>
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        ${article.tags.map(tag => `<span class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded text-xs cursor-pointer hover:bg-primary-100 dark:hover:bg-primary-900" onclick="event.stopPropagation(); filterByTag('${tag}')">${tag}</span>`).join('')}
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <img src="${article.authorAvatar}" alt="${article.authorAvatarAlt}" class="w-8 h-8 rounded-full cursor-pointer" onclick="event.stopPropagation(); showContributorArticles('${article.author}')">
+                            <div>
+                                <div class="font-semibold text-sm cursor-pointer hover:text-primary-600" onclick="event.stopPropagation(); showContributorArticles('${article.author}')">${article.author}</div>
+                                <div class="text-xs text-gray-500">${article.date}</div>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4 text-sm text-gray-500">
+                            <span><i class="fas fa-eye mr-1"></i><span class="views-count">${formatNumber(article.views)}</span></span>
+                            <span><i class="fas fa-heart mr-1"></i>${article.likes}</span>
+                            <span><i class="fas fa-comment mr-1"></i>${article.comments}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderTutorials() {
+            const container = document.getElementById('tutorials-grid');
+            container.innerHTML = displayedTutorials.map((tutorial, index) => `
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden card-hover cursor-pointer new-content" style="animation-delay: ${index * 0.1}s">
+                    <img src="${tutorial.imageUrl}" alt="${tutorial.imageAlt}" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-3 py-1 rounded-full text-sm font-medium capitalize">${tutorial.level}</span>
+                            <span class="text-sm text-gray-500"><i class="fas fa-clock mr-1"></i>${tutorial.duration}</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">${tutorial.title}</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4">${tutorial.description}</p>
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="flex items-center space-x-1">
+                                <div class="flex text-yellow-400">
+                                    ${Array(5).fill().map((_, i) => `<i class="fas fa-star ${i < Math.floor(tutorial.rating) ? '' : 'text-gray-300'}"></i>`).join('')}
+                                </div>
+                                <span class="text-sm text-gray-500 ml-1">${tutorial.rating}</span>
+                            </div>
+                            <span class="text-sm text-gray-500">${formatNumber(tutorial.students)} students</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600 dark:text-gray-400">by ${tutorial.author}</span>
+                            <button class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors text-sm">
+                                Start Tutorial
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderDiscussions() {
+            const container = document.getElementById('discussions-grid');
+            container.innerHTML = displayedDiscussions.map((discussion, index) => `
+                <div class="discussion-thread bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg cursor-pointer new-content" style="animation-delay: ${index * 0.1}s">
+                    <div class="flex items-start justify-between mb-4">
+                        <div class="flex-1">
+                            <div class="flex items-center space-x-3 mb-2">
+                                <span class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-sm font-medium capitalize">${discussion.category}</span>
+                                ${discussion.solved ? '<span class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full text-xs"><i class="fas fa-check mr-1"></i>Solved</span>' : ''}
+                            </div>
+                            <h3 class="text-lg font-semibold mb-2 hover:text-primary-600 transition-colors">${discussion.title}</h3>
+                            <div class="flex flex-wrap gap-2 mb-3">
+                                ${discussion.tags.map(tag => `<span class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded text-xs cursor-pointer hover:bg-primary-100 dark:hover:bg-primary-900" onclick="filterByTag('${tag}')">${tag}</span>`).join('')}
+                            </div>
+                            <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                <span>by ${discussion.author}</span>
+                                <span><i class="fas fa-reply mr-1"></i>${discussion.replies} replies</span>
+                                <span><i class="fas fa-eye mr-1"></i>${formatNumber(discussion.views)} views</span>
+                                <span>Last active ${discussion.lastActivity}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderShowcase() {
+            const container = document.getElementById('showcase-grid');
+            container.innerHTML = displayedShowcase.map((project, index) => `
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden card-hover mb-6 break-inside-avoid cursor-pointer new-content" style="animation-delay: ${index * 0.1}s">
+                    <img src="${project.imageUrl}" alt="${project.imageAlt}" class="w-full object-cover">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-3 py-1 rounded-full text-sm font-medium capitalize">${project.category}</span>
+                            <div class="flex items-center space-x-3 text-sm text-gray-500">
+                                <span><i class="fas fa-heart mr-1"></i>${project.likes}</span>
+                                <span><i class="fas fa-eye mr-1"></i>${formatNumber(project.views)}</span>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-semibold mb-2">${project.title}</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4">${project.description}</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            ${project.tech.map(tech => `<span class="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded text-xs">${tech}</span>`).join('')}
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-sm text-gray-600 dark:text-gray-400">by ${project.author}</span>
+                            <button class="text-primary-600 hover:text-primary-700 font-medium text-sm">
+                                View Project <i class="fas fa-external-link-alt ml-1"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderEvents() {
+            // Upcoming Events
+            const upcomingContainer = document.getElementById('upcoming-events');
+            upcomingContainer.innerHTML = displayedUpcomingEvents.map((event, index) => `
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden card-hover new-content" style="animation-delay: ${index * 0.1}s">
+                    <img src="${event.imageUrl}" alt="${event.imageAlt}" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <span class="bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 px-3 py-1 rounded-full text-sm font-medium">${event.type}</span>
+                            <span class="text-sm text-gray-500"><i class="fas fa-users mr-1"></i>${event.attendees} attending</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">${event.title}</h3>
+                        <div class="mb-4">
+                            <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">
+                                <i class="fas fa-calendar mr-2"></i>${event.date}
+                            </div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400 mb-1">
+                                <i class="fas fa-clock mr-2"></i>${event.time}
+                            </div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">
+                                <i class="fas fa-user mr-2"></i>Speaker: ${event.speaker}
+                            </div>
+                        </div>
+                        <button class="w-full bg-primary-600 text-white py-2 px-4 rounded-lg hover:bg-primary-700 transition-colors">
+                            Register Now
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            // Past Events
+            const pastContainer = document.getElementById('past-events');
+            pastContainer.innerHTML = displayedPastEvents.map((event, index) => `
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden opacity-75 new-content" style="animation-delay: ${index * 0.1}s">
+                    <img src="${event.imageUrl}" alt="${event.imageAlt}" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <span class="bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-3 py-1 rounded-full text-sm font-medium">${event.type}</span>
+                        <h3 class="text-xl font-bold mt-3 mb-2">${event.title}</h3>
+                        <div class="text-sm text-gray-600 dark:text-gray-400 mb-4">
+                            <div><i class="fas fa-calendar mr-2"></i>${event.date}</div>
+                            <div><i class="fas fa-user mr-2"></i>Speaker: ${event.speaker}</div>
+                        </div>
+                        <button class="w-full bg-gray-600 text-white py-2 px-4 rounded-lg hover:bg-gray-700 transition-colors">
+                            Watch Recording
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderSidebar() {
+            // Categories
+            const categoriesContainer = document.getElementById('categories-list');
+            categoriesContainer.innerHTML = categoriesData.map(cat => `
+                <div class="category-tag flex items-center justify-between p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-colors" onclick="filterByCategory('${cat.filter}')">
+                    <span class="font-medium">${cat.name}</span>
+                    <span class="text-sm text-gray-500 bg-gray-200 dark:bg-gray-600 px-2 py-1 rounded-full">${cat.count}</span>
+                </div>
+            `).join('');
+
+            // Trending Tags
+            const tagsContainer = document.getElementById('trending-tags');
+            const tags = ["React", "JavaScript", "CSS", "Node.js", "TypeScript", "Vue", "Next.js", "Tailwind", "GraphQL", "MongoDB"];
+            
+            tagsContainer.innerHTML = tags.map(tag => `
+                <span class="bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200 px-3 py-1 rounded-full text-sm cursor-pointer hover:bg-primary-200 dark:hover:bg-primary-800 transition-colors" onclick="filterByTag('${tag}')">${tag}</span>
+            `).join('');
+
+            // Top Contributors
+            const contributorsContainer = document.getElementById('top-contributors');
+            contributorsContainer.innerHTML = contributorsData.map(contributor => `
+                <div class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-colors" onclick="showContributorArticles('${contributor.name}')">
+                    <img src="${contributor.avatar}" alt="${contributor.avatarAlt}" class="w-8 h-8 rounded-full">
+                    <div class="flex-1">
+                        <div class="font-semibold text-sm">${contributor.name}</div>
+                        <div class="text-xs text-gray-500">${contributor.articles} articles • ${contributor.specialty}</div>
+                    </div>
+                    <span class="author-badge text-white px-2 py-1 rounded-full text-xs font-medium">${contributor.badge}</span>
+                </div>
+            `).join('');
+        }
+
+        // Utility Functions
+        function formatNumber(num) {
+            if (num >= 1000) {
+                return (num / 1000).toFixed(1) + 'K';
+            }
+            return num.toString();
+        }
+
+        function updateCounter(elementId, value) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.textContent = value.toLocaleString();
+                element.classList.add('scale-110');
+                setTimeout(() => {
+                    element.classList.remove('scale-110');
+                }, 200);
+            }
+        }
+
+        function updateCounterWithCommas(elementId, value) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.textContent = value.toLocaleString();
+                element.classList.add('scale-110');
+                setTimeout(() => {
+                    element.classList.remove('scale-110');
+                }, 200);
+            }
+        }
+
+        function showRealtimeNotification(message, type = 'info') {
+            const colors = {
+                info: 'bg-blue-500',
+                success: 'bg-green-500',
+                warning: 'bg-yellow-500',
+                error: 'bg-red-500'
+            };
+            
+            const notification = document.createElement('div');
+            notification.className = `${colors[type]} text-white px-4 py-3 rounded-lg shadow-lg mb-2 transform translate-x-full transition-transform duration-300`;
+            notification.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <span class="text-sm font-medium">${message}</span>
+                    <button onclick="this.parentElement.parentElement.remove()" class="ml-3 text-white hover:text-gray-200">
+                        <i class="fas fa-times text-xs"></i>
+                    </button>
+                </div>
+            `;
+            
+            document.getElementById('notifications-container').appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.remove('translate-x-full');
+            }, 100);
+            
+            setTimeout(() => {
+                notification.classList.add('translate-x-full');
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 5000);
+        }
+
+        function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', isDarkMode);
+        }
+
+        function switchTab(tab) {
+            document.querySelectorAll('.tab-button').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(tab + '-tab').classList.add('active');
+            
+            currentTab = tab;
+        }
+
+        // Modal Functions
+        function openWriteModal() {
+            document.getElementById('write-modal').classList.remove('hidden');
+        }
+
+        function closeWriteModal() {
+            document.getElementById('write-modal').classList.add('hidden');
+        }
+
+        function openDiscussionModal() {
+            document.getElementById('discussion-modal').classList.remove('hidden');
+        }
+
+        function closeDiscussionModal() {
+            document.getElementById('discussion-modal').classList.add('hidden');
+        }
+
+        function openArticle(articleId) {
+            showRealtimeNotification(`Opening article ${articleId}...`, 'info');
+        }
+
+        function saveAsDraft() {
+            showRealtimeNotification('Article saved as draft!', 'success');
+        }
+
+        function subscribeNewsletter() {
+            const email = document.getElementById('newsletter-email').value;
+            if (email && email.includes('@')) {
+                showRealtimeNotification('Successfully subscribed to newsletter!', 'success');
+                document.getElementById('newsletter-email').value = '';
+            } else {
+                showRealtimeNotification('Please enter a valid email address.', 'error');
+            }
+        }
+
+        // Form Submissions
+        document.getElementById('article-form')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            showRealtimeNotification('Article published successfully!', 'success');
+            closeWriteModal();
+        });
+
+        document.getElementById('discussion-form')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            showRealtimeNotification('Discussion started successfully!', 'success');
+            closeDiscussionModal();
+        });
+
+        // Event Listeners
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('modal-backdrop')) {
+                closeWriteModal();
+                closeDiscussionModal();
+            }
+        });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeWriteModal();
+                closeDiscussionModal();
+            }
+        });
+
+        document.getElementById('community-search')?.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const searchTerm = e.target.value;
+                if (searchTerm.trim()) {
+                    showRealtimeNotification(`Searching for "${searchTerm}"...`, 'info');
+                }
+            }
+        });
+
+        // Clean up intervals when page is closed
+        window.addEventListener('beforeunload', function() {
+            Object.values(updateIntervals).forEach(interval => {
+                clearInterval(interval);
+            });
+        });
+    </script>
+</body>
+</html>
+

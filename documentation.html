@@ -1,0 +1,1594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentation & API - DevHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .docs-sidebar {
+            position: sticky;
+            top: 2rem;
+            max-height: calc(100vh - 4rem);
+            overflow-y: auto;
+        }
+        .docs-content {
+            max-width: none;
+        }
+        .api-method {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.25rem 0.75rem;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+        .method-get { background: #10b981; color: white; }
+        .method-post { background: #3b82f6; color: white; }
+        .method-put { background: #f59e0b; color: white; }
+        .method-delete { background: #ef4444; color: white; }
+        .code-block {
+            background: #1e293b;
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+        .code-header {
+            background: #334155;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #475569;
+            display: flex;
+            justify-content: between;
+            align-items: center;
+        }
+        .endpoint-card {
+            border-left: 4px solid #3b82f6;
+            transition: all 0.3s ease;
+        }
+        .endpoint-card:hover {
+            border-left-color: #1d4ed8;
+            background-color: rgba(59, 130, 246, 0.05);
+        }
+        .dark .endpoint-card:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+        .response-status {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.125rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .status-200 { background: #dcfce7; color: #166534; }
+        .status-201 { background: #dcfce7; color: #166534; }
+        .status-400 { background: #fef3c7; color: #92400e; }
+        .status-401 { background: #fee2e2; color: #991b1b; }
+        .status-404 { background: #fee2e2; color: #991b1b; }
+        .status-500 { background: #fee2e2; color: #991b1b; }
+        .dark .status-200 { background: #166534; color: #dcfce7; }
+        .dark .status-201 { background: #166534; color: #dcfce7; }
+        .dark .status-400 { background: #92400e; color: #fef3c7; }
+        .dark .status-401 { background: #991b1b; color: #fee2e2; }
+        .dark .status-404 { background: #991b1b; color: #fee2e2; }
+        .dark .status-500 { background: #991b1b; color: #fee2e2; }
+        .nav-item {
+            transition: all 0.3s ease;
+        }
+        .nav-item:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+            transform: translateX(4px);
+        }
+        .nav-item.active {
+            background-color: #3b82f6;
+            color: white;
+        }
+        .api-explorer {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+        }
+        .dark .api-explorer {
+            background: linear-gradient(135deg, #1e293b, #334155);
+        }
+        .version-badge {
+            background: linear-gradient(45deg, #10b981, #059669);
+        }
+        .beta-badge {
+            background: linear-gradient(45deg, #f59e0b, #d97706);
+        }
+        .deprecated-badge {
+            background: linear-gradient(45deg, #ef4444, #dc2626);
+        }
+        .search-highlight {
+            background: #fbbf24;
+            color: #92400e;
+            padding: 0.125rem 0.25rem;
+            border-radius: 0.25rem;
+        }
+        .toc-item {
+            border-left: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        .toc-item.active {
+            border-left-color: #3b82f6;
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-lg sticky top-0 z-50 transition-colors duration-300">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo & Brand -->
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="flex items-center space-x-2">
+                        <div class="w-10 h-10 bg-gradient-to-r from-primary-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-code text-white text-lg"></i>
+                        </div>
+                        <h1 class="text-2xl font-bold bg-gradient-to-r from-primary-500 to-purple-600 bg-clip-text text-transparent">
+                            DevHub
+                        </h1>
+                    </a>
+                    <div class="hidden md:flex items-center space-x-2 text-gray-500">
+                        <i class="fas fa-chevron-right text-sm"></i>
+                        <span class="text-primary-600">Documentation</span>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex items-center space-x-4">
+                    <!-- API Version -->
+                    <div class="version-badge text-white px-3 py-1 rounded-full text-sm font-medium">
+                        API v2.1
+                    </div>
+
+                    <!-- Search Documentation -->
+                    <div class="relative hidden lg:block">
+                        <input 
+                            type="text" 
+                            placeholder="Search documentation..." 
+                            class="pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 w-64"
+                            id="docs-search"
+                        >
+                        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                    </div>
+
+                    <!-- Dark Mode Toggle -->
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:block"></i>
+                    </button>
+
+                    <!-- Back to Hub -->
+                    <a href="index.html" class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors">
+                        <i class="fas fa-arrow-left mr-2"></i>Back to Hub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="flex">
+        <!-- Documentation Sidebar -->
+        <aside class="w-80 bg-white dark:bg-gray-800 shadow-lg min-h-screen">
+            <div class="docs-sidebar p-6">
+                <!-- Quick Start -->
+                <div class="mb-8">
+                    <h3 class="text-lg font-bold mb-4 text-primary-600">Getting Started</h3>
+                    <nav class="space-y-1">
+                        <a href="#introduction" onclick="scrollToSection('introduction')" class="nav-item active block px-3 py-2 rounded-lg text-sm">
+                            <i class="fas fa-play-circle mr-2"></i>Introduction
+                        </a>
+                        <a href="#quick-start" onclick="scrollToSection('quick-start')" class="nav-item block px-3 py-2 rounded-lg text-sm">
+                            <i class="fas fa-rocket mr-2"></i>Quick Start
+                        </a>
+                        <a href="#authentication" onclick="scrollToSection('authentication')" class="nav-item block px-3 py-2 rounded-lg text-sm">
+                            <i class="fas fa-key mr-2"></i>Authentication
+                        </a>
+                        <a href="#rate-limiting" onclick="scrollToSection('rate-limiting')" class="nav-item block px-3 py-2 rounded-lg text-sm">
+                            <i class="fas fa-clock mr-2"></i>Rate Limiting
+                        </a>
+                    </nav>
+                </div>
+
+                <!-- API Reference -->
+                <div class="mb-8">
+                    <h3 class="text-lg font-bold mb-4 text-primary-600">API Reference</h3>
+                    <nav class="space-y-1">
+                        <a href="#assets-api" onclick="scrollToSection('assets-api')" class="nav-item block px-3 py-2 rounded-lg text-sm">
+                            <i class="fas fa-cube mr-2"></i>Assets API
+                        </a>
+                        <a href="#resources-api" onclick="scrollToSection('resources-api')" class="nav-item block px-3 py-2 rounded-lg text-sm">
+                            <i class="fas fa-folder mr-2"></i>Resources API
+                        </a>
+                        <a href="#users-api" onclick="scrollToSection('users-api')" class="nav-item block px-3 py-2 rounded-lg text-sm">
+                            <i class="fas fa-users mr-2"></i>Users API
+                        </a>
+                        <a href="#search-api" onclick="scrollToSection('search-api')" class="nav-item block px-3 py-2 rounded-lg text-sm">
+                            <i class="fas fa-search mr-2"></i>Search API
+                        </a>
+                    </nav>
+                </div>
+
+                <!-- SDKs & Libraries -->
+                <div class="mb-8">
+                    <h3 class="text-lg font-bold mb-4 text-primary-600">SDKs & Libraries</h3>
+                    <nav class="space-y-1">
+                        <a href="#javascript-sdk" onclick="scrollToSection('javascript-sdk')" class="nav-item block px-3 py-2 rounded-lg text-sm">
+                            <i class="fab fa-js-square mr-2"></i>JavaScript SDK
+                        </a>
+                        <a href="#react-components" onclick="scrollToSection('react-components')" class="nav-item block px-3 py-2 rounded-lg text-sm">
+                            <i class="fab fa-react mr-2"></i>React Components
+                        </a>
+                        <a href="#vue-components" onclick="scrollToSection('vue-components')" class="nav-item block px-3 py-2 rounded-lg text-sm">
+                            <i class="fab fa-vuejs mr-2"></i>Vue Components
+                        </a>
+                        <a href="#cli-tools" onclick="scrollToSection('cli-tools')" class="nav-item block px-3 py-2 rounded-lg text-sm">
+                            <i class="fas fa-terminal mr-2"></i>CLI Tools
+                        </a>
+                    </nav>
+                </div>
+
+                <!-- Guides -->
+                <div class="mb-8">
+                    <h3 class="text-lg font-bold mb-4 text-primary-600">Integration Guides</h3>
+                    <nav class="space-y-1">
+                        <a href="#webhooks" onclick="scrollToSection('webhooks')" class="nav-item block px-3 py-2 rounded-lg text-sm">
+                            <i class="fas fa-webhook mr-2"></i>Webhooks
+                        </a>
+                        <a href="#best-practices" onclick="scrollToSection('best-practices')" class="nav-item block px-3 py-2 rounded-lg text-sm">
+                            <i class="fas fa-star mr-2"></i>Best Practices
+                        </a>
+                        <a href="#examples" onclick="scrollToSection('examples')" class="nav-item block px-3 py-2 rounded-lg text-sm">
+                            <i class="fas fa-code mr-2"></i>Code Examples
+                        </a>
+                        <a href="#troubleshooting" onclick="scrollToSection('troubleshooting')" class="nav-item block px-3 py-2 rounded-lg text-sm">
+                            <i class="fas fa-wrench mr-2"></i>Troubleshooting
+                        </a>
+                    </nav>
+                </div>
+
+                <!-- Support -->
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                    <h4 class="font-semibold mb-3">Need Help?</h4>
+                    <div class="space-y-2 text-sm">
+                        <a href="#" class="flex items-center text-primary-600 hover:text-primary-700">
+                            <i class="fas fa-comments mr-2"></i>Join Discord
+                        </a>
+                        <a href="#" class="flex items-center text-primary-600 hover:text-primary-700">
+                            <i class="fas fa-envelope mr-2"></i>Email Support
+                        </a>
+                        <a href="#" class="flex items-center text-primary-600 hover:text-primary-700">
+                            <i class="fab fa-github mr-2"></i>GitHub Issues
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Documentation Content -->
+        <main class="flex-1 p-8">
+            <!-- Introduction Section -->
+            <section id="introduction" class="mb-16">
+                <div class="mb-8">
+                    <h1 class="text-4xl font-bold mb-4">DevHub API Documentation</h1>
+                    <p class="text-xl text-gray-600 dark:text-gray-400 leading-relaxed">
+                        Welcome to the DevHub API documentation. Our REST API allows you to integrate DevHub's vast collection 
+                        of UI components, templates, and resources directly into your applications and workflows.
+                    </p>
+                </div>
+
+                <!-- API Overview Cards -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg card-hover">
+                        <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-rocket text-blue-600 text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2">Fast & Reliable</h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">99.9% uptime with global CDN and edge caching for lightning-fast responses</p>
+                    </div>
+                    <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg card-hover">
+                        <div class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-shield-alt text-green-600 text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2">Secure by Default</h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">OAuth 2.0, rate limiting, and enterprise-grade security built-in</p>
+                    </div>
+                    <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg card-hover">
+                        <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-lg flex items-center justify-center mb-4">
+                            <i class="fas fa-code text-purple-600 text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-bold mb-2">Developer Friendly</h3>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm">RESTful design, comprehensive SDKs, and detailed documentation</p>
+                    </div>
+                </div>
+
+                <!-- Base URL -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
+                    <h3 class="text-lg font-bold mb-4">Base URL</h3>
+                    <div class="code-block">
+                        <div class="code-header">
+                            <span class="text-gray-300 text-sm">Production</span>
+                            <button onclick="copyToClipboard('https://api.devhub.com/v2')" class="text-gray-400 hover:text-gray-200">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
+                        <div class="p-4">
+                            <code class="text-green-400">https://api.devhub.com/v2</code>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Start Section -->
+            <section id="quick-start" class="mb-16">
+                <h2 class="text-3xl font-bold mb-6">Quick Start</h2>
+                <p class="text-gray-600 dark:text-gray-400 mb-6">
+                    Get up and running with the DevHub API in just a few minutes. Here's a simple example to fetch popular assets:
+                </p>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- cURL Example -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+                        <div class="bg-gray-50 dark:bg-gray-700 px-6 py-3 border-b dark:border-gray-600">
+                            <h4 class="font-semibold">cURL</h4>
+                        </div>
+                        <div class="p-6">
+                            <div class="code-block">
+                                <pre><code class="language-bash">curl -H "Authorization: Bearer YOUR_API_KEY" \
+  -H "Content-Type: application/json" \
+  https://api.devhub.com/v2/assets?category=components&limit=10</code></pre>
+                            </div>
+                            <button onclick="copyCode('curl-example')" class="mt-3 bg-primary-600 text-white px-4 py-2 rounded hover:bg-primary-700 transition-colors text-sm">
+                                <i class="fas fa-copy mr-2"></i>Copy
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- JavaScript Example -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+                        <div class="bg-gray-50 dark:bg-gray-700 px-6 py-3 border-b dark:border-gray-600">
+                            <h4 class="font-semibold">JavaScript</h4>
+                        </div>
+                        <div class="p-6">
+                            <div class="code-block">
+                                <pre><code class="language-javascript">const response = await fetch('https://api.devhub.com/v2/assets', {
+  headers: {
+    'Authorization': 'Bearer YOUR_API_KEY',
+    'Content-Type': 'application/json'
+  }
+});
+
+const assets = await response.json();
+console.log(assets);</code></pre>
+                            </div>
+                            <button onclick="copyCode('js-example')" class="mt-3 bg-primary-600 text-white px-4 py-2 rounded hover:bg-primary-700 transition-colors text-sm">
+                                <i class="fas fa-copy mr-2"></i>Copy
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Authentication Section -->
+            <section id="authentication" class="mb-16">
+                <h2 class="text-3xl font-bold mb-6">Authentication</h2>
+                <p class="text-gray-600 dark:text-gray-400 mb-6">
+                    DevHub API uses API keys for authentication. Include your API key in the Authorization header of every request.
+                </p>
+
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg mb-6">
+                    <h4 class="font-semibold mb-4">Getting Your API Key</h4>
+                    <div class="space-y-4">
+                        <div class="flex items-start space-x-3">
+                            <div class="w-6 h-6 bg-primary-600 text-white rounded-full flex items-center justify-center text-sm font-bold">1</div>
+                            <div>
+                                <p class="font-medium">Sign up for a DevHub account</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Create your free account at devhub.com/signup</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="w-6 h-6 bg-primary-600 text-white rounded-full flex items-center justify-center text-sm font-bold">2</div>
+                            <div>
+                                <p class="font-medium">Navigate to API Settings</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Go to your dashboard and click on "API Keys" in the settings</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start space-x-3">
+                            <div class="w-6 h-6 bg-primary-600 text-white rounded-full flex items-center justify-center text-sm font-bold">3</div>
+                            <div>
+                                <p class="font-medium">Generate API Key</p>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">Click "Generate New Key" and copy it securely</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Authentication Example -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+                    <div class="bg-gray-50 dark:bg-gray-700 px-6 py-3 border-b dark:border-gray-600">
+                        <h4 class="font-semibold">Authorization Header</h4>
+                    </div>
+                    <div class="p-6">
+                        <div class="code-block">
+                            <pre><code class="language-bash">Authorization: Bearer dh_live_1234567890abcdef...</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Rate Limiting Section -->
+            <section id="rate-limiting" class="mb-16">
+                <h2 class="text-3xl font-bold mb-6">Rate Limiting</h2>
+                <p class="text-gray-600 dark:text-gray-400 mb-6">
+                    To ensure fair usage and optimal performance, the DevHub API implements rate limiting based on your subscription plan.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
+                        <h4 class="font-bold mb-3 text-green-600">Free Plan</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between">
+                                <span>Requests/Hour:</span>
+                                <span class="font-bold">100</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Requests/Day:</span>
+                                <span class="font-bold">1,000</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Burst Limit:</span>
+                                <span class="font-bold">10/min</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
+                        <h4 class="font-bold mb-3 text-blue-600">Pro Plan</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between">
+                                <span>Requests/Hour:</span>
+                                <span class="font-bold">1,000</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Requests/Day:</span>
+                                <span class="font-bold">10,000</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Burst Limit:</span>
+                                <span class="font-bold">50/min</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
+                        <h4 class="font-bold mb-3 text-purple-600">Enterprise</h4>
+                        <div class="space-y-2 text-sm">
+                            <div class="flex justify-between">
+                                <span>Requests/Hour:</span>
+                                <span class="font-bold">Unlimited</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Requests/Day:</span>
+                                <span class="font-bold">Unlimited</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Burst Limit:</span>
+                                <span class="font-bold">500/min</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Assets API Section -->
+            <section id="assets-api" class="mb-16">
+                <h2 class="text-3xl font-bold mb-6">Assets API</h2>
+                <p class="text-gray-600 dark:text-gray-400 mb-8">
+                    The Assets API allows you to retrieve, search, and manage UI components and code assets.
+                </p>
+
+                <!-- Get Assets Endpoint -->
+                <div class="endpoint-card bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg mb-6">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <span class="api-method method-get">GET</span>
+                        <code class="text-lg font-mono">/assets</code>
+                        <span class="text-sm text-gray-500">Retrieve assets list</span>
+                    </div>
+                    
+                    <h4 class="font-semibold mb-3">Parameters</h4>
+                    <div class="overflow-x-auto mb-6">
+                        <table class="w-full text-sm">
+                            <thead class="bg-gray-50 dark:bg-gray-700">
+                                <tr>
+                                    <th class="px-4 py-2 text-left">Parameter</th>
+                                    <th class="px-4 py-2 text-left">Type</th>
+                                    <th class="px-4 py-2 text-left">Required</th>
+                                    <th class="px-4 py-2 text-left">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                                <tr>
+                                    <td class="px-4 py-2 font-mono text-sm">category</td>
+                                    <td class="px-4 py-2">string</td>
+                                    <td class="px-4 py-2">No</td>
+                                    <td class="px-4 py-2">Filter by category (components, templates, icons)</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2 font-mono text-sm">technology</td>
+                                    <td class="px-4 py-2">string</td>
+                                    <td class="px-4 py-2">No</td>
+                                    <td class="px-4 py-2">Filter by technology (react, vue, html)</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2 font-mono text-sm">limit</td>
+                                    <td class="px-4 py-2">integer</td>
+                                    <td class="px-4 py-2">No</td>
+                                    <td class="px-4 py-2">Number of results (1-100, default: 20)</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2 font-mono text-sm">page</td>
+                                    <td class="px-4 py-2">integer</td>
+                                    <td class="px-4 py-2">No</td>
+                                    <td class="px-4 py-2">Page number for pagination (default: 1)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4 class="font-semibold mb-3">Example Request</h4>
+                    <div class="code-block mb-4">
+                        <pre><code class="language-javascript">fetch('https://api.devhub.com/v2/assets?category=components&technology=react&limit=5', {
+  headers: {
+    'Authorization': 'Bearer dh_live_1234567890abcdef',
+    'Content-Type': 'application/json'
+  }
+})</code></pre>
+                    </div>
+
+                    <h4 class="font-semibold mb-3">Response</h4>
+                    <div class="flex items-center space-x-2 mb-3">
+                        <span class="response-status status-200">200 OK</span>
+                        <span class="text-sm text-gray-500">Success</span>
+                    </div>
+                    <div class="code-block">
+                        <pre><code class="language-json">{
+  "data": [
+    {
+      "id": "ast_1234567890",
+      "title": "Modern Login Form",
+      "description": "Clean and responsive login form with gradient styling",
+      "category": "components",
+      "technology": ["react", "tailwind"],
+      "tags": ["login", "form", "authentication"],
+      "preview_url": "https://preview.devhub.com/ast_1234567890",
+      "download_url": "https://api.devhub.com/v2/assets/ast_1234567890/download",
+      "code_snippets": {
+        "react": "...",
+        "html": "...",
+        "css": "..."
+      },
+      "metadata": {
+        "downloads": 1247,
+        "likes": 89,
+        "rating": 4.8,
+        "created_at": "2024-01-15T10:30:00Z",
+        "updated_at": "2024-01-20T14:22:00Z"
+      },
+      "author": {
+        "id": "usr_0987654321",
+        "name": "Sarah Chen",
+        "avatar": "https://avatars.devhub.com/usr_0987654321.jpg"
+      }
+    }
+  ],
+  "pagination": {
+    "page": 1,
+    "limit": 5,
+    "total": 1247,
+    "pages": 250
+  }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- Get Single Asset -->
+                <div class="endpoint-card bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg mt-6">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <span class="api-method method-get">GET</span>
+                        <code class="text-lg font-mono">/assets/{id}</code>
+                        <span class="text-sm text-gray-500">Get specific asset</span>
+                    </div>
+                    
+                    <h4 class="font-semibold mb-3">Path Parameters</h4>
+                    <div class="bg-gray-50 dark:bg-gray-700 rounded p-4 mb-4">
+                        <code class="font-mono text-sm">id</code> <span class="text-gray-600 dark:text-gray-400">- The unique asset identifier</span>
+                    </div>
+
+                    <div class="code-block">
+                        <pre><code class="language-javascript">fetch('https://api.devhub.com/v2/assets/ast_1234567890', {
+  headers: {
+    'Authorization': 'Bearer dh_live_1234567890abcdef'
+  }
+})</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- API Explorer Section -->
+            <section id="api-explorer" class="mb-16">
+                <h2 class="text-3xl font-bold mb-6">Interactive API Explorer</h2>
+                <p class="text-gray-600 dark:text-gray-400 mb-6">
+                    Test API endpoints directly from your browser. No coding required!
+                </p>
+
+                <div class="api-explorer rounded-lg p-6 shadow-lg">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <!-- Request Builder -->
+                        <div class="bg-white dark:bg-gray-800 rounded-lg p-6">
+                            <h3 class="text-lg font-bold mb-4">Request Builder</h3>
+                            <div class="space-y-4">
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Endpoint</label>
+                                    <select id="api-endpoint" class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600">
+                                        <option value="assets">GET /assets</option>
+                                        <option value="assets-single">GET /assets/{id}</option>
+                                        <option value="resources">GET /resources</option>
+                                        <option value="search">GET /search</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">Parameters</label>
+                                    <textarea 
+                                        id="api-params" 
+                                        rows="4" 
+                                        class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600 font-mono text-sm"
+                                        placeholder='{"category": "components", "limit": 5}'
+                                    ></textarea>
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-2">API Key</label>
+                                    <input 
+                                        type="password" 
+                                        id="api-key-input" 
+                                        placeholder="Enter your API key"
+                                        class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600"
+                                    >
+                                </div>
+                                <button onclick="executeApiCall()" class="w-full bg-primary-600 text-white py-3 px-4 rounded-lg hover:bg-primary-700 transition-colors font-semibold">
+                                    <i class="fas fa-play mr-2"></i>Execute Request
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Response Display -->
+                        <div class="bg-white dark:bg-gray-800 rounded-lg p-6">
+                            <h3 class="text-lg font-bold mb-4">Response</h3>
+                            <div id="api-response" class="code-block min-h-64">
+                                <div class="p-4 text-gray-400 text-center">
+                                    <i class="fas fa-play-circle text-4xl mb-3"></i>
+                                    <p>Execute a request to see the response</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- JavaScript SDK Section -->
+            <section id="javascript-sdk" class="mb-16">
+                <h2 class="text-3xl font-bold mb-6">JavaScript SDK</h2>
+                <p class="text-gray-600 dark:text-gray-400 mb-6">
+                    The official DevHub JavaScript SDK provides a convenient way to interact with our API from Node.js and browser environments.
+                </p>
+
+                <!-- Installation -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg mb-6">
+                    <h3 class="text-xl font-bold mb-4">Installation</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <h4 class="font-semibold mb-2">npm</h4>
+                            <div class="code-block">
+                                <pre><code class="language-bash">npm install @devhub/sdk</code></pre>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2">yarn</h4>
+                            <div class="code-block">
+                                <pre><code class="language-bash">yarn add @devhub/sdk</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SDK Usage Example -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
+                    <h3 class="text-xl font-bold mb-4">Usage Example</h3>
+                    <div class="code-block">
+                        <pre><code class="language-javascript">import { DevHub } from '@devhub/sdk';
+
+// Initialize client
+const devhub = new DevHub({
+  apiKey: 'dh_live_1234567890abcdef',
+  environment: 'production' // or 'sandbox'
+});
+
+// Fetch assets
+const assets = await devhub.assets.list({
+  category: 'components',
+  technology: 'react',
+  limit: 10
+});
+
+// Get specific asset
+const asset = await devhub.assets.get('ast_1234567890');
+
+// Download asset
+const downloadUrl = await devhub.assets.getDownloadUrl('ast_1234567890');
+
+// Search
+const searchResults = await devhub.search({
+  query: 'login form',
+  filters: {
+    category: 'components'
+  }
+});
+
+console.log('Assets:', assets);
+console.log('Search Results:', searchResults);</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- React Components Section -->
+            <section id="react-components" class="mb-16">
+                <h2 class="text-3xl font-bold mb-6">React Components</h2>
+                <p class="text-gray-600 dark:text-gray-400 mb-6">
+                    Pre-built React components to quickly integrate DevHub functionality into your React applications.
+                </p>
+
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
+                    <h3 class="text-xl font-bold mb-4">Asset Browser Component</h3>
+                    <div class="code-block mb-4">
+                        <pre><code class="language-javascript">import { AssetBrowser, DevHubProvider } from '@devhub/react';
+
+function App() {
+  return (
+    <DevHubProvider apiKey="your-api-key">
+      <AssetBrowser
+        category="components"
+        technology="react"
+        onAssetSelect={(asset) => {
+          console.log('Selected asset:', asset);
+        }}
+        theme="light" // or "dark"
+      />
+    </DevHubProvider>
+  );
+}</code></pre>
+                    </div>
+
+                    <h4 class="font-semibold mb-3">Props</h4>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm">
+                            <thead class="bg-gray-50 dark:bg-gray-700">
+                                <tr>
+                                    <th class="px-4 py-2 text-left">Prop</th>
+                                    <th class="px-4 py-2 text-left">Type</th>
+                                    <th class="px-4 py-2 text-left">Default</th>
+                                    <th class="px-4 py-2 text-left">Description</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                                <tr>
+                                    <td class="px-4 py-2 font-mono">category</td>
+                                    <td class="px-4 py-2">string</td>
+                                    <td class="px-4 py-2">'all'</td>
+                                    <td class="px-4 py-2">Asset category filter</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2 font-mono">technology</td>
+                                    <td class="px-4 py-2">string</td>
+                                    <td class="px-4 py-2">'all'</td>
+                                    <td class="px-4 py-2">Technology stack filter</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2 font-mono">onAssetSelect</td>
+                                    <td class="px-4 py-2">function</td>
+                                    <td class="px-4 py-2">-</td>
+                                    <td class="px-4 py-2">Callback when asset is selected</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-2 font-mono">theme</td>
+                                    <td class="px-4 py-2">string</td>
+                                    <td class="px-4 py-2">'light'</td>
+                                    <td class="px-4 py-2">UI theme (light/dark)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CLI Tools Section -->
+            <section id="cli-tools" class="mb-16">
+                <h2 class="text-3xl font-bold mb-6">CLI Tools</h2>
+                <p class="text-gray-600 dark:text-gray-400 mb-6">
+                    Command-line interface for managing assets, deploying resources, and integrating DevHub into your development workflow.
+                </p>
+
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg mb-6">
+                    <h3 class="text-xl font-bold mb-4">Installation</h3>
+                    <div class="code-block">
+                        <pre><code class="language-bash">npm install -g @devhub/cli</code></pre>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg mb-6">
+                    <h3 class="text-xl font-bold mb-4">Authentication</h3>
+                    <div class="code-block mb-4">
+                        <pre><code class="language-bash">devhub auth login</code></pre>
+                    </div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                        This will open a browser window to authenticate with your DevHub account.
+                    </p>
+                </div>
+
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
+                    <h3 class="text-xl font-bold mb-4">Common Commands</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <h4 class="font-semibold mb-2">Search and Download Assets</h4>
+                            <div class="code-block">
+                                <pre><code class="language-bash"># Search for assets
+devhub search "login form" --category=components
+
+# Download specific asset
+devhub download ast_1234567890 --output=./components/
+
+# Browse assets interactively
+devhub browse --interactive</code></pre>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold mb-2">Upload and Manage</h4>
+                            <div class="code-block">
+                                <pre><code class="language-bash"># Upload new asset
+devhub upload ./my-component --title="My Awesome Component"
+
+# Update existing asset
+devhub update ast_1234567890 --description="Updated description"
+
+# List your assets
+devhub list --mine</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Webhooks Section -->
+            <section id="webhooks" class="mb-16">
+                <h2 class="text-3xl font-bold mb-6">Webhooks</h2>
+                <p class="text-gray-600 dark:text-gray-400 mb-6">
+                    Stay informed about events in your DevHub account with webhooks. Get real-time notifications when assets are downloaded, 
+                    new reviews are posted, or resources are purchased.
+                </p>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                    <!-- Webhook Events -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
+                        <h3 class="text-xl font-bold mb-4">Available Events</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center space-x-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                                <i class="fas fa-download text-blue-500"></i>
+                                <div>
+                                    <div class="font-semibold text-sm">asset.downloaded</div>
+                                    <div class="text-xs text-gray-500">When someone downloads your asset</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                                <i class="fas fa-star text-yellow-500"></i>
+                                <div>
+                                    <div class="font-semibold text-sm">review.created</div>
+                                    <div class="text-xs text-gray-500">When a new review is posted</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                                <i class="fas fa-shopping-cart text-green-500"></i>
+                                <div>
+                                    <div class="font-semibold text-sm">resource.purchased</div>
+                                    <div class="text-xs text-gray-500">When your resource is purchased</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center space-x-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                                <i class="fas fa-heart text-red-500"></i>
+                                <div>
+                                    <div class="font-semibold text-sm">asset.liked</div>
+                                    <div class="text-xs text-gray-500">When someone likes your asset</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Webhook Configuration -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
+                        <h3 class="text-xl font-bold mb-4">Configuration</h3>
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Webhook URL</label>
+                                <input 
+                                    type="url" 
+                                    placeholder="https://yourapp.com/webhook"
+                                    class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600"
+                                    id="webhook-url"
+                                >
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Events</label>
+                                <div class="space-y-2">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500" checked>
+                                        <span class="ml-2 text-sm">asset.downloaded</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500">
+                                        <span class="ml-2 text-sm">review.created</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500">
+                                        <span class="ml-2 text-sm">resource.purchased</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <button onclick="configureWebhook()" class="w-full bg-primary-600 text-white py-2 px-4 rounded-lg hover:bg-primary-700 transition-colors">
+                                Configure Webhook
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Webhook Payload Example -->
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
+                    <h3 class="text-xl font-bold mb-4">Webhook Payload Example</h3>
+                    <div class="code-block">
+                        <pre><code class="language-json">{
+  "event": "asset.downloaded",
+  "timestamp": "2024-01-20T15:30:00Z",
+  "data": {
+    "asset": {
+      "id": "ast_1234567890",
+      "title": "Modern Login Form",
+      "category": "components",
+      "technology": ["react", "tailwind"]
+    },
+    "download": {
+      "user_id": "usr_0987654321",
+      "user_name": "John Developer",
+      "download_count": 1248,
+      "ip_address": "192.168.1.1",
+      "user_agent": "Mozilla/5.0..."
+    }
+  },
+  "signature": "sha256=abc123..."
+}</code></pre>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Code Examples Section -->
+            <section id="examples" class="mb-16">
+                <h2 class="text-3xl font-bold mb-6">Code Examples</h2>
+                <p class="text-gray-600 dark:text-gray-400 mb-8">
+                    Real-world examples showing how to integrate DevHub API into popular frameworks and platforms.
+                </p>
+
+                <!-- Example Cards -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Next.js Example -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+                        <div class="bg-gray-50 dark:bg-gray-700 px-6 py-3 border-b dark:border-gray-600">
+                            <div class="flex items-center space-x-3">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/31d2fd8f-ae9e-4f88-971a-e8c60c1c52c8.png" alt="Next.js framework logo for server-side rendering and static site generation" class="w-6 h-6">
+                                <h4 class="font-semibold">Next.js Integration</h4>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="code-block">
+                                <pre><code class="language-javascript">// pages/api/assets.js
+import { DevHub } from '@devhub/sdk';
+
+const devhub = new DevHub({
+  apiKey: process.env.DEVHUB_API_KEY
+});
+
+export default async function handler(req, res) {
+  try {
+    const assets = await devhub.assets.list({
+      category: req.query.category,
+      limit: 20
+    });
+    
+    res.status(200).json(assets);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch assets' });
+  }
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Express.js Example -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+                        <div class="bg-gray-50 dark:bg-gray-700 px-6 py-3 border-b dark:border-gray-600">
+                            <div class="flex items-center space-x-3">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/cec5bd97-f0d6-4d64-a3cd-48beeddc72f5.png" alt="Express.js framework logo for Node.js web applications" class="w-6 h-6">
+                                <h4 class="font-semibold">Express.js Integration</h4>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="code-block">
+                                <pre><code class="language-javascript">const express = require('express');
+const { DevHub } = require('@devhub/sdk');
+
+const app = express();
+const devhub = new DevHub({
+  apiKey: process.env.DEVHUB_API_KEY
+});
+
+app.get('/api/assets', async (req, res) => {
+  try {
+    const assets = await devhub.assets.list({
+      category: req.query.category,
+      page: req.query.page || 1
+    });
+    
+    res.json(assets);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+app.listen(3000);</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Vue.js Example -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+                        <div class="bg-gray-50 dark:bg-gray-700 px-6 py-3 border-b dark:border-gray-600">
+                            <div class="flex items-center space-x-3">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/18a0e6e5-2c8e-4fb1-822b-4f67d1b76097.png" alt="Vue.js framework logo for progressive web applications" class="w-6 h-6">
+                                <h4 class="font-semibold">Vue.js Integration</h4>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="code-block">
+                                <pre><code class="language-javascript">// composables/useDevHub.js
+import { ref, onMounted } from 'vue';
+import { DevHub } from '@devhub/sdk';
+
+export function useDevHub() {
+  const assets = ref([]);
+  const loading = ref(false);
+  
+  const devhub = new DevHub({
+    apiKey: 'your-api-key'
+  });
+  
+  const fetchAssets = async (params = {}) => {
+    loading.value = true;
+    try {
+      const data = await devhub.assets.list(params);
+      assets.value = data;
+    } catch (error) {
+      console.error('Failed to fetch assets:', error);
+    } finally {
+      loading.value = false;
+    }
+  };
+  
+  return { assets, loading, fetchAssets };
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Python Example -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+                        <div class="bg-gray-50 dark:bg-gray-700 px-6 py-3 border-b dark:border-gray-600">
+                            <div class="flex items-center space-x-3">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/55b79981-71eb-461e-9bc8-fc66566478e6.png" alt="Python programming language logo for backend development" class="w-6 h-6">
+                                <h4 class="font-semibold">Python Integration</h4>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="code-block">
+                                <pre><code class="language-python">import requests
+from typing import List, Dict
+
+class DevHubAPI:
+    def __init__(self, api_key: str):
+        self.api_key = api_key
+        self.base_url = "https://api.devhub.com/v2"
+        self.headers = {
+            "Authorization": f"Bearer {api_key}",
+            "Content-Type": "application/json"
+        }
+    
+    def get_assets(self, **params) -> List[Dict]:
+        response = requests.get(
+            f"{self.base_url}/assets",
+            headers=self.headers,
+            params=params
+        )
+        response.raise_for_status()
+        return response.json()["data"]
+
+# Usage
+client = DevHubAPI("dh_live_1234567890abcdef")
+assets = client.get_assets(category="components", limit=10)</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Best Practices Section -->
+            <section id="best-practices" class="mb-16">
+                <h2 class="text-3xl font-bold mb-6">Best Practices</h2>
+                
+                <div class="space-y-6">
+                    <!-- Error Handling -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
+                        <h3 class="text-xl font-bold mb-4">Error Handling</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4">
+                            Always implement proper error handling to gracefully manage API failures and rate limits.
+                        </p>
+                        <div class="code-block">
+                            <pre><code class="language-javascript">async function fetchAssetsWithRetry(params, maxRetries = 3) {
+  for (let attempt = 0; attempt < maxRetries; attempt++) {
+    try {
+      const response = await fetch('https://api.devhub.com/v2/assets', {
+        headers: {
+          'Authorization': 'Bearer ' + apiKey,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.status === 429) {
+        // Rate limited, wait and retry
+        const retryAfter = response.headers.get('Retry-After') || 60;
+        await new Promise(resolve => setTimeout(resolve, retryAfter * 1000));
+        continue;
+      }
+
+      if (!response.ok) {
+        throw new Error(`API Error: ${response.status} ${response.statusText}`);
+      }
+
+      return await response.json();
+    } catch (error) {
+      if (attempt === maxRetries - 1) {
+        throw error;
+      }
+      // Wait before retry with exponential backoff
+      await new Promise(resolve => setTimeout(resolve, Math.pow(2, attempt) * 1000));
+    }
+  }
+}</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- Caching -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
+                        <h3 class="text-xl font-bold mb-4">Caching Strategy</h3>
+                        <p class="text-gray-600 dark:text-gray-400 mb-4">
+                            Implement caching to reduce API calls and improve performance for your users.
+                        </p>
+                        <div class="code-block">
+                            <pre><code class="language-javascript">class DevHubCache {
+  constructor(ttl = 300000) { // 5 minutes default TTL
+    this.cache = new Map();
+    this.ttl = ttl;
+  }
+
+  get(key) {
+    const item = this.cache.get(key);
+    if (!item) return null;
+    
+    if (Date.now() > item.expiry) {
+      this.cache.delete(key);
+      return null;
+    }
+    
+    return item.data;
+  }
+
+  set(key, data) {
+    this.cache.set(key, {
+      data,
+      expiry: Date.now() + this.ttl
+    });
+  }
+
+  async fetchWithCache(url, options = {}) {
+    const cacheKey = url + JSON.stringify(options);
+    const cached = this.get(cacheKey);
+    
+    if (cached) {
+      return cached;
+    }
+    
+    const response = await fetch(url, options);
+    const data = await response.json();
+    
+    this.set(cacheKey, data);
+    return data;
+  }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Troubleshooting Section -->
+            <section id="troubleshooting" class="mb-16">
+                <h2 class="text-3xl font-bold mb-6">Troubleshooting</h2>
+                
+                <div class="space-y-6">
+                    <!-- Common Errors -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
+                        <h3 class="text-xl font-bold mb-4">Common Error Codes</h3>
+                        <div class="space-y-4">
+                            <div class="border-l-4 border-red-500 pl-4">
+                                <div class="flex items-center space-x-2 mb-2">
+                                    <span class="response-status status-401">401 Unauthorized</span>
+                                    <span class="font-semibold">Invalid API Key</span>
+                                </div>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">
+                                    Check that your API key is correct and has the necessary permissions. Make sure you're including the "Bearer " prefix.
+                                </p>
+                            </div>
+                            <div class="border-l-4 border-yellow-500 pl-4">
+                                <div class="flex items-center space-x-2 mb-2">
+                                    <span class="response-status status-429">429 Too Many Requests</span>
+                                    <span class="font-semibold">Rate Limit Exceeded</span>
+                                </div>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">
+                                    You've exceeded your rate limit. Check the Retry-After header and implement exponential backoff.
+                                </p>
+                            </div>
+                            <div class="border-l-4 border-red-500 pl-4">
+                                <div class="flex items-center space-x-2 mb-2">
+                                    <span class="response-status status-404">404 Not Found</span>
+                                    <span class="font-semibold">Resource Not Found</span>
+                                </div>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">
+                                    The requested asset or resource doesn't exist or has been removed.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Debug Tips -->
+                    <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
+                        <h3 class="text-xl font-bold mb-4">Debugging Tips</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start space-x-3">
+                                <i class="fas fa-lightbulb text-yellow-500 mt-1"></i>
+                                <div>
+                                    <h4 class="font-semibold mb-1">Enable Request Logging</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                                        Log all API requests and responses during development to identify issues quickly.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <i class="fas fa-clock text-blue-500 mt-1"></i>
+                                <div>
+                                    <h4 class="font-semibold mb-1">Check Response Headers</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                                        Important headers like X-RateLimit-Remaining and Retry-After provide useful debugging information.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-3">
+                                <i class="fas fa-bug text-red-500 mt-1"></i>
+                                <div>
+                                    <h4 class="font-semibold mb-1">Use Sandbox Environment</h4>
+                                    <p class="text-sm text-gray-600 dark:text-gray-400">
+                                        Test your integration against our sandbox API before going live.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- API Status -->
+            <section id="api-status" class="mb-16">
+                <h2 class="text-3xl font-bold mb-6">API Status</h2>
+                
+                <div class="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
+                    <div class="flex items-center justify-between mb-6">
+                        <h3 class="text-xl font-bold">Service Status</h3>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                            <span class="text-green-600 font-semibold">All Systems Operational</span>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-green-600 mb-2">99.98%</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">Uptime (30 days)</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-blue-600 mb-2">45ms</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">Avg Response Time</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-2xl font-bold text-purple-600 mb-2">2.3M</div>
+                            <div class="text-sm text-gray-600 dark:text-gray-400">Requests Today</div>
+                        </div>
+                    </div>
+
+                    <!-- Recent Incidents -->
+                    <div class="mt-8">
+                        <h4 class="font-semibold mb-4">Recent Incidents</h4>
+                        <div class="space-y-3">
+                            <div class="flex items-center space-x-3 p-3 bg-green-50 dark:bg-green-900 rounded-lg">
+                                <i class="fas fa-check-circle text-green-500"></i>
+                                <div class="flex-1">
+                                    <div class="font-medium text-sm">Scheduled Maintenance Completed</div>
+                                    <div class="text-xs text-gray-500">March 15, 2024 - 30 minutes downtime</div>
+                                </div>
+                                <span class="text-xs text-green-600 bg-green-100 dark:bg-green-800 px-2 py-1 rounded">Resolved</span>
+                            </div>
+                            <div class="flex items-center space-x-3 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                                <i class="fas fa-info-circle text-blue-500"></i>
+                                <div class="flex-1">
+                                    <div class="font-medium text-sm">No incidents in the last 30 days</div>
+                                    <div class="text-xs text-gray-500">Our systems are running smoothly</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // State Management
+        let isDarkMode = false;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            initializePage();
+            setupScrollspy();
+            Prism.highlightAll();
+        });
+
+        function initializePage() {
+            if (localStorage.getItem('darkMode') === 'true') {
+                isDarkMode = true;
+                document.documentElement.classList.add('dark');
+            }
+        }
+
+        function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', isDarkMode);
+        }
+
+        function setupScrollspy() {
+            const sections = document.querySelectorAll('section[id]');
+            const navItems = document.querySelectorAll('.nav-item');
+
+            window.addEventListener('scroll', () => {
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    if (window.pageYOffset >= sectionTop - 200) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                navItems.forEach(item => {
+                    item.classList.remove('active');
+                    if (item.getAttribute('href') === '#' + current) {
+                        item.classList.add('active');
+                    }
+                });
+            });
+        }
+
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showNotification('Copied to clipboard!');
+            });
+        }
+
+        function copyCode(elementId) {
+            const codeElement = document.querySelector(`#${elementId} code`);
+            if (codeElement) {
+                navigator.clipboard.writeText(codeElement.textContent).then(() => {
+                    showNotification('Code copied to clipboard!');
+                });
+            }
+        }
+
+        function executeApiCall() {
+            const endpoint = document.getElementById('api-endpoint').value;
+            const params = document.getElementById('api-params').value;
+            const apiKey = document.getElementById('api-key-input').value;
+
+            if (!apiKey) {
+                showNotification('Please enter your API key', 'error');
+                return;
+            }
+
+            // Show loading state
+            const responseContainer = document.getElementById('api-response');
+            responseContainer.innerHTML = `
+                <div class="p-4 text-center">
+                    <i class="fas fa-spinner fa-spin text-2xl text-primary-600 mb-3"></i>
+                    <p class="text-gray-400">Executing request...</p>
+                </div>
+            `;
+
+            // Simulate API call
+            setTimeout(() => {
+                const mockResponse = {
+                    "data": [
+                        {
+                            "id": "ast_1234567890",
+                            "title": "Modern Login Form",
+                            "category": "components",
+                            "technology": ["react", "tailwind"],
+                            "downloads": 1247,
+                            "rating": 4.8
+                        }
+                    ],
+                    "pagination": {
+                        "page": 1,
+                        "limit": 5,
+                        "total": 1247
+                    }
+                };
+
+                responseContainer.innerHTML = `
+                    <div class="code-header">
+                        <span class="text-gray-300 text-sm">Response</span>
+                        <span class="response-status status-200">200 OK</span>
+                    </div>
+                    <pre class="p-4"><code class="language-json">${JSON.stringify(mockResponse, null, 2)}</code></pre>
+                `;
+                
+                Prism.highlightAll();
+                showNotification('API request executed successfully!', 'success');
+            }, 2000);
+        }
+
+        function configureWebhook() {
+            const webhookUrl = document.getElementById('webhook-url').value;
+            if (!webhookUrl) {
+                showNotification('Please enter a webhook URL', 'error');
+                return;
+            }
+            showNotification('Webhook configured successfully!', 'success');
+        }
+
+        function showNotification(message, type = 'info') {
+            const colors = {
+                info: 'bg-blue-500',
+                success: 'bg-green-500',
+                warning: 'bg-yellow-500',
+                error: 'bg-red-500'
+            };
+            
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 ${colors[type]} text-white px-6 py-3 rounded-lg shadow-lg z-50 transition-all duration-300 transform translate-x-full`;
+            notification.innerHTML = `
+                <div class="flex items-center justify-between">
+                    <span class="text-sm font-medium">${message}</span>
+                    <button onclick="this.parentElement.parentElement.remove()" class="ml-3 text-white hover:text-gray-200">
+                        <i class="fas fa-times text-xs"></i>
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Trigger animation
+            setTimeout(() => {
+                notification.classList.remove('translate-x-full');
+            }, 100);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                notification.classList.add('translate-x-full');
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 5000);
+        }
+
+        // Search functionality
+        document.getElementById('docs-search')?.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            if (searchTerm.length < 2) return;
+
+            // Simple search highlighting (in a real app, this would be more sophisticated)
+            const textElements = document.querySelectorAll('p, h1, h2, h3, h4, li');
+            textElements.forEach(element => {
+                const text = element.textContent;
+                if (text.toLowerCase().includes(searchTerm)) {
+                    const highlightedText = text.replace(
+                        new RegExp(searchTerm, 'gi'),
+                        match => `<span class="search-highlight">${match}</span>`
+                    );
+                    element.innerHTML = highlightedText;
+                }
+            });
+        });
+
+        // Clear search highlights when search is cleared
+        document.getElementById('docs-search')?.addEventListener('blur', function() {
+            setTimeout(() => {
+                if (!this.value) {
+                    location.reload(); // Simple way to clear highlights
+                }
+            }, 100);
+        });
+    </script>
+</body>
+</html>
+

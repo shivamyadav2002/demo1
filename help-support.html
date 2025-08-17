@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Help & Support Center - DevHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a'
+                        }
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'ui-sans-serif', 'system-ui']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .support-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .support-gradient::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 80%, rgba(102, 126, 234, 0.3), transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1), transparent 50%),
+                        radial-gradient(circle at 40% 40%, rgba(240, 147, 251, 0.2), transparent 50%);
+            animation: floating 6s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(1deg); }
+        }
+        
+        .help-card {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+        
+        .dark .help-card {
+            background: linear-gradient(145deg, #1f2937, #111827);
+        }
+        
+        .help-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border-color: #3b82f6;
+        }
+        
+        .dark .help-card:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .faq-category {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border-left: 4px solid #3b82f6;
+            transition: all 0.3s ease;
+        }
+        
+        .dark .faq-category {
+            background: linear-gradient(135deg, #1e3a8a, #1e40af);
+        }
+        
+        .faq-item {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .faq-item:hover {
+            background-color: rgba(59, 130, 246, 0.05);
+        }
+        
+        .dark .faq-item:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease;
+        }
+        
+        .faq-answer.active {
+            max-height: 500px;
+        }
+        
+        .contact-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .contact-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.8s ease;
+        }
+        
+        .contact-card:hover::before {
+            left: 100%;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(102, 126, 234, 0.4);
+        }
+        
+        .status-indicator {
+            background: #10b981;
+            animation: pulse 2s infinite;
+        }
+        
+        .search-highlight {
+            background: linear-gradient(90deg, #fbbf24, #f59e0b);
+            padding: 0.125rem 0.25rem;
+            border-radius: 0.25rem;
+            color: #92400e;
+            font-weight: 600;
+        }
+        
+        .ticket-priority-high {
+            background: #fee2e2;
+            color: #991b1b;
+            border-left: 4px solid #ef4444;
+        }
+        
+        .dark .ticket-priority-high {
+            background: #7f1d1d;
+            color: #fca5a5;
+        }
+        
+        .ticket-priority-medium {
+            background: #fef3c7;
+            color: #92400e;
+            border-left: 4px solid #f59e0b;
+        }
+        
+        .dark .ticket-priority-medium {
+            background: #92400e;
+            color: #fbbf24;
+        }
+        
+        .ticket-priority-low {
+            background: #dcfce7;
+            color: #166534;
+            border-left: 4px solid #10b981;
+        }
+        
+        .dark .ticket-priority-low {
+            background: #065f46;
+            color: #6ee7b7;
+        }
+        
+        .chat-bubble-user {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            border-radius: 1rem 1rem 0.25rem 1rem;
+        }
+        
+        .chat-bubble-support {
+            background: #f3f4f6;
+            color: #374151;
+            border-radius: 1rem 1rem 1rem 0.25rem;
+        }
+        
+        .dark .chat-bubble-support {
+            background: #374151;
+            color: #f3f4f6;
+        }
+        
+        .typing-indicator {
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #3b82f6;
+            margin: 0 2px;
+            animation: typing 1.4s infinite;
+        }
+        
+        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
+        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
+        
+        @keyframes typing {
+            0%, 60%, 100% { transform: scale(1); opacity: 0.7; }
+            30% { transform: scale(1.3); opacity: 1; }
+        }
+        
+        .satisfaction-rating {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .satisfaction-rating:hover {
+            transform: scale(1.2);
+        }
+        
+        .satisfaction-rating.selected {
+            color: #fbbf24;
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
+        }
+        
+        .feature-request-card {
+            background: linear-gradient(135deg, #fefbff, #f3e8ff);
+            border: 2px dashed #c084fc;
+            transition: all 0.3s ease;
+        }
+        
+        .dark .feature-request-card {
+            background: linear-gradient(135deg, #581c87, #6b21a8);
+            border-color: #a855f7;
+        }
+        
+        .feature-request-card:hover {
+            border-style: solid;
+            transform: translateY(-2px);
+        }
+        
+        .knowledge-base-card {
+            background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+            border-left: 4px solid #10b981;
+        }
+        
+        .dark .knowledge-base-card {
+            background: linear-gradient(135deg, #064e3b, #065f46);
+        }
+        
+        .priority-badge-high {
+            background: linear-gradient(45deg, #ef4444, #dc2626);
+            color: white;
+        }
+        
+        .priority-badge-medium {
+            background: linear-gradient(45deg, #f59e0b, #d97706);
+            color: white;
+        }
+        
+        .priority-badge-low {
+            background: linear-gradient(45deg, #10b981, #059669);
+            color: white;
+        }
+        
+        .live-chat-widget {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 50;
+        }
+        
+        .chat-widget-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+            animation: chatPulse 3s infinite;
+        }
+        
+        @keyframes chatPulse {
+            0%, 100% { box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4); }
+            50% { box-shadow: 0 8px 35px rgba(59, 130, 246, 0.6); }
+        }
+        
+        .chat-widget-button:hover {
+            transform: scale(1.1);
+        }
+        
+        .chat-popup {
+            position: absolute;
+            bottom: 80px;
+            right: 0;
+            width: 350px;
+            height: 500px;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .dark .chat-popup {
+            background: #1f2937;
+        }
+        
+        .chat-popup.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        
+        .breadcrumb-item {
+            transition: all 0.3s ease;
+        }
+        
+        .breadcrumb-item:hover {
+            color: #3b82f6;
+            transform: translateX(2px);
+        }
+        
+        .search-filter-panel {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.1);
+        }
+        
+        .dark .search-filter-panel {
+            background: linear-gradient(135deg, #1e293b, #334155);
+            border-color: rgba(96, 165, 250, 0.2);
+        }
+        
+        .help-section {
+            scroll-margin-top: 100px;
+        }
+        
+        .floating-toc {
+            position: fixed;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+            z-index: 30;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .dark .floating-toc {
+            background: #1f2937;
+        }
+        
+        .floating-toc.show {
+            opacity: 1;
+        }
+        
+        .toc-item {
+            display: block;
+            padding: 0.5rem;
+            color: #6b7280;
+            font-size: 0.875rem;
+            transition: all 0.3s ease;
+            border-left: 2px solid transparent;
+        }
+        
+        .toc-item:hover {
+            color: #3b82f6;
+            transform: translateX(4px);
+        }
+        
+        .toc-item.active {
+            color: #3b82f6;
+            border-left-color: #3b82f6;
+            background-color: rgba(59, 130, 246, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-lg sticky top-0 z-50 transition-colors duration-300">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo & Brand -->
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="flex items-center space-x-2">
+                        <div class="w-10 h-10 bg-gradient-to-r from-primary-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-code text-white text-lg"></i>
+                        </div>
+                        <h1 class="text-2xl font-bold bg-gradient-to-r from-primary-500 to-purple-600 bg-clip-text text-transparent">
+                            DevHub
+                        </h1>
+                    </a>
+                    <div class="hidden md:flex items-center space-x-2 text-gray-500">
+                        <i class="fas fa-chevron-right text-sm"></i>
+                        <span class="text-primary-600">Help & Support</span>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <nav class="hidden md:flex items-center space-x-6">
+                    <a href="index.html" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 transition-colors">Hub</a>
+                    <a href="community-enhanced.html" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 transition-colors">Community</a>
+                    <a href="documentation.html" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 transition-colors">Docs</a>
+                    <a href="pricing-functional.html" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 transition-colors">Pricing</a>
+                </nav>
+
+                <!-- Actions -->
+                <div class="flex items-center space-x-4">
+                    <!-- Search Help -->
+                    <div class="relative hidden lg:block">
+                        <input 
+                            type="text" 
+                            placeholder="Search help articles..." 
+                            class="pl-10 pr-4 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 w-64"
+                            id="help-search"
+                            onkeyup="searchHelp()"
+                        >
+                        <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                    </div>
+
+                    <!-- Dark Mode Toggle -->
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:block"></i>
+                    </button>
+
+                    <!-- Contact Support -->
+                    <button onclick="openContactModal()" class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors">
+                        <i class="fas fa-headset mr-2"></i>Contact Support
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Floating Table of Contents -->
+    <nav class="floating-toc hidden lg:block" id="floating-toc">
+        <div class="text-sm font-semibold text-gray-800 dark:text-gray-100 mb-3">Quick Navigation</div>
+        <a href="#getting-started" class="toc-item active" onclick="scrollToSection('getting-started')">Getting Started</a>
+        <a href="#faq" class="toc-item" onclick="scrollToSection('faq')">FAQ</a>
+        <a href="#contact" class="toc-item" onclick="scrollToSection('contact')">Contact Options</a>
+        <a href="#tickets" class="toc-item" onclick="scrollToSection('tickets')">Support Tickets</a>
+        <a href="#status" class="toc-item" onclick="scrollToSection('status')">System Status</a>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="support-gradient text-white py-16 relative">
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <h2 class="text-5xl md:text-6xl font-black mb-6">
+                How Can We Help?
+            </h2>
+            <p class="text-xl md:text-2xl mb-8 opacity-90 max-w-2xl mx-auto">
+                Get the support you need to make the most of DevHub. 
+                We're here to help you succeed.
+            </p>
+            
+            <!-- Hero Search -->
+            <div class="max-w-2xl mx-auto relative">
+                <input 
+                    type="text" 
+                    placeholder="Search for help articles, tutorials, or contact support..."
+                    class="w-full pl-12 pr-6 py-4 rounded-xl text-gray-900 text-lg focus:ring-4 focus:ring-white focus:ring-opacity-30 shadow-lg"
+                    id="hero-search"
+                    onkeypress="handleHeroSearch(event)"
+                >
+                <i class="fas fa-search absolute left-4 top-5 text-gray-500 text-lg"></i>
+            </div>
+
+            <!-- Quick Help Stats -->
+            <div class="flex items-center justify-center space-x-8 mt-12 opacity-75">
+                <div class="text-center">
+                    <div class="text-2xl font-bold">< 2min</div>
+                    <div class="text-sm">Avg Response Time</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold">98%</div>
+                    <div class="text-sm">Issues Resolved</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold">24/7</div>
+                    <div class="text-sm">Support Available</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-2xl font-bold">500+</div>
+                    <div class="text-sm">Help Articles</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-16">
+        <!-- Getting Started Section -->
+        <section id="getting-started" class="help-section mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold mb-4 text-gray-800 dark:text-gray-100">Getting Started</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                    New to DevHub? These guides will help you get up and running quickly
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="help-card rounded-2xl p-6 shadow-lg" onclick="openHelpArticle('quick-start')">
+                    <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-rocket text-blue-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-gray-100">Quick Start Guide</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4">
+                        Get started with DevHub in 5 minutes. Download your first components and integrate them into your project.
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-500">5 min read</span>
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="help-card rounded-2xl p-6 shadow-lg" onclick="openHelpArticle('first-component')">
+                    <div class="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-cube text-green-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-gray-100">Using Your First Component</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4">
+                        Step-by-step tutorial on downloading, installing, and customizing your first DevHub component.
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-500">8 min read</span>
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="help-card rounded-2xl p-6 shadow-lg" onclick="openHelpArticle('account-setup')">
+                    <div class="w-16 h-16 bg-purple-100 dark:bg-purple-900 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-user-cog text-purple-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-gray-100">Account Setup & Profile</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4">
+                        Configure your profile, set preferences, and personalize your DevHub experience.
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-500">6 min read</span>
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="help-card rounded-2xl p-6 shadow-lg" onclick="openHelpArticle('api-basics')">
+                    <div class="w-16 h-16 bg-orange-100 dark:bg-orange-900 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-code text-orange-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-gray-100">API Integration Basics</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4">
+                        Learn how to integrate DevHub API into your workflow and automate component management.
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-500">12 min read</span>
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="help-card rounded-2xl p-6 shadow-lg" onclick="openHelpArticle('team-collaboration')">
+                    <div class="w-16 h-16 bg-red-100 dark:bg-red-900 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-users text-red-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-gray-100">Team Collaboration</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4">
+                        Set up team workspaces, manage permissions, and collaborate effectively with your development team.
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-500">10 min read</span>
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="help-card rounded-2xl p-6 shadow-lg" onclick="openHelpArticle('troubleshooting')">
+                    <div class="w-16 h-16 bg-indigo-100 dark:bg-indigo-900 rounded-xl flex items-center justify-center mb-4">
+                        <i class="fas fa-wrench text-indigo-600 text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-gray-800 dark:text-gray-100">Troubleshooting Guide</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-4">
+                        Common issues and solutions. Fix problems quickly with our comprehensive troubleshooting guide.
+                    </p>
+                    <div class="flex items-center justify-between">
+                        <span class="text-sm text-gray-500">15 min read</span>
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="far fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="help-section mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold mb-4 text-gray-800 dark:text-gray-100">Frequently Asked Questions</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400">
+                    Find quick answers to the most common questions about DevHub
+                </p>
+            </div>
+
+            <!-- FAQ Categories -->
+            <div class="flex flex-wrap justify-center gap-4 mb-8">
+                <button onclick="filterFAQ('all')" class="faq-category-btn active px-6 py-2 rounded-full bg-primary-600 text-white font-medium">
+                    All Questions
+                </button>
+                <button onclick="filterFAQ('account')" class="faq-category-btn px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors font-medium">
+                    Account & Billing
+                </button>
+                <button onclick="filterFAQ('technical')" class="faq-category-btn px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors font-medium">
+                    Technical Issues
+                </button>
+                <button onclick="filterFAQ('components')" class="faq-category-btn px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors font-medium">
+                    Components & Usage
+                </button>
+            </div>
+
+            <!-- FAQ List -->
+            <div class="max-w-4xl mx-auto space-y-4" id="faq-list">
+                <!-- FAQ items will be populated by JavaScript -->
+            </div>
+        </section>
+
+        <!-- Contact Options Section -->
+        <section id="contact" class="help-section mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold mb-4 text-gray-800 dark:text-gray-100">Contact Support</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400">
+                    Choose the best way to get in touch with our support team
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Live Chat -->
+                <div class="contact-card rounded-2xl p-6 text-center relative" onclick="startLiveChat()">
+                    <div class="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-comments text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Live Chat</h3>
+                    <p class="text-sm mb-4 opacity-90">Get instant help from our support team</p>
+                    <div class="flex items-center justify-center space-x-2">
+                        <div class="status-indicator w-2 h-2 rounded-full"></div>
+                        <span class="text-xs">Available now</span>
+                    </div>
+                    <div class="text-xs mt-2 opacity-75">Avg. response: 30 seconds</div>
+                </div>
+
+                <!-- Email Support -->
+                <div class="contact-card rounded-2xl p-6 text-center relative" onclick="openEmailSupport()">
+                    <div class="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-envelope text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Email Support</h3>
+                    <p class="text-sm mb-4 opacity-90">Send us a detailed message</p>
+                    <div class="text-xs opacity-75">Response within 24 hours</div>
+                </div>
+
+                <!-- Phone Support -->
+                <div class="contact-card rounded-2xl p-6 text-center relative" onclick="requestPhoneCall()">
+                    <div class="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-phone text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Phone Support</h3>
+                    <p class="text-sm mb-4 opacity-90">Talk directly with our experts</p>
+                    <div class="text-xs opacity-75">Business plan and above</div>
+                </div>
+
+                <!-- Community Forum -->
+                <div class="contact-card rounded-2xl p-6 text-center relative" onclick="goToCommunity()">
+                    <div class="w-16 h-16 bg-white/20 rounded-xl flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-users text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Community Forum</h3>
+                    <p class="text-sm mb-4 opacity-90">Get help from other developers</p>
+                    <div class="text-xs opacity-75">15K+ active members</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Support Tickets Section -->
+        <section id="tickets" class="help-section mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold mb-4 text-gray-800 dark:text-gray-100">Your Support Tickets</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400">
+                    Track and manage your support requests
+                </p>
+            </div>
+
+            <!-- Tickets List -->
+            <div class="max-w-4xl mx-auto space-y-4" id="tickets-list">
+                <!-- Support tickets will be populated by JavaScript -->
+            </div>
+
+            <!-- Create New Ticket -->
+            <div class="text-center mt-8">
+                <button onclick="createNewTicket()" class="bg-primary-600 text-white px-8 py-3 rounded-xl hover:bg-primary-700 transition-colors font-semibold">
+                    <i class="fas fa-plus mr-2"></i>Create New Ticket
+                </button>
+            </div>
+        </section>
+
+        <!-- System Status Section -->
+        <section id="status" class="help-section mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold mb-4 text-gray-800 dark:text-gray-100">System Status</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400">
+                    Current status of DevHub services and infrastructure
+                </p>
+            </div>
+
+            <div class="max-w-4xl mx-auto">
+                <!-- Overall Status -->
+                <div class="bg-green-50 dark:bg-green-900 border-l-4 border-green-500 rounded-xl p-6 mb-8">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-4 h-4 bg-green-500 rounded-full animate-pulse"></div>
+                            <h3 class="text-xl font-bold text-green-800 dark:text-green-200">All Systems Operational</h3>
+                        </div>
+                        <div class="text-sm text-green-600 dark:text-green-300">
+                            Last checked: <span id="last-status-check">2 minutes ago</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Service Status Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="service-status">
+                    <!-- Service status items will be populated by JavaScript -->
+                </div>
+
+                <!-- Recent Incidents -->
+                <div class="mt-12">
+                    <h3 class="text-2xl font-bold mb-6 text-gray-800 dark:text-gray-100">Recent Incidents</h3>
+                    <div class="space-y-4" id="incidents-list">
+                        <!-- Incidents will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Knowledge Base -->
+        <section class="mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold mb-4 text-gray-800 dark:text-gray-100">Knowledge Base</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400">
+                    Comprehensive guides and documentation for DevHub
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="knowledge-base-card rounded-xl p-6">
+                    <h3 class="text-xl font-bold mb-4 text-gray-800 dark:text-gray-100">Popular Articles</h3>
+                    <div class="space-y-3" id="popular-articles">
+                        <!-- Popular articles will be populated by JavaScript -->
+                    </div>
+                </div>
+
+                <div class="knowledge-base-card rounded-xl p-6">
+                    <h3 class="text-xl font-bold mb-4 text-gray-800 dark:text-gray-100">Recently Updated</h3>
+                    <div class="space-y-3" id="recent-articles">
+                        <!-- Recent articles will be populated by JavaScript -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Requests -->
+        <section class="mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold mb-4 text-gray-800 dark:text-gray-100">Feature Requests</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400">
+                    Help shape the future of DevHub by suggesting new features
+                </p>
+            </div>
+
+            <div class="max-w-2xl mx-auto">
+                <div class="feature-request-card rounded-xl p-8 text-center">
+                    <i class="fas fa-lightbulb text-4xl text-purple-600 mb-4"></i>
+                    <h3 class="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100">Have an idea?</h3>
+                    <p class="text-gray-600 dark:text-gray-400 mb-6">
+                        We're always looking to improve DevHub based on your feedback and suggestions. 
+                        Share your ideas with our product team.
+                    </p>
+                    <button onclick="submitFeatureRequest()" class="bg-purple-600 text-white px-8 py-3 rounded-xl hover:bg-purple-700 transition-colors font-semibold">
+                        <i class="fas fa-plus mr-2"></i>Submit Feature Request
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Live Chat Widget -->
+    <div class="live-chat-widget">
+        <div class="chat-popup" id="chat-popup">
+            <!-- Chat Header -->
+            <div class="bg-gradient-to-r from-primary-500 to-purple-600 text-white p-4 rounded-t-xl">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-3">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/d97a5268-7b2f-41ef-bbef-8e3afa62d40f.png" alt="Support agent profile picture" class="w-8 h-8 rounded-full">
+                        <div>
+                            <div class="font-semibold">Support Agent</div>
+                            <div class="text-xs opacity-75">Online now</div>
+                        </div>
+                    </div>
+                    <button onclick="closeLiveChat()" class="text-white hover:text-gray-200">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Chat Messages -->
+            <div class="flex-1 p-4 space-y-4 h-80 overflow-y-auto" id="chat-messages">
+                <div class="chat-bubble-support p-3 max-w-xs">
+                    <p class="text-sm">Hi! I'm here to help. What can I assist you with today?</p>
+                    <div class="text-xs text-gray-500 mt-1">Just now</div>
+                </div>
+            </div>
+
+            <!-- Typing Indicator -->
+            <div class="px-4 pb-2" id="typing-indicator" style="display: none;">
+                <div class="flex items-center space-x-2 text-gray-500">
+                    <span class="text-sm">Support is typing</span>
+                    <div class="typing-indicator">
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                        <div class="typing-dot"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chat Input -->
+            <div class="p-4 border-t dark:border-gray-700">
+                <div class="flex space-x-2">
+                    <input 
+                        type="text" 
+                        placeholder="Type your message..." 
+                        class="flex-1 px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600"
+                        id="chat-input"
+                        onkeypress="handleChatInput(event)"
+                    >
+                    <button onclick="sendChatMessage()" class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-widget-button" onclick="toggleLiveChat()">
+            <i class="fas fa-headset"></i>
+        </div>
+    </div>
+
+    <!-- Contact Support Modal -->
+    <div id="contact-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl max-w-2xl w-full">
+            <div class="p-8">
+                <div class="flex justify-between items-center mb-8">
+                    <h3 class="text-3xl font-bold text-gray-800 dark:text-gray-100">Contact Support</h3>
+                    <button onclick="closeContactModal()" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 text-2xl">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <form id="support-form" class="space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Your Name</label>
+                            <input type="text" required class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Email Address</label>
+                            <input type="email" required class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600">
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Issue Category</label>
+                            <select required class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600">
+                                <option value="">Select category</option>
+                                <option>Account & Billing</option>
+                                <option>Technical Issue</option>
+                                <option>Component Problem</option>
+                                <option>API Support</option>
+                                <option>Feature Request</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Priority</label>
+                            <select class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600">
+                                <option>Low</option>
+                                <option>Medium</option>
+                                <option>High</option>
+                                <option>Urgent</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Subject</label>
+                        <input type="text" required class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600" placeholder="Brief description of your issue">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Description</label>
+                        <textarea rows="6" required class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600" placeholder="Please provide as much detail as possible..."></textarea>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Attachments (Optional)</label>
+                        <div class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-6 text-center">
+                            <i class="fas fa-cloud-upload-alt text-3xl text-gray-400 mb-2"></i>
+                            <p class="text-gray-600 dark:text-gray-400 mb-2">Drag & drop files or click to browse</p>
+                            <input type="file" multiple class="hidden" id="support-files">
+                            <button type="button" onclick="document.getElementById('support-files').click()" class="text-primary-600 hover:text-primary-700 font-medium">
+                                Choose Files
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="flex space-x-4">
+                        <button type="button" onclick="closeContactModal()" class="flex-1 bg-gray-300 dark:bg-gray-600 py-3 px-6 rounded-xl hover:bg-gray-400 dark:hover:bg-gray-700 transition-colors font-semibold">
+                            Cancel
+                        </button>
+                        <button type="submit" class="flex-1 bg-primary-600 text-white py-3 px-6 rounded-xl hover:bg-primary-700 transition-colors font-semibold">
+                            <i class="fas fa-paper-plane mr-2"></i>Submit Ticket
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State Management
+        let isDarkMode = false;
+        let chatOpen = false;
+        let currentFAQFilter = 'all';
+
+        // Sample data
+        const faqData = [
+            {
+                category: 'account',
+                question: 'How do I upgrade my account to Pro?',
+                answer: 'You can upgrade your account by going to Settings > Billing and selecting the Pro plan. The upgrade takes effect immediately, and you\'ll have access to all Pro features.'
+            },
+            {
+                category: 'account',
+                question: 'Can I cancel my subscription anytime?',
+                answer: 'Yes, you can cancel your subscription at any time from your account settings. You\'ll continue to have access to paid features until the end of your current billing period.'
+            },
+            {
+                category: 'technical',
+                question: 'Components not loading in my project?',
+                answer: 'This is usually due to missing dependencies or incorrect import paths. Make sure you\'ve installed all required packages and check the integration guide for your framework.'
+            },
+            {
+                category: 'technical',
+                question: 'How do I report a bug?',
+                answer: 'You can report bugs through our support ticket system or GitHub issues. Please include steps to reproduce, expected behavior, and your environment details.'
+            },
+            {
+                category: 'components',
+                question: 'Can I customize downloaded components?',
+                answer: 'Absolutely! All components come with source code and are designed to be customizable. You can modify colors, spacing, and functionality to match your needs.'
+            },
+            {
+                category: 'components',
+                question: 'Do components work with my framework?',
+                answer: 'Our components support React, Vue, Angular, and vanilla HTML/CSS. Each component page shows compatibility and provides framework-specific code examples.'
+            },
+            {
+                category: 'account',
+                question: 'How do I reset my password?',
+                answer: 'Click the "Forgot Password" link on the login page, enter your email address, and we\'ll send you a password reset link within minutes.'
+            },
+            {
+                category: 'technical',
+                question: 'API rate limits and errors?',
+                answer: 'Free accounts have a limit of 100 requests per day. Pro accounts get 1,000 requests per day. If you hit the limit, you\'ll receive a 429 error. Check our API documentation for details.'
+            }
+        ];
+
+        const supportTickets = [
+            {
+                id: 'TKT-2024-001',
+                subject: 'Component not rendering correctly',
+                status: 'Open',
+                priority: 'high',
+                created: '2 hours ago',
+                lastUpdate: '1 hour ago',
+                category: 'Technical Issue'
+            },
+            {
+                id: 'TKT-2024-002',
+                subject: 'Billing question about annual plan',
+                status: 'Resolved',
+                priority: 'low',
+                created: '1 day ago',
+                lastUpdate: '6 hours ago',
+                category: 'Account & Billing'
+            },
+            {
+                id: 'TKT-2024-003',
+                subject: 'API integration help needed',
+                status: 'In Progress',
+                priority: 'medium',
+                created: '3 days ago',
+                lastUpdate: '1 day ago',
+                category: 'API Support'
+            }
+        ];
+
+        const serviceStatus = [
+            { name: 'Website', status: 'operational', uptime: '99.98%' },
+            { name: 'API', status: 'operational', uptime: '99.95%' },
+            { name: 'CDN', status: 'operational', uptime: '100%' },
+            { name: 'Database', status: 'operational', uptime: '99.99%' },
+            { name: 'File Storage', status: 'operational', uptime: '99.97%' },
+            { name: 'Support Chat', status: 'operational', uptime: '99.5%' }
+        ];
+
+        const recentIncidents = [
+            {
+                title: 'Scheduled Maintenance Complete',
+                description: 'Database optimization and server updates completed successfully',
+                status: 'resolved',
+                date: '2 days ago',
+                duration: '30 minutes'
+            },
+            {
+                title: 'API Slowdown Resolved',
+                description: 'Temporary API response delays due to high traffic, resolved with auto-scaling',
+                status: 'resolved',
+                date: '1 week ago',
+                duration: '15 minutes'
+            }
+        ];
+
+        const popularArticles = [
+            { title: 'Getting Started with DevHub', views: '12.5K', category: 'Getting Started' },
+            { title: 'How to Use React Components', views: '8.7K', category: 'Components' },
+            { title: 'API Integration Guide', views: '6.3K', category: 'API' },
+            { title: 'Team Collaboration Setup', views: '5.9K', category: 'Teams' },
+            { title: 'Troubleshooting Common Issues', views: '4.2K', category: 'Technical' }
+        ];
+
+        const recentArticles = [
+            { title: 'New Vue 3 Component Support', updated: '1 day ago', category: 'Updates' },
+            { title: 'Enhanced Search Features', updated: '3 days ago', category: 'Features' },
+            { title: 'Security Best Practices', updated: '1 week ago', category: 'Security' },
+            { title: 'Mobile Responsive Components', updated: '2 weeks ago', category: 'Mobile' }
+        ];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            initializePage();
+            populateFAQ();
+            populateSupportTickets();
+            populateServiceStatus();
+            populateIncidents();
+            populateKnowledgeBase();
+            setupScrollSpyTOC();
+            startStatusUpdates();
+        });
+
+        function initializePage() {
+            if (localStorage.getItem('darkMode') === 'true') {
+                isDarkMode = true;
+                document.documentElement.classList.add('dark');
+            }
+        }
+
+        function populateFAQ() {
+            const container = document.getElementById('faq-list');
+            const filteredFAQ = currentFAQFilter === 'all' 
+                ? faqData 
+                : faqData.filter(item => item.category === currentFAQFilter);
+            
+            container.innerHTML = filteredFAQ.map((faq, index) => `
+                <div class="faq-item bg-white dark:bg-gray-800 rounded-xl shadow-lg">
+                    <div class="p-6" onclick="toggleFAQ(${index})">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-gray-100 pr-4">${faq.question}</h3>
+                            <div class="flex items-center space-x-2">
+                                <span class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-2 py-1 rounded-full text-xs font-medium">
+                                    ${faq.category}
+                                </span>
+                                <i class="fas fa-chevron-down text-gray-400 faq-icon-${index} transition-transform"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="faq-answer px-6 pb-6" id="faq-answer-${index}">
+                        <p class="text-gray-600 dark:text-gray-400 leading-relaxed">${faq.answer}</p>
+                        <div class="mt-4 flex items-center justify-between">
+                            <div class="flex items-center space-x-4">
+                                <button onclick="rateFAQ(${index}, 'helpful')" class="text-green-600 hover:text-green-700 text-sm font-medium">
+                                    <i class="fas fa-thumbs-up mr-1"></i>Helpful
+                                </button>
+                                <button onclick="rateFAQ(${index}, 'not-helpful')" class="text-red-600 hover:text-red-700 text-sm font-medium">
+                                    <i class="fas fa-thumbs-down mr-1"></i>Not Helpful
+                                </button>
+                            </div>
+                            <button onclick="contactFromFAQ('${faq.question}')" class="text-primary-600 hover:text-primary-700 text-sm font-medium">
+                                Still need help?
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function populateSupportTickets() {
+            const container = document.getElementById('tickets-list');
+            container.innerHTML = supportTickets.map(ticket => `
+                <div class="ticket-priority-${ticket.priority} rounded-xl p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center space-x-4">
+                            <div>
+                                <h3 class="text-lg font-bold">${ticket.subject}</h3>
+                                <p class="text-sm opacity-75">Ticket ID: ${ticket.id}</p>
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <span class="priority-badge-${ticket.priority} px-2 py-1 rounded-full text-xs font-bold">
+                                    ${ticket.priority.toUpperCase()}
+                                </span>
+                                <span class="px-2 py-1 rounded-full text-xs font-medium ${ticket.status === 'Open' ? 'bg-blue-100 text-blue-800' : ticket.status === 'Resolved' ? 'bg-green-100 text-green-800' : 'bg-yellow-100 text-yellow-800'}">
+                                    ${ticket.status}
+                                </span>
+                            </div>
+                        </div>
+                        <button onclick="viewTicket('${ticket.id}')" class="text-primary-600 hover:text-primary-700 font-medium">
+                            View Details
+                        </button>
+                    </div>
+                    <div class="flex items-center justify-between text-sm">
+                        <span class="opacity-75">Category: ${ticket.category}</span>
+                        <div class="space-x-4">
+                            <span>Created: ${ticket.created}</span>
+                            <span>Updated: ${ticket.lastUpdate}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function populateServiceStatus() {
+            const container = document.getElementById('service-status');
+            container.innerHTML = serviceStatus.map(service => `
+                <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-lg">
+                    <div class="flex items-center justify-between mb-2">
+                        <h4 class="font-semibold text-gray-800 dark:text-gray-100">${service.name}</h4>
+                        <div class="flex items-center space-x-2">
+                            <div class="w-3 h-3 bg-green-500 rounded-full"></div>
+                            <span class="text-sm text-green-600 font-medium">Operational</span>
+                        </div>
+                    </div>
+                    <div class="text-sm text-gray-600 dark:text-gray-400">
+                        Uptime: <span class="font-semibold text-green-600">${service.uptime}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function populateIncidents() {
+            const container = document.getElementById('incidents-list');
+            if (recentIncidents.length === 0) {
+                container.innerHTML = `
+                    <div class="bg-green-50 dark:bg-green-900 border border-green-200 dark:border-green-700 rounded-xl p-6 text-center">
+                        <i class="fas fa-check-circle text-green-500 text-2xl mb-2"></i>
+                        <p class="text-green-800 dark:text-green-200 font-medium">No recent incidents</p>
+                        <p class="text-green-600 dark:text-green-400 text-sm">All systems running smoothly</p>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = recentIncidents.map(incident => `
+                    <div class="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-lg border-l-4 border-green-500">
+                        <div class="flex items-center justify-between mb-2">
+                            <h4 class="font-semibold text-gray-800 dark:text-gray-100">${incident.title}</h4>
+                            <span class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full text-xs font-medium">
+                                ${incident.status}
+                            </span>
+                        </div>
+                        <p class="text-gray-600 dark:text-gray-400 text-sm mb-2">${incident.description}</p>
+                        <div class="flex items-center justify-between text-xs text-gray-500">
+                            <span>${incident.date}</span>
+                            <span>Duration: ${incident.duration}</span>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function populateKnowledgeBase() {
+            // Popular Articles
+            const popularContainer = document.getElementById('popular-articles');
+            popularContainer.innerHTML = popularArticles.map(article => `
+                <div class="flex items-center justify-between p-3 hover:bg-green-100 dark:hover:bg-green-800 rounded-lg cursor-pointer transition-colors" onclick="openKBArticle('${article.title}')">
+                    <div>
+                        <div class="font-medium text-gray-800 dark:text-gray-100">${article.title}</div>
+                        <div class="text-sm text-gray-500">${article.category}</div>
+                    </div>
+                    <div class="text-sm text-gray-500">${article.views} views</div>
+                </div>
+            `).join('');
+
+            // Recent Articles
+            const recentContainer = document.getElementById('recent-articles');
+            recentContainer.innerHTML = recentArticles.map(article => `
+                <div class="flex items-center justify-between p-3 hover:bg-green-100 dark:hover:bg-green-800 rounded-lg cursor-pointer transition-colors" onclick="openKBArticle('${article.title}')">
+                    <div>
+                        <div class="font-medium text-gray-800 dark:text-gray-100">${article.title}</div>
+                        <div class="text-sm text-gray-500">${article.category}</div>
+                    </div>
+                    <div class="text-sm text-gray-500">${article.updated}</div>
+                </div>
+            `).join('');
+        }
+
+        function startStatusUpdates() {
+            setInterval(() => {
+                document.getElementById('last-status-check').textContent = 'Just now';
+            }, 60000); // Update every minute
+        }
+
+        function setupScrollSpyTOC() {
+            const sections = document.querySelectorAll('.help-section');
+            const tocItems = document.querySelectorAll('.toc-item');
+            const toc = document.getElementById('floating-toc');
+
+            window.addEventListener('scroll', () => {
+                // Show/hide TOC based on scroll position
+                if (window.scrollY > 300) {
+                    toc.classList.add('show');
+                } else {
+                    toc.classList.remove('show');
+                }
+
+                // Update active TOC item
+                let current = '';
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop - 150;
+                    if (window.pageYOffset >= sectionTop) {
+                        current = section.getAttribute('id');
+                    }
+                });
+
+                tocItems.forEach(item => {
+                    item.classList.remove('active');
+                    if (item.getAttribute('href') === '#' + current) {
+                        item.classList.add('active');
+                    }
+                });
+            });
+        }
+
+        // FAQ Functions
+        function filterFAQ(category) {
+            currentFAQFilter = category;
+            
+            // Update button states
+            document.querySelectorAll('.faq-category-btn').forEach(btn => {
+                btn.classList.remove('active', 'bg-primary-600', 'text-white');
+                btn.classList.add('bg-gray-200', 'dark:bg-gray-700');
+            });
+            
+            event.target.classList.add('active', 'bg-primary-600', 'text-white');
+            event.target.classList.remove('bg-gray-200', 'dark:bg-gray-700');
+            
+            populateFAQ();
+            showNotification(`Showing ${category === 'all' ? 'all' : category} questions`, 'info');
+        }
+
+        function toggleFAQ(index) {
+            const answer = document.getElementById(`faq-answer-${index}`);
+            const icon = document.querySelector(`.faq-icon-${index}`);
+            
+            answer.classList.toggle('active');
+            icon.style.transform = answer.classList.contains('active') 
+                ? 'rotate(180deg)' 
+                : 'rotate(0deg)';
+        }
+
+        function rateFAQ(index, rating) {
+            showNotification(rating === 'helpful' ? 'Thanks for your feedback!' : 'We\'ll work on improving this answer', 'success');
+        }
+
+        function contactFromFAQ(question) {
+            openContactModal();
+            // Pre-fill the subject with the FAQ question
+            setTimeout(() => {
+                const subjectField = document.querySelector('#support-form input[type="text"]');
+                if (subjectField) {
+                    subjectField.value = `Question about: ${question}`;
+                }
+            }, 100);
+        }
+
+        // Contact Functions
+        function openContactModal() {
+            document.getElementById('contact-modal').classList.remove('hidden');
+        }
+
+        function closeContactModal() {
+            document.getElementById('contact-modal').classList.add('hidden');
+        }
+
+        function startLiveChat() {
+            toggleLiveChat();
+            showNotification('Live chat started! An agent will be with you shortly.', 'success');
+        }
+
+        function openEmailSupport() {
+            openContactModal();
+            showNotification('Opening email support form...', 'info');
+        }
+
+        function requestPhoneCall() {
+            showNotification('Phone support is available for Business and Enterprise plans. Upgrade to access this feature.', 'warning');
+        }
+
+        function goToCommunity() {
+            window.location.href = 'community-enhanced.html';
+        }
+
+        // Live Chat Functions
+        function toggleLiveChat() {
+            const popup = document.getElementById('chat-popup');
+            chatOpen = !chatOpen;
+            
+            if (chatOpen) {
+                popup.classList.add('active');
+            } else {
+                popup.classList.remove('active');
+            }
+        }
+
+        function closeLiveChat() {
+            document.getElementById('chat-popup').classList.remove('active');
+            chatOpen = false;
+        }
+
+        function handleChatInput(event) {
+            if (event.key === 'Enter') {
+                sendChatMessage();
+            }
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chat-input');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            const messagesContainer = document.getElementById('chat-messages');
+            
+            // Add user message
+            const userMessage = document.createElement('div');
+            userMessage.className = 'flex justify-end';
+            userMessage.innerHTML = `
+                <div class="chat-bubble-user p-3 max-w-xs">
+                    <p class="text-sm">${message}</p>
+                    <div class="text-xs opacity-75 mt-1">Just now</div>
+                </div>
+            `;
+            messagesContainer.appendChild(userMessage);
+            
+            // Clear input
+            input.value = '';
+            
+            // Show typing indicator
+            document.getElementById('typing-indicator').style.display = 'block';
+            
+            // Scroll to bottom
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            // Simulate support response
+            setTimeout(() => {
+                document.getElementById('typing-indicator').style.display = 'none';
+                
+                const supportMessage = document.createElement('div');
+                supportMessage.innerHTML = `
+                    <div class="chat-bubble-support p-3 max-w-xs">
+                        <p class="text-sm">Thanks for your message! I'm looking into that for you right away. Can you provide a bit more detail about the specific issue you're experiencing?</p>
+                        <div class="text-xs text-gray-500 mt-1">Just now</div>
+                    </div>
+                `;
+                messagesContainer.appendChild(supportMessage);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }, 2000);
+        }
+
+        // Utility Functions
+        function searchHelp() {
+            const query = document.getElementById('help-search').value.toLowerCase();
+            if (query.length < 2) return;
+            
+            showNotification(`Searching help articles for "${query}"...`, 'info');
+            // In a real app, this would filter help articles
+        }
+
+        function handleHeroSearch(event) {
+            if (event.key === 'Enter') {
+                const query = document.getElementById('hero-search').value;
+                if (query.trim()) {
+                    showNotification(`Searching for "${query}"...`, 'info');
+                    // Simulate search results
+                    setTimeout(() => {
+                        showNotification(`Found 12 articles matching "${query}"`, 'success');
+                    }, 1000);
+                }
+            }
+        }
+
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
+
+        function openHelpArticle(articleId) {
+            showNotification(`Opening ${articleId} guide...`, 'info');
+            // In a real app, navigate to specific help article
+        }
+
+        function viewTicket(ticketId) {
+            showNotification(`Opening ticket ${ticketId}...`, 'info');
+            // In a real app, navigate to ticket details
+        }
+
+        function createNewTicket() {
+            openContactModal();
+            showNotification('Opening new support ticket form...', 'info');
+        }
+
+        function openKBArticle(title) {
+            showNotification(`Opening "${title}" article...`, 'info');
+            // In a real app, navigate to knowledge base article
+        }
+
+        function submitFeatureRequest() {
+            showNotification('Opening feature request form...', 'info');
+            // In a real app, open feature request modal
+        }
+
+        function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', isDarkMode);
+        }
+
+        function showNotification(message, type = 'info') {
+            const colors = {
+                info: 'bg-blue-500',
+                success: 'bg-green-500',
+                warning: 'bg-yellow-500',
+                error: 'bg-red-500'
+            };
+            
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 ${colors[type]} text-white px-6 py-3 rounded-lg shadow-lg z-50 transition-all duration-300 transform translate-x-full`;
+            notification.innerHTML = `
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-info-circle"></i>
+                    <span class="font-medium">${message}</span>
+                    <button onclick="this.parentElement.parentElement.remove()" class="ml-2 text-white hover:text-gray-200">
+                        <i class="fas fa-times text-xs"></i>
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.remove('translate-x-full');
+            }, 100);
+            
+            setTimeout(() => {
+                notification.classList.add('translate-x-full');
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 4000);
+        }
+
+        // Form submission
+        document.getElementById('support-form')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            showNotification('Support ticket created successfully! We\'ll get back to you within 24 hours.', 'success');
+            closeContactModal();
+        });
+
+        // Close modal when clicking outside
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('bg-black')) {
+                closeContactModal();
+            }
+        });
+
+        // Escape key to close modal
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeContactModal();
+            }
+        });
+    </script>
+</body>
+</html>
+

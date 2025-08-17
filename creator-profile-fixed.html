@@ -1,0 +1,1790 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sarah Chen - Elite Creator | DevHub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a'
+                        }
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'ui-sans-serif', 'system-ui']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-gradient::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3), transparent 50%),
+                        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.15), transparent 50%),
+                        radial-gradient(circle at 40% 40%, rgba(249, 168, 212, 0.2), transparent 50%);
+            animation: floating 6s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(1deg); }
+        }
+        
+        .profile-image-container {
+            position: relative;
+            animation: profilePulse 4s ease-in-out infinite;
+        }
+        
+        @keyframes profilePulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.4); }
+            50% { box-shadow: 0 0 0 20px rgba(59, 130, 246, 0); }
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .dark .glass-effect {
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        
+        .card-premium {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            box-shadow: 
+                20px 20px 60px #d1d5db,
+                -20px -20px 60px #ffffff;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        
+        .dark .card-premium {
+            background: linear-gradient(145deg, #1f2937, #111827);
+            box-shadow: 
+                20px 20px 60px #0f172a,
+                -20px -20px 60px #374151;
+        }
+        
+        .card-premium:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 
+                25px 25px 80px #d1d5db,
+                -25px -25px 80px #ffffff,
+                0 0 40px rgba(59, 130, 246, 0.15);
+        }
+        
+        .dark .card-premium:hover {
+            box-shadow: 
+                25px 25px 80px #0f172a,
+                -25px -25px 80px #374151,
+                0 0 40px rgba(59, 130, 246, 0.3);
+        }
+        
+        .skill-orb {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, #3b82f6, #8b5cf6, #ec4899, #3b82f6);
+            animation: rotate 8s linear infinite;
+        }
+        
+        .skill-orb::before {
+            content: '';
+            position: absolute;
+            inset: 3px;
+            background: white;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        .dark .skill-orb::before {
+            background: #1f2937;
+        }
+        
+        .skill-orb-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .achievement-glow {
+            background: linear-gradient(45deg, #fbbf24, #f59e0b);
+            box-shadow: 0 0 30px rgba(251, 191, 36, 0.5);
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 20px rgba(251, 191, 36, 0.4); }
+            to { box-shadow: 0 0 40px rgba(251, 191, 36, 0.8); }
+        }
+        
+        .portfolio-mosaic {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            grid-auto-rows: minmax(200px, auto);
+        }
+        
+        .portfolio-item {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+        
+        .portfolio-item:nth-child(3n) {
+            grid-row: span 2;
+        }
+        
+        .portfolio-item:hover {
+            transform: translateY(-12px) scale(1.03);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+        
+        .portfolio-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, 
+                rgba(59, 130, 246, 0.95) 0%, 
+                rgba(139, 92, 246, 0.95) 50%, 
+                rgba(236, 72, 153, 0.95) 100%);
+            opacity: 0;
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            color: white;
+        }
+        
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+        
+        .stats-counter {
+            color: #3b82f6;
+            font-weight: 900;
+            animation: counterGlow 3s ease-in-out infinite;
+        }
+        
+        .dark .stats-counter {
+            color: #60a5fa;
+        }
+        
+        @keyframes counterGlow {
+            0%, 100% { text-shadow: 0 0 10px rgba(59, 130, 246, 0.5); }
+            50% { text-shadow: 0 0 20px rgba(59, 130, 246, 0.8); }
+        }
+        
+        .floating-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+        
+        .testimonial-slider {
+            position: relative;
+            overflow: hidden;
+            min-height: 300px;
+        }
+        
+        .testimonial-slide {
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.6s ease;
+            position: absolute;
+            width: 100%;
+        }
+        
+        .testimonial-slide.active {
+            opacity: 1;
+            transform: translateX(0);
+            position: relative;
+        }
+        
+        .testimonial-card {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            border-left: 4px solid #3b82f6;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .dark .testimonial-card {
+            background: linear-gradient(135deg, #1e293b, #334155);
+            border-left-color: #60a5fa;
+        }
+        
+        .magic-button {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57);
+            background-size: 300% 300%;
+            animation: gradientShift 3s ease infinite;
+            border: none;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .magic-button:hover {
+            animation: gradientShift 0.8s ease infinite;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .activity-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        .tech-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            justify-content: center;
+            margin: 2rem 0;
+        }
+        
+        .tech-bubble {
+            padding: 0.75rem 1.5rem;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+            color: #3730a3;
+            font-weight: 600;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tech-bubble::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.6s;
+        }
+        
+        .tech-bubble:hover::before {
+            left: 100%;
+        }
+        
+        .tech-bubble:hover {
+            transform: translateY(-4px) scale(1.05);
+            background: linear-gradient(135deg, #3730a3, #4338ca);
+            color: white;
+            box-shadow: 0 10px 25px rgba(55, 48, 163, 0.4);
+        }
+        
+        .dark .tech-bubble {
+            background: linear-gradient(135deg, #312e81, #3730a3);
+            color: #e0e7ff;
+        }
+        
+        .dark .tech-bubble:hover {
+            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+            color: #3730a3;
+        }
+        
+        .milestone-card {
+            background: linear-gradient(135deg, #fef7cd, #fde047);
+            border: 2px solid #eab308;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .milestone-card::before {
+            content: '✨';
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: 2rem;
+            animation: sparkle 2s ease-in-out infinite;
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(90deg) scale(1.1); }
+            50% { transform: rotate(180deg) scale(1.2); }
+            75% { transform: rotate(270deg) scale(1.1); }
+        }
+        
+        .dark .milestone-card {
+            background: linear-gradient(135deg, #92400e, #b45309);
+            border-color: #d97706;
+        }
+        
+        .collaboration-glow {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border: 2px dashed #f59e0b;
+            animation: collaborationPulse 3s ease-in-out infinite;
+            position: relative;
+        }
+        
+        @keyframes collaborationPulse {
+            0%, 100% { 
+                border-color: #f59e0b;
+                box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4);
+            }
+            50% { 
+                border-color: #d97706;
+                box-shadow: 0 0 0 10px rgba(245, 158, 11, 0);
+            }
+        }
+        
+        .dark .collaboration-glow {
+            background: linear-gradient(135deg, #92400e, #b45309);
+            border-color: #d97706;
+        }
+        
+        .morphing-blob {
+            border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+            animation: morph 8s ease-in-out infinite;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+        }
+        
+        @keyframes morph {
+            0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+            50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
+            100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+        }
+        
+        .neon-text {
+            color: white;
+            text-shadow: 
+                0 0 5px rgba(255, 255, 255, 0.8),
+                0 0 10px rgba(255, 255, 255, 0.6),
+                0 0 15px rgba(59, 130, 246, 0.8),
+                0 0 20px rgba(59, 130, 246, 0.6);
+        }
+        
+        .floating-social {
+            position: fixed;
+            right: 2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 40;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .social-orb {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-size: 1.5rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .social-orb::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
+            border-radius: 50%;
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+        
+        .social-orb:hover::before {
+            transform: translateX(100%);
+        }
+        
+        .social-orb:hover {
+            transform: scale(1.15);
+            box-shadow: 0 0 30px rgba(102, 126, 234, 0.6);
+        }
+        
+        .interactive-stat {
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .interactive-stat:hover {
+            transform: scale(1.05);
+        }
+        
+        .creation-timeline {
+            position: relative;
+        }
+        
+        .creation-timeline::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, #3b82f6, #8b5cf6, #ec4899);
+            border-radius: 2px;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 80px;
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateX(-50px);
+            animation: slideInTimeline 0.8s ease-out forwards;
+        }
+        
+        .timeline-item:nth-child(even) {
+            animation-delay: 0.2s;
+        }
+        
+        .timeline-item:nth-child(3n) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes slideInTimeline {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: 20px;
+            top: 1rem;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border: 4px solid white;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.3);
+            z-index: 10;
+        }
+        
+        .dark .timeline-dot {
+            border-color: #1f2937;
+        }
+        
+        .premium-gradient-text {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 800;
+        }
+        
+        .floating-card {
+            animation: floatCard 6s ease-in-out infinite;
+        }
+        
+        @keyframes floatCard {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-5px) rotate(0.5deg); }
+            66% { transform: translateY(5px) rotate(-0.5deg); }
+        }
+        
+        .magic-border {
+            position: relative;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 2px;
+            border-radius: 16px;
+        }
+        
+        .magic-border-inner {
+            background: white;
+            border-radius: 14px;
+            padding: 1.5rem;
+        }
+        
+        .dark .magic-border-inner {
+            background: #1f2937;
+        }
+        
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 0%;
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899);
+            z-index: 100;
+            transition: width 0.1s ease;
+        }
+        
+        .creator-badge {
+            background: conic-gradient(from 0deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #feca57, #ff6b6b);
+            animation: rotateBadge 10s linear infinite;
+            color: white;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        @keyframes rotateBadge {
+            from { background-position: 0deg; }
+            to { background-position: 360deg; }
+        }
+        
+        .verified-badge {
+            background: linear-gradient(45deg, #10b981, #059669);
+            color: white;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+        }
+        
+        .stats-card {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border: 1px solid #0ea5e9;
+            box-shadow: 0 10px 25px rgba(59, 130, 246, 0.1);
+        }
+        
+        .dark .stats-card {
+            background: linear-gradient(135deg, #0c4a6e, #075985);
+            border-color: #0284c7;
+        }
+        
+        .follower-avatar {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .follower-avatar:hover {
+            transform: scale(1.2);
+            z-index: 10;
+        }
+        
+        .rating-stars {
+            color: #fbbf24;
+            text-shadow: 0 0 8px rgba(251, 191, 36, 0.5);
+        }
+        
+        .contact-form {
+            background: linear-gradient(135deg, #fefbff, #f3e8ff);
+            border: 2px solid #c084fc;
+        }
+        
+        .dark .contact-form {
+            background: linear-gradient(135deg, #581c87, #6b21a8);
+            border-color: #a855f7;
+        }
+        
+        /* Fixed text visibility */
+        .hero-text {
+            color: white;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero-description {
+            color: rgba(255, 255, 255, 0.95);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        .glass-stat-text {
+            color: white;
+            font-weight: 700;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        
+        .glass-stat-label {
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Improved testimonial styling */
+        .testimonial-text {
+            color: #374151;
+            font-weight: 500;
+        }
+        
+        .dark .testimonial-text {
+            color: #d1d5db;
+        }
+        
+        .testimonial-author {
+            color: #1f2937;
+            font-weight: 700;
+        }
+        
+        .dark .testimonial-author {
+            color: #f9fafb;
+        }
+        
+        .testimonial-role {
+            color: #6b7280;
+        }
+        
+        .dark .testimonial-role {
+            color: #9ca3af;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scroll-progress"></div>
+
+    <!-- Header -->
+    <header class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg shadow-lg sticky top-0 z-50 transition-all duration-300">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo & Brand -->
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="flex items-center space-x-2">
+                        <div class="w-12 h-12 bg-gradient-to-r from-primary-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-code text-white text-lg"></i>
+                        </div>
+                        <h1 class="text-3xl font-bold premium-gradient-text">
+                            DevHub
+                        </h1>
+                    </a>
+                </div>
+
+                <!-- Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 transition-colors font-medium">Hub</a>
+                    <a href="community-enhanced.html" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 transition-colors font-medium">Community</a>
+                    <a href="documentation.html" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 transition-colors font-medium">Docs</a>
+                </nav>
+
+                <!-- Actions -->
+                <div class="flex items-center space-x-4">
+                    <!-- Dark Mode Toggle -->
+                    <button onclick="toggleDarkMode()" class="p-3 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-moon dark:hidden text-lg"></i>
+                        <i class="fas fa-sun hidden dark:block text-lg"></i>
+                    </button>
+
+                    <!-- Follow Button -->
+                    <button onclick="toggleFollow()" id="follow-btn" class="magic-button px-8 py-3 rounded-xl font-semibold text-lg">
+                        <i class="fas fa-plus mr-2"></i>Follow Creator
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Floating Social Menu -->
+    <div class="floating-social hidden lg:flex">
+        <a href="#" class="social-orb" title="Twitter">
+            <i class="fab fa-twitter"></i>
+        </a>
+        <a href="#" class="social-orb" title="GitHub">
+            <i class="fab fa-github"></i>
+        </a>
+        <a href="#" class="social-orb" title="Dribbble">
+            <i class="fab fa-dribbble"></i>
+        </a>
+        <a href="#" class="social-orb" title="Email">
+            <i class="fas fa-envelope"></i>
+        </a>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient text-white py-24 relative overflow-hidden">
+        <!-- Floating Particles -->
+        <div class="floating-particles" id="particles-container">
+            <!-- Particles will be added by JavaScript -->
+        </div>
+
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="flex flex-col lg:flex-row items-center lg:items-start space-y-8 lg:space-y-0 lg:space-x-12">
+                <!-- Profile Image -->
+                <div class="profile-image-container">
+                    <div class="relative">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/a063a87a-eafe-4b18-8f07-07fc5701c697.png" 
+                             alt="Sarah Chen - Award-winning UI/UX Designer and Frontend Developer, creator of 200+ premium React components" 
+                             class="w-48 h-48 lg:w-56 lg:h-56 rounded-3xl shadow-2xl border-4 border-white/30">
+                        
+                        <!-- Verified Badge -->
+                        <div class="verified-badge absolute -bottom-4 -right-4 w-16 h-16 rounded-full flex items-center justify-center border-4 border-white">
+                            <i class="fas fa-crown text-white text-lg"></i>
+                        </div>
+                        
+                        <!-- Status Indicator -->
+                        <div class="absolute -top-2 -left-2 w-6 h-6 bg-green-400 rounded-full border-3 border-white activity-pulse"></div>
+                    </div>
+                </div>
+
+                <!-- Profile Info -->
+                <div class="flex-1 text-center lg:text-left max-w-3xl">
+                    <div class="mb-6">
+                        <h1 class="text-6xl lg:text-7xl font-black mb-4 neon-text">
+                            Sarah Chen
+                        </h1>
+                        <div class="flex items-center justify-center lg:justify-start space-x-4 mb-4">
+                            <span class="creator-badge px-6 py-2 rounded-full font-bold text-lg">
+                                Elite Creator
+                            </span>
+                            <div class="achievement-glow px-4 py-2 rounded-full text-white font-semibold">
+                                <i class="fas fa-medal mr-2"></i>Top 1%
+                            </div>
+                        </div>
+                        <p class="text-2xl hero-text font-medium mb-6">
+                            UI/UX Designer • React Specialist • Design System Architect
+                        </p>
+                    </div>
+
+                    <p class="text-xl hero-description leading-relaxed mb-8 max-w-3xl">
+                        🚀 Transforming ideas into pixel-perfect realities. Creating the future of web interfaces, 
+                        one component at a time. Trusted by <strong class="text-white">50,000+</strong> developers worldwide.
+                    </p>
+
+                    <!-- Tech Stack Cloud -->
+                    <div class="tech-cloud">
+                        <span class="tech-bubble">React</span>
+                        <span class="tech-bubble">TypeScript</span>
+                        <span class="tech-bubble">Next.js</span>
+                        <span class="tech-bubble">Tailwind</span>
+                        <span class="tech-bubble">Figma</span>
+                        <span class="tech-bubble">Framer Motion</span>
+                        <span class="tech-bubble">Storybook</span>
+                        <span class="tech-bubble">Node.js</span>
+                    </div>
+
+                    <!-- Hero Stats -->
+                    <div class="grid grid-cols-2 lg:grid-cols-4 gap-6 mt-8">
+                        <div class="glass-effect rounded-2xl p-4 text-center interactive-stat" onclick="showStatDetail('assets')">
+                            <div class="glass-stat-text text-3xl font-black mb-1">247</div>
+                            <div class="glass-stat-label font-medium">Premium Assets</div>
+                        </div>
+                        <div class="glass-effect rounded-2xl p-4 text-center interactive-stat" onclick="showStatDetail('downloads')">
+                            <div class="glass-stat-text text-3xl font-black mb-1">52.8K</div>
+                            <div class="glass-stat-label font-medium">Downloads</div>
+                        </div>
+                        <div class="glass-effect rounded-2xl p-4 text-center interactive-stat" onclick="showStatDetail('followers')">
+                            <div class="glass-stat-text text-3xl font-black mb-1">8.2K</div>
+                            <div class="glass-stat-label font-medium">Followers</div>
+                        </div>
+                        <div class="glass-effect rounded-2xl p-4 text-center interactive-stat" onclick="showStatDetail('rating')">
+                            <div class="flex items-center justify-center rating-stars text-2xl mb-1">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span class="ml-2 glass-stat-text text-3xl font-black">4.98</span>
+                            </div>
+                            <div class="glass-stat-label font-medium">Avg Rating</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-16">
+        <!-- About & Achievements Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+            <!-- About Me -->
+            <div class="lg:col-span-2">
+                <div class="card-premium rounded-2xl p-8 floating-card">
+                    <h2 class="text-4xl font-bold mb-6 premium-gradient-text">About Me</h2>
+                    <div class="prose prose-lg dark:prose-invert max-w-none">
+                        <p class="text-gray-700 dark:text-gray-300 leading-relaxed mb-6 text-lg">
+                            Hello! I'm Sarah, a passionate UI/UX designer and frontend developer with over 8 years of experience 
+                            crafting digital experiences that users love. My journey started as a graphic designer, but I fell 
+                            in love with code and never looked back.
+                        </p>
+                        <p class="text-gray-700 dark:text-gray-300 leading-relaxed mb-6 text-lg">
+                            I specialize in creating component libraries and design systems that help teams build consistent, 
+                            scalable interfaces. My components have been downloaded over <strong class="text-primary-600">50,000 times</strong> and are 
+                            used by startups and Fortune 500 companies alike.
+                        </p>
+                        <p class="text-gray-700 dark:text-gray-300 leading-relaxed text-lg">
+                            When I'm not coding or designing, you'll find me mentoring junior developers, speaking at conferences, 
+                            or exploring the latest in AI-assisted design tools. I believe in sharing knowledge and lifting others up.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Achievements & Milestones -->
+            <div class="space-y-6">
+                <!-- Current Milestone -->
+                <div class="milestone-card rounded-2xl p-6">
+                    <h3 class="text-xl font-bold mb-4 text-gray-800 dark:text-gray-100">🎉 Latest Milestone</h3>
+                    <div class="text-3xl font-black text-gray-800 dark:text-gray-100 mb-2">50K Downloads</div>
+                    <p class="text-gray-700 dark:text-gray-200 text-sm font-medium">
+                        Just hit 50,000 total downloads across all my components! Thank you to the amazing DevHub community.
+                    </p>
+                    <div class="mt-4 bg-yellow-200 dark:bg-yellow-800 rounded-full h-3">
+                        <div class="bg-yellow-500 h-3 rounded-full transition-all duration-1000" style="width: 85%"></div>
+                    </div>
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mt-2 font-semibold">Next: 100K Downloads (85% complete)</p>
+                </div>
+
+                <!-- Achievement Badges -->
+                <div class="card-premium rounded-2xl p-6">
+                    <h3 class="text-xl font-bold mb-4 text-gray-800 dark:text-gray-100">🏆 Achievements</h3>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div class="achievement-glow rounded-xl p-4 text-center">
+                            <i class="fas fa-fire text-white text-2xl mb-2"></i>
+                            <div class="text-white font-bold text-sm">Hot Streak</div>
+                            <div class="text-white text-xs opacity-90">30 days</div>
+                        </div>
+                        <div class="achievement-glow rounded-xl p-4 text-center">
+                            <i class="fas fa-star text-white text-2xl mb-2"></i>
+                            <div class="text-white font-bold text-sm">Featured</div>
+                            <div class="text-white text-xs opacity-90">10x this month</div>
+                        </div>
+                        <div class="achievement-glow rounded-xl p-4 text-center">
+                            <i class="fas fa-heart text-white text-2xl mb-2"></i>
+                            <div class="text-white font-bold text-sm">Community</div>
+                            <div class="text-white text-xs opacity-90">Favorite</div>
+                        </div>
+                        <div class="achievement-glow rounded-xl p-4 text-center">
+                            <i class="fas fa-rocket text-white text-2xl mb-2"></i>
+                            <div class="text-white font-bold text-sm">Innovation</div>
+                            <div class="text-white text-xs opacity-90">Award</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Skills Orbit -->
+                <div class="card-premium rounded-2xl p-6 text-center">
+                    <h3 class="text-xl font-bold mb-6 text-gray-800 dark:text-gray-100">Skills Mastery</h3>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="skill-orb mx-auto">
+                            <div class="skill-orb-content text-center">
+                                <div class="font-bold text-lg text-primary-600 dark:text-primary-400">95%</div>
+                                <div class="text-xs font-semibold text-gray-600 dark:text-gray-400">React</div>
+                            </div>
+                        </div>
+                        <div class="skill-orb mx-auto" style="animation-delay: -2s;">
+                            <div class="skill-orb-content text-center">
+                                <div class="font-bold text-lg text-primary-600 dark:text-primary-400">92%</div>
+                                <div class="text-xs font-semibold text-gray-600 dark:text-gray-400">Design</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Portfolio Showcase -->
+        <section class="mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-5xl font-bold mb-4 premium-gradient-text">Featured Portfolio</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto font-medium">
+                    Showcasing my best work - components and templates that push the boundaries of modern web design
+                </p>
+            </div>
+
+            <div class="portfolio-mosaic">
+                <div class="portfolio-item">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/0b7abd56-35c1-4857-ad56-b6a088dfa601.png" alt="Advanced React dashboard with real-time analytics, dark mode, and responsive design" class="w-full h-full object-cover">
+                    <div class="portfolio-overlay">
+                        <h3 class="text-2xl font-bold mb-3 text-white">React Dashboard Pro</h3>
+                        <p class="mb-4 text-center text-white/90">Advanced admin dashboard with 50+ components</p>
+                        <div class="flex justify-center space-x-2 mb-4">
+                            <span class="bg-white/20 px-3 py-1 rounded-full text-sm text-white">React</span>
+                            <span class="bg-white/20 px-3 py-1 rounded-full text-sm text-white">TypeScript</span>
+                        </div>
+                        <div class="flex items-center justify-center space-x-4 text-white">
+                            <span class="text-sm font-semibold"><i class="fas fa-download mr-1"></i>2.4K</span>
+                            <span class="text-sm font-semibold"><i class="fas fa-star mr-1"></i>4.9</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/ef8015cf-58e3-43cf-8dc5-2798f11d3c4d.png" alt="Mobile-first e-commerce template with modern UI patterns and animations" class="w-full h-full object-cover">
+                    <div class="portfolio-overlay">
+                        <h3 class="text-2xl font-bold mb-3 text-white">E-Commerce Mobile</h3>
+                        <p class="mb-4 text-center text-white/90">Mobile-first shopping experience</p>
+                        <div class="flex justify-center space-x-2 mb-4">
+                            <span class="bg-white/20 px-3 py-1 rounded-full text-sm text-white">Next.js</span>
+                            <span class="bg-white/20 px-3 py-1 rounded-full text-sm text-white">Stripe</span>
+                        </div>
+                        <div class="flex items-center justify-center space-x-4 text-white">
+                            <span class="text-sm font-semibold"><i class="fas fa-download mr-1"></i>1.8K</span>
+                            <span class="text-sm font-semibold"><i class="fas fa-star mr-1"></i>4.8</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/2669067c-0d87-4910-9f08-9a5800a58174.png" alt="Complete design system with component library, tokens, and documentation" class="w-full h-full object-cover">
+                    <div class="portfolio-overlay">
+                        <h3 class="text-2xl font-bold mb-3 text-white">Aurora Design System</h3>
+                        <p class="mb-4 text-center text-white/90">Complete design system with 100+ components</p>
+                        <div class="flex justify-center space-x-2 mb-4">
+                            <span class="bg-white/20 px-3 py-1 rounded-full text-sm text-white">Figma</span>
+                            <span class="bg-white/20 px-3 py-1 rounded-full text-sm text-white">Storybook</span>
+                        </div>
+                        <div class="flex items-center justify-center space-x-4 text-white">
+                            <span class="text-sm font-semibold"><i class="fas fa-download mr-1"></i>3.2K</span>
+                            <span class="text-sm font-semibold"><i class="fas fa-star mr-1"></i>4.9</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/8d6c27d4-0feb-428a-b79f-7d1caa766fca.png" alt="Interactive animation library with smooth transitions and micro-interactions" class="w-full h-full object-cover">
+                    <div class="portfolio-overlay">
+                        <h3 class="text-2xl font-bold mb-3 text-white">Motion UI Kit</h3>
+                        <p class="mb-4 text-center text-white/90">Beautiful animations and micro-interactions</p>
+                        <div class="flex justify-center space-x-2 mb-4">
+                            <span class="bg-white/20 px-3 py-1 rounded-full text-sm text-white">Framer</span>
+                            <span class="bg-white/20 px-3 py-1 rounded-full text-sm text-white">CSS</span>
+                        </div>
+                        <div class="flex items-center justify-center space-x-4 text-white">
+                            <span class="text-sm font-semibold"><i class="fas fa-download mr-1"></i>1.6K</span>
+                            <span class="text-sm font-semibold"><i class="fas fa-star mr-1"></i>4.7</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/b0edf378-16cf-4c42-81d8-da0c8862b224.png" alt="SaaS landing page template with conversion optimization and A/B testing ready" class="w-full h-full object-cover">
+                    <div class="portfolio-overlay">
+                        <h3 class="text-2xl font-bold mb-3 text-white">SaaS Landing Pro</h3>
+                        <p class="mb-4 text-center text-white/90">High-converting landing pages</p>
+                        <div class="flex justify-center space-x-2 mb-4">
+                            <span class="bg-white/20 px-3 py-1 rounded-full text-sm text-white">Vue.js</span>
+                            <span class="bg-white/20 px-3 py-1 rounded-full text-sm text-white">Nuxt</span>
+                        </div>
+                        <div class="flex items-center justify-center space-x-4 text-white">
+                            <span class="text-sm font-semibold"><i class="fas fa-download mr-1"></i>2.1K</span>
+                            <span class="text-sm font-semibold"><i class="fas fa-star mr-1"></i>4.8</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="portfolio-item">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/7d59dcb9-3771-444e-9f79-ae3deafb3793.png" alt="AI-powered component generator with smart design suggestions" class="w-full h-full object-cover">
+                    <div class="portfolio-overlay">
+                        <h3 class="text-2xl font-bold mb-3 text-white">AI Component Lab</h3>
+                        <p class="mb-4 text-center text-white/90">AI-powered component generation</p>
+                        <div class="flex justify-center space-x-2 mb-4">
+                            <span class="bg-white/20 px-3 py-1 rounded-full text-sm text-white">AI</span>
+                            <span class="bg-white/20 px-3 py-1 rounded-full text-sm text-white">React</span>
+                        </div>
+                        <div class="flex items-center justify-center space-x-4 text-white">
+                            <span class="text-sm font-semibold"><i class="fas fa-download mr-1"></i>987</span>
+                            <span class="text-sm font-semibold"><i class="fas fa-star mr-1"></i>4.9</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Stats & Analytics Dashboard -->
+        <section class="mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-5xl font-bold mb-4 premium-gradient-text">Performance Analytics</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400 font-medium">Real-time insights into my creative impact</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Downloads Chart -->
+                <div class="magic-border">
+                    <div class="magic-border-inner">
+                        <h3 class="text-2xl font-bold mb-6 text-gray-800 dark:text-gray-100">Downloads Growth</h3>
+                        <div class="h-64">
+                            <canvas id="downloadsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Category Distribution -->
+                <div class="magic-border">
+                    <div class="magic-border-inner">
+                        <h3 class="text-2xl font-bold mb-6 text-gray-800 dark:text-gray-100">Asset Categories</h3>
+                        <div class="h-64">
+                            <canvas id="categoryChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Live Stats Cards -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-8">
+                <div class="stats-card rounded-2xl p-6 text-center">
+                    <i class="fas fa-eye text-4xl text-blue-600 mb-3"></i>
+                    <div class="stats-counter text-3xl font-bold mb-1" id="live-views">125.7K</div>
+                    <div class="text-base font-semibold text-blue-700 dark:text-blue-300">Profile Views</div>
+                    <div class="text-sm text-green-600 mt-2 font-medium">↑ +12% today</div>
+                </div>
+                <div class="stats-card rounded-2xl p-6 text-center">
+                    <i class="fas fa-comments text-4xl text-purple-600 mb-3"></i>
+                    <div class="stats-counter text-3xl font-bold mb-1" id="live-reviews">89</div>
+                    <div class="text-base font-semibold text-purple-700 dark:text-purple-300">Total Reviews</div>
+                    <div class="text-sm text-green-600 mt-2 font-medium">↑ +3 this week</div>
+                </div>
+                <div class="stats-card rounded-2xl p-6 text-center">
+                    <i class="fas fa-trophy text-4xl text-yellow-600 mb-3"></i>
+                    <div class="stats-counter text-3xl font-bold mb-1">#3</div>
+                    <div class="text-base font-semibold text-yellow-700 dark:text-yellow-300">Global Rank</div>
+                    <div class="text-sm text-green-600 mt-2 font-medium">↑ +2 positions</div>
+                </div>
+                <div class="stats-card rounded-2xl p-6 text-center">
+                    <i class="fas fa-bolt text-4xl text-orange-600 mb-3"></i>
+                    <div class="stats-counter text-3xl font-bold mb-1">47</div>
+                    <div class="text-base font-semibold text-orange-700 dark:text-orange-300">Streak Days</div>
+                    <div class="text-sm text-green-600 mt-2 font-medium">Active daily</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recent Activity Timeline -->
+        <section class="mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-5xl font-bold mb-4 premium-gradient-text">Recent Activity</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400 font-medium">What I've been creating lately</p>
+            </div>
+
+            <div class="max-w-4xl mx-auto">
+                <div class="creation-timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="card-premium rounded-xl p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center space-x-3">
+                                    <i class="fas fa-upload text-green-500 text-xl"></i>
+                                    <span class="font-bold text-lg text-gray-800 dark:text-gray-100">Published New Component</span>
+                                </div>
+                                <span class="text-sm text-gray-500 font-medium">2 hours ago</span>
+                            </div>
+                            <h4 class="font-bold text-xl mb-2 text-gray-800 dark:text-gray-100">Advanced Search Component</h4>
+                            <p class="text-gray-600 dark:text-gray-400 mb-4 text-base">
+                                Released a powerful search component with autocomplete, filters, and real-time results
+                            </p>
+                            <div class="flex items-center space-x-6 text-sm">
+                                <span class="text-green-600 font-semibold"><i class="fas fa-download mr-1"></i>47 downloads</span>
+                                <span class="text-blue-600 font-semibold"><i class="fas fa-heart mr-1"></i>23 likes</span>
+                                <span class="text-purple-600 font-semibold"><i class="fas fa-star mr-1"></i>4.9 rating</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot" style="background: linear-gradient(135deg, #8b5cf6, #ec4899);"></div>
+                        <div class="card-premium rounded-xl p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center space-x-3">
+                                    <i class="fas fa-star text-yellow-500 text-xl"></i>
+                                    <span class="font-bold text-lg text-gray-800 dark:text-gray-100">Featured in Newsletter</span>
+                                </div>
+                                <span class="text-sm text-gray-500 font-medium">1 day ago</span>
+                            </div>
+                            <p class="text-gray-600 dark:text-gray-400 text-base">
+                                My "Design System Fundamentals" article was featured in the weekly DevHub newsletter, 
+                                reaching over <strong class="text-primary-600">15,000 subscribers</strong>!
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot" style="background: linear-gradient(135deg, #ec4899, #f59e0b);"></div>
+                        <div class="card-premium rounded-xl p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center space-x-3">
+                                    <i class="fas fa-trophy text-orange-500 text-xl"></i>
+                                    <span class="font-bold text-lg text-gray-800 dark:text-gray-100">Achievement Unlocked</span>
+                                </div>
+                                <span class="text-sm text-gray-500 font-medium">3 days ago</span>
+                            </div>
+                            <h4 class="font-bold text-xl mb-2 text-gray-800 dark:text-gray-100">🏆 50K Downloads Milestone</h4>
+                            <p class="text-gray-600 dark:text-gray-400 text-base">
+                                Reached 50,000 total downloads across all my components and templates!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Carousel -->
+        <section class="mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-5xl font-bold mb-4 premium-gradient-text">What Developers Say</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400 font-medium">Testimonials from the amazing DevHub community</p>
+            </div>
+
+            <div class="max-w-5xl mx-auto">
+                <div class="testimonial-slider relative">
+                    <div class="testimonial-slide active">
+                        <div class="testimonial-card p-8 text-center">
+                            <div class="mb-8">
+                                <div class="flex justify-center rating-stars text-3xl mb-6">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <p class="text-xl italic leading-relaxed testimonial-text mb-6">
+                                    "Sarah's components are absolutely incredible! They saved our team months of development time. 
+                                    The attention to detail and code quality is unmatched. Every component works flawlessly out of the box."
+                                </p>
+                            </div>
+                            <div class="flex items-center justify-center space-x-6">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/4b8c3a46-5816-4a49-857d-c9e6ee05fc64.png" alt="Profile picture of Alex Thompson, Senior Frontend Developer at TechCorp" class="w-20 h-20 rounded-full shadow-lg">
+                                <div class="text-left">
+                                    <div class="testimonial-author text-2xl font-bold">Alex Thompson</div>
+                                    <div class="testimonial-role text-lg">Senior Frontend Developer</div>
+                                    <div class="text-primary-600 font-semibold">TechCorp Inc.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-slide">
+                        <div class="testimonial-card p-8 text-center">
+                            <div class="mb-8">
+                                <div class="flex justify-center rating-stars text-3xl mb-6">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <p class="text-xl italic leading-relaxed testimonial-text mb-6">
+                                    "Working with Sarah's design system transformed our entire product. 
+                                    The consistency and polish we achieved was beyond our expectations. Highly recommend!"
+                                </p>
+                            </div>
+                            <div class="flex items-center justify-center space-x-6">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/49795933-a369-48ed-8d13-52e1edfbeae6.png" alt="Profile picture of Maria Rodriguez, Design Director at StartupXYZ" class="w-20 h-20 rounded-full shadow-lg">
+                                <div class="text-left">
+                                    <div class="testimonial-author text-2xl font-bold">Maria Rodriguez</div>
+                                    <div class="testimonial-role text-lg">Design Director</div>
+                                    <div class="text-primary-600 font-semibold">StartupXYZ</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-slide">
+                        <div class="testimonial-card p-8 text-center">
+                            <div class="mb-8">
+                                <div class="flex justify-center rating-stars text-3xl mb-6">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                </div>
+                                <p class="text-xl italic leading-relaxed testimonial-text mb-6">
+                                    "Sarah's expertise in React and design systems is evident in every component. 
+                                    Professional quality that rivals any premium UI kit on the market. Outstanding work!"
+                                </p>
+                            </div>
+                            <div class="flex items-center justify-center space-x-6">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/0a063cfe-5cda-46ed-9239-6b9cc2c5eacc.png" alt="Profile picture of David Kim, CTO at InnovateNow Inc" class="w-20 h-20 rounded-full shadow-lg">
+                                <div class="text-left">
+                                    <div class="testimonial-author text-2xl font-bold">David Kim</div>
+                                    <div class="testimonial-role text-lg">Chief Technology Officer</div>
+                                    <div class="text-primary-600 font-semibold">InnovateNow Inc</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial Navigation -->
+                <div class="flex justify-center mt-8 space-x-4">
+                    <button onclick="showTestimonial(0)" class="testimonial-dot w-6 h-6 rounded-full bg-primary-600 active transition-all duration-300"></button>
+                    <button onclick="showTestimonial(1)" class="testimonial-dot w-6 h-6 rounded-full bg-gray-300 hover:bg-gray-400 transition-all duration-300"></button>
+                    <button onclick="showTestimonial(2)" class="testimonial-dot w-6 h-6 rounded-full bg-gray-300 hover:bg-gray-400 transition-all duration-300"></button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Collaboration Section -->
+        <section class="mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-5xl font-bold mb-4 premium-gradient-text">Let's Create Together</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400 font-medium">
+                    Ready to bring your vision to life? Let's collaborate on something amazing!
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Collaboration Card -->
+                <div class="collaboration-glow rounded-2xl p-8 text-center">
+                    <div class="morphing-blob w-24 h-24 mx-auto mb-6 flex items-center justify-center">
+                        <i class="fas fa-handshake text-white text-3xl"></i>
+                    </div>
+                    <h3 class="text-3xl font-bold mb-4 text-gray-800 dark:text-gray-100">Custom Projects</h3>
+                    <p class="text-gray-700 dark:text-gray-200 mb-6 text-lg font-medium">
+                        Need something unique? I offer custom component development and design system creation services 
+                        tailored to your specific needs.
+                    </p>
+                    <button onclick="openCollaborationModal()" class="bg-orange-500 hover:bg-orange-600 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 hover:scale-105">
+                        <i class="fas fa-rocket mr-2"></i>Start a Project
+                    </button>
+                </div>
+
+                <!-- Contact Form -->
+                <div class="contact-form rounded-2xl p-8">
+                    <h3 class="text-3xl font-bold mb-6 text-purple-800 dark:text-purple-200">Get In Touch</h3>
+                    <form class="space-y-6" onsubmit="sendMessage(event)">
+                        <div>
+                            <input 
+                                type="text" 
+                                placeholder="Your Name" 
+                                class="w-full px-6 py-4 rounded-xl border-2 border-purple-200 dark:border-purple-700 focus:border-purple-500 bg-white/80 dark:bg-gray-800/80 backdrop-blur transition-colors text-gray-800 dark:text-gray-100 font-medium"
+                                required
+                            >
+                        </div>
+                        <div>
+                            <input 
+                                type="email" 
+                                placeholder="Your Email" 
+                                class="w-full px-6 py-4 rounded-xl border-2 border-purple-200 dark:border-purple-700 focus:border-purple-500 bg-white/80 dark:bg-gray-800/80 backdrop-blur transition-colors text-gray-800 dark:text-gray-100 font-medium"
+                                required
+                            >
+                        </div>
+                        <div>
+                            <textarea 
+                                placeholder="Your Message" 
+                                rows="4"
+                                class="w-full px-6 py-4 rounded-xl border-2 border-purple-200 dark:border-purple-700 focus:border-purple-500 bg-white/80 dark:bg-gray-800/80 backdrop-blur transition-colors text-gray-800 dark:text-gray-100 font-medium"
+                                required
+                            ></textarea>
+                        </div>
+                        <button type="submit" class="w-full magic-button py-4 rounded-xl font-semibold text-lg">
+                            <i class="fas fa-paper-plane mr-2"></i>Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Followers & Community -->
+        <section class="mb-16">
+            <div class="text-center mb-12">
+                <h2 class="text-5xl font-bold mb-4 premium-gradient-text">Amazing Community</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400 font-medium">
+                    Join 8,200+ developers who follow my work
+                </p>
+            </div>
+
+            <div class="card-premium rounded-2xl p-8">
+                <div class="flex items-center justify-between mb-8">
+                    <h3 class="text-2xl font-bold text-gray-800 dark:text-gray-100">Recent Followers</h3>
+                    <div class="flex items-center space-x-2 text-green-600">
+                        <div class="w-3 h-3 bg-green-500 rounded-full activity-pulse"></div>
+                        <span class="font-bold text-lg">+23 this week</span>
+                    </div>
+                </div>
+                
+                <!-- Follower Avatars -->
+                <div class="flex flex-wrap justify-center gap-4 mb-8">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/804e1b40-b135-42af-916d-0bef81acedcf.png" alt="Recent follower - Frontend developer interested in React components" class="follower-avatar w-16 h-16 rounded-full border-3 border-primary-500">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/ec9a8c7c-fc51-4adb-9cc5-71d1d57f0d2f.png" alt="Recent follower - UI designer learning modern design systems" class="follower-avatar w-16 h-16 rounded-full border-3 border-green-500">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/2952f0fd-50db-409f-be5d-444c37bcd103.png" alt="Recent follower - Full-stack developer building SaaS products" class="follower-avatar w-16 h-16 rounded-full border-3 border-purple-500">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/df37b8ab-f328-4517-9926-5f627b88f12b.png" alt="Recent follower - Mobile app developer using React Native" class="follower-avatar w-16 h-16 rounded-full border-3 border-pink-500">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/9702a5fb-e17c-4b36-948f-597225c82726.png" alt="Recent follower - Design student learning component architecture" class="follower-avatar w-16 h-16 rounded-full border-3 border-blue-500">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/ab6338ba-ea58-42ca-9be5-203577339e0d.png" alt="Recent follower - Startup founder seeking design inspiration" class="follower-avatar w-16 h-16 rounded-full border-3 border-yellow-500">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/ed506b3d-9bc7-465c-8c23-b20dc688a3d1.png" alt="Recent follower - Tech lead implementing design systems" class="follower-avatar w-16 h-16 rounded-full border-3 border-red-500">
+                    <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/163ac88c-b64d-4d17-a79a-4e5df86cd61d.png" alt="Recent follower - Freelance developer building client projects" class="follower-avatar w-16 h-16 rounded-full border-3 border-indigo-500">
+                    <div class="w-16 h-16 rounded-full bg-gradient-to-r from-primary-500 to-purple-600 flex items-center justify-center text-white font-black text-lg shadow-lg">
+                        +8.1K
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <button onclick="showAllFollowers()" class="bg-gradient-to-r from-primary-600 to-purple-600 text-white px-10 py-4 rounded-xl font-bold text-lg hover:from-primary-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105">
+                        <i class="fas fa-users mr-2"></i>View All Followers
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Collaboration Modal -->
+    <div id="collaboration-modal" class="hidden fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="magic-border max-w-3xl w-full">
+            <div class="magic-border-inner">
+                <div class="flex justify-between items-center mb-8">
+                    <h3 class="text-4xl font-bold premium-gradient-text">Let's Collaborate!</h3>
+                    <button onclick="closeCollaborationModal()" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 text-3xl">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="space-y-8">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900 dark:to-blue-800 p-6 rounded-xl text-center transition-all duration-300 hover:scale-105">
+                            <i class="fas fa-paint-brush text-blue-600 text-4xl mb-4"></i>
+                            <h4 class="font-bold text-xl mb-3 text-gray-800 dark:text-gray-100">Custom Design</h4>
+                            <p class="text-gray-600 dark:text-gray-300 font-medium">UI/UX design for your product</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-green-50 to-green-100 dark:from-green-900 dark:to-green-800 p-6 rounded-xl text-center transition-all duration-300 hover:scale-105">
+                            <i class="fas fa-code text-green-600 text-4xl mb-4"></i>
+                            <h4 class="font-bold text-xl mb-3 text-gray-800 dark:text-gray-100">Component Library</h4>
+                            <p class="text-gray-600 dark:text-gray-300 font-medium">Custom React components</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900 dark:to-purple-800 p-6 rounded-xl text-center transition-all duration-300 hover:scale-105">
+                            <i class="fas fa-layer-group text-purple-600 text-4xl mb-4"></i>
+                            <h4 class="font-bold text-xl mb-3 text-gray-800 dark:text-gray-100">Design System</h4>
+                            <p class="text-gray-600 dark:text-gray-300 font-medium">Complete design system creation</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-orange-50 to-orange-100 dark:from-orange-900 dark:to-orange-800 p-6 rounded-xl text-center transition-all duration-300 hover:scale-105">
+                            <i class="fas fa-graduation-cap text-orange-600 text-4xl mb-4"></i>
+                            <h4 class="font-bold text-xl mb-3 text-gray-800 dark:text-gray-100">Mentoring</h4>
+                            <p class="text-gray-600 dark:text-gray-300 font-medium">1-on-1 design mentorship</p>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center">
+                        <p class="text-xl text-gray-600 dark:text-gray-300 mb-6 font-medium">
+                            Starting at <strong class="text-3xl text-primary-600">$150/hour</strong>
+                        </p>
+                        <button onclick="startCollaboration()" class="magic-button px-10 py-4 rounded-xl font-bold text-xl">
+                            <i class="fas fa-rocket mr-2"></i>Let's Build Something Amazing
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State Management
+        let isDarkMode = false;
+        let isFollowing = false;
+        let currentTestimonial = 0;
+        let testimonialInterval;
+        let liveStatsInterval;
+        let particlesCreated = false;
+
+        // Live stats counters
+        let liveStats = {
+            views: 125743,
+            reviews: 89,
+            followers: 8247
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            initializePage();
+            startLiveUpdates();
+            initializeCharts();
+            startTestimonialCarousel();
+            setupScrollProgress();
+            createFloatingParticles();
+        });
+
+        function initializePage() {
+            if (localStorage.getItem('darkMode') === 'true') {
+                isDarkMode = true;
+                document.documentElement.classList.add('dark');
+            }
+        }
+
+        function startLiveUpdates() {
+            liveStatsInterval = setInterval(() => {
+                // Randomly update stats
+                if (Math.random() > 0.6) {
+                    liveStats.views += Math.floor(Math.random() * 15) + 5;
+                    updateLiveCounter('live-views', liveStats.views);
+                }
+                
+                if (Math.random() > 0.9) {
+                    liveStats.reviews++;
+                    updateLiveCounter('live-reviews', liveStats.reviews);
+                }
+                
+                if (Math.random() > 0.95) {
+                    liveStats.followers++;
+                    showFollowerNotification();
+                }
+            }, 4000);
+        }
+
+        function updateLiveCounter(elementId, value) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.textContent = formatNumber(value);
+                element.classList.add('scale-125');
+                setTimeout(() => {
+                    element.classList.remove('scale-125');
+                }, 400);
+            }
+        }
+
+        function formatNumber(num) {
+            if (num >= 1000000) {
+                return (num / 1000000).toFixed(1) + 'M';
+            } else if (num >= 1000) {
+                return (num / 1000).toFixed(1) + 'K';
+            }
+            return num.toString();
+        }
+
+        function showFollowerNotification() {
+            const notification = document.createElement('div');
+            notification.className = 'fixed top-24 right-4 bg-green-500 text-white px-8 py-4 rounded-xl shadow-2xl z-50 transition-all duration-500 transform translate-x-full';
+            notification.innerHTML = `
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-user-plus text-xl"></i>
+                    <span class="font-bold text-lg">New follower joined!</span>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.remove('translate-x-full');
+            }, 200);
+            
+            setTimeout(() => {
+                notification.classList.add('translate-x-full');
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 500);
+            }, 5000);
+        }
+
+        function initializeCharts() {
+            // Downloads Chart
+            const downloadsCtx = document.getElementById('downloadsChart');
+            if (downloadsCtx) {
+                new Chart(downloadsCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+                        datasets: [{
+                            label: 'Downloads',
+                            data: [5200, 8400, 12300, 18700, 25100, 32800],
+                            borderColor: 'rgb(59, 130, 246)',
+                            backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                            fill: true,
+                            tension: 0.4,
+                            borderWidth: 4,
+                            pointBackgroundColor: 'rgb(59, 130, 246)',
+                            pointBorderColor: '#fff',
+                            pointBorderWidth: 3,
+                            pointRadius: 8,
+                            pointHoverRadius: 10
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                                titleColor: 'white',
+                                bodyColor: 'white',
+                                borderColor: 'rgb(59, 130, 246)',
+                                borderWidth: 2,
+                                titleFont: { size: 16, weight: 'bold' },
+                                bodyFont: { size: 14, weight: 'bold' }
+                            }
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: { color: isDarkMode ? '#374151' : '#e5e7eb' },
+                                ticks: { 
+                                    color: isDarkMode ? '#d1d5db' : '#374151',
+                                    font: { size: 12, weight: 'bold' }
+                                }
+                            },
+                            x: {
+                                grid: { color: isDarkMode ? '#374151' : '#e5e7eb' },
+                                ticks: { 
+                                    color: isDarkMode ? '#d1d5db' : '#374151',
+                                    font: { size: 12, weight: 'bold' }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Category Chart
+            const categoryCtx = document.getElementById('categoryChart');
+            if (categoryCtx) {
+                new Chart(categoryCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Components', 'Templates', 'Icons', 'Layouts'],
+                        datasets: [{
+                            data: [45, 25, 20, 10],
+                            backgroundColor: [
+                                'rgb(59, 130, 246)',
+                                'rgb(139, 92, 246)',
+                                'rgb(236, 72, 153)',
+                                'rgb(245, 158, 11)'
+                            ],
+                            borderWidth: 0,
+                            hoverOffset: 15
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                position: 'bottom',
+                                labels: {
+                                    padding: 25,
+                                    usePointStyle: true,
+                                    font: { size: 16, weight: 'bold' },
+                                    color: isDarkMode ? '#d1d5db' : '#374151'
+                                }
+                            },
+                            tooltip: {
+                                backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                                titleColor: 'white',
+                                bodyColor: 'white',
+                                borderColor: 'rgb(59, 130, 246)',
+                                borderWidth: 2,
+                                titleFont: { size: 16, weight: 'bold' },
+                                bodyFont: { size: 14, weight: 'bold' }
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        function startTestimonialCarousel() {
+            testimonialInterval = setInterval(() => {
+                currentTestimonial = (currentTestimonial + 1) % 3;
+                showTestimonial(currentTestimonial);
+            }, 6000);
+        }
+
+        function showTestimonial(index) {
+            currentTestimonial = index;
+            
+            // Reset interval
+            clearInterval(testimonialInterval);
+            startTestimonialCarousel();
+            
+            // Update slides
+            document.querySelectorAll('.testimonial-slide').forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+            
+            // Update dots
+            document.querySelectorAll('.testimonial-dot').forEach((dot, i) => {
+                if (i === index) {
+                    dot.classList.add('bg-primary-600');
+                    dot.classList.remove('bg-gray-300');
+                } else {
+                    dot.classList.remove('bg-primary-600');
+                    dot.classList.add('bg-gray-300');
+                }
+            });
+        }
+
+        function setupScrollProgress() {
+            window.addEventListener('scroll', () => {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.getElementById('scroll-progress').style.width = scrolled + '%';
+            });
+        }
+
+        function createFloatingParticles() {
+            if (particlesCreated) return;
+            
+            const particlesContainer = document.getElementById('particles-container');
+            
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 4 + 6) + 's';
+                particlesContainer.appendChild(particle);
+            }
+            
+            particlesCreated = true;
+        }
+
+        function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', isDarkMode);
+            
+            // Update charts for dark mode
+            setTimeout(() => {
+                initializeCharts();
+            }, 100);
+        }
+
+        function toggleFollow() {
+            const btn = document.getElementById('follow-btn');
+            isFollowing = !isFollowing;
+            
+            if (isFollowing) {
+                btn.innerHTML = '<i class="fas fa-check mr-2"></i>Following';
+                showNotification('🎉 You are now following Sarah Chen! You\'ll get notified of new releases.', 'success');
+            } else {
+                btn.innerHTML = '<i class="fas fa-plus mr-2"></i>Follow Creator';
+                showNotification('You unfollowed Sarah Chen', 'info');
+            }
+        }
+
+        function showStatDetail(statType) {
+            const messages = {
+                assets: '✨ Sarah has created 247 premium assets including components, templates, and design systems used by thousands of developers',
+                downloads: '🚀 Her exceptional work has been downloaded 52.8K times by developers worldwide, making her one of the top creators',
+                followers: '👥 8.2K talented developers follow Sarah for the latest UI/UX insights and cutting-edge component releases',
+                rating: '⭐ Maintains a perfect 4.98/5 rating based on 1,200+ detailed reviews from satisfied developers'
+            };
+            
+            showNotification(messages[statType], 'info');
+        }
+
+        function openCollaborationModal() {
+            document.getElementById('collaboration-modal').classList.remove('hidden');
+        }
+
+        function closeCollaborationModal() {
+            document.getElementById('collaboration-modal').classList.add('hidden');
+        }
+
+        function startCollaboration() {
+            showNotification('🚀 Collaboration request sent! Sarah will get back to you within 24 hours with project details.', 'success');
+            closeCollaborationModal();
+        }
+
+        function sendMessage(event) {
+            event.preventDefault();
+            showNotification('📧 Message sent successfully! Sarah will reply within 24-48 hours.', 'success');
+            event.target.reset();
+        }
+
+        function showAllFollowers() {
+            showNotification('👥 Opening complete followers directory...', 'info');
+        }
+
+        function showNotification(message, type = 'info') {
+            const colors = {
+                info: 'bg-blue-500',
+                success: 'bg-green-500',
+                warning: 'bg-yellow-500',
+                error: 'bg-red-500'
+            };
+            
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 left-1/2 transform -translate-x-1/2 ${colors[type]} text-white px-8 py-4 rounded-xl shadow-2xl z-50 transition-all duration-500 scale-0 max-w-md`;
+            notification.innerHTML = `
+                <div class="flex items-center space-x-3">
+                    <i class="fas fa-info-circle text-xl"></i>
+                    <span class="font-semibold text-base">${message}</span>
+                    <button onclick="this.parentElement.parentElement.remove()" class="ml-4 text-white hover:text-gray-200">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.remove('scale-0');
+                notification.classList.add('scale-100');
+            }, 100);
+            
+            setTimeout(() => {
+                notification.classList.add('scale-0');
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 500);
+            }, 6000);
+        }
+
+        // Close modal when clicking outside
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('bg-black/60')) {
+                closeCollaborationModal();
+            }
+        });
+
+        // Escape key to close modal
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeCollaborationModal();
+            }
+        });
+
+        // Cleanup intervals
+        window.addEventListener('beforeunload', function() {
+            if (liveStatsInterval) clearInterval(liveStatsInterval);
+            if (testimonialInterval) clearInterval(testimonialInterval);
+        });
+    </script>
+</body>
+</html>
+

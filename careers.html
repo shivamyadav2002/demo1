@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Careers at DevHub - Join Our Team</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a'
+                        }
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'ui-sans-serif', 'system-ui']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .careers-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .careers-gradient::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 25% 75%, rgba(102, 126, 234, 0.3), transparent 50%),
+                        radial-gradient(circle at 75% 25%, rgba(255, 255, 255, 0.1), transparent 50%),
+                        radial-gradient(circle at 50% 50%, rgba(240, 147, 251, 0.2), transparent 50%);
+            animation: floating 8s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(1deg); }
+        }
+        
+        .job-card {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid transparent;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .dark .job-card {
+            background: linear-gradient(145deg, #1f2937, #111827);
+        }
+        
+        .job-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(59, 130, 246, 0.1), transparent);
+            transition: left 0.8s ease;
+        }
+        
+        .job-card:hover::before {
+            left: 100%;
+        }
+        
+        .job-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            border-color: #3b82f6;
+        }
+        
+        .dark .job-card:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .benefit-card {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border: 2px solid #7dd3fc;
+            transition: all 0.3s ease;
+        }
+        
+        .dark .benefit-card {
+            background: linear-gradient(135deg, #0c4a6e, #075985);
+            border-color: #0284c7;
+        }
+        
+        .benefit-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.2);
+        }
+        
+        .culture-highlight {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .culture-highlight::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="squares" width="20" height="20" patternUnits="userSpaceOnUse"><rect width="10" height="10" fill="rgba(255,255,255,0.05)"/></pattern></defs><rect width="100" height="100" fill="url(%23squares)"/></svg>');
+            opacity: 0.4;
+        }
+        
+        .team-photo {
+            border-radius: 1rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+        }
+        
+        .team-photo:hover {
+            transform: scale(1.05);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+        
+        .job-filter {
+            transition: all 0.3s ease;
+        }
+        
+        .job-filter.active {
+            background: #3b82f6;
+            color: white;
+        }
+        
+        .job-filter:hover {
+            background: rgba(59, 130, 246, 0.1);
+        }
+        
+        .perk-icon {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .perk-icon:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .application-form {
+            background: linear-gradient(135deg, #fefbff, #f3e8ff);
+            border: 2px dashed #c084fc;
+        }
+        
+        .dark .application-form {
+            background: linear-gradient(135deg, #581c87, #6b21a8);
+            border-color: #a855f7;
+        }
+        
+        .salary-range {
+            background: linear-gradient(45deg, #10b981, #059669);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-weight: 600;
+        }
+        
+        .remote-badge {
+            background: linear-gradient(45deg, #8b5cf6, #7c3aed);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .urgent-badge {
+            background: linear-gradient(45deg, #ef4444, #dc2626);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            animation: pulse 2s infinite;
+        }
+        
+        .employee-quote {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            border-left: 4px solid #3b82f6;
+            position: relative;
+        }
+        
+        .dark .employee-quote {
+            background: linear-gradient(135deg, #1e293b, #334155);
+        }
+        
+        .employee-quote::before {
+            content: '"';
+            position: absolute;
+            top: -0.5rem;
+            left: 1rem;
+            font-size: 3rem;
+            color: #3b82f6;
+            line-height: 1;
+        }
+        
+        .hiring-process {
+            background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+            border: 2px solid #10b981;
+        }
+        
+        .dark .hiring-process {
+            background: linear-gradient(135deg, #064e3b, #065f46);
+        }
+        
+        .process-step {
+            background: white;
+            border: 2px solid #d1d5db;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .dark .process-step {
+            background: #1f2937;
+            border-color: #374151;
+        }
+        
+        .process-step:hover {
+            border-color: #3b82f6;
+            transform: translateY(-2px);
+        }
+        
+        .process-step::before {
+            content: attr(data-step);
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: #3b82f6;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+        
+        .diversity-commitment {
+            background: linear-gradient(135deg, #fef3c7, #fbbf24);
+            border: 2px solid #f59e0b;
+        }
+        
+        .dark .diversity-commitment {
+            background: linear-gradient(135deg, #92400e, #b45309);
+        }
+        
+        .referral-bonus {
+            background: linear-gradient(135deg, #fee2e2, #fca5a5);
+            border: 2px solid #f87171;
+            animation: pulse 3s infinite;
+        }
+        
+        .dark .referral-bonus {
+            background: linear-gradient(135deg, #7f1d1d, #991b1b);
+        }
+        
+        .glassmorphism {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .dark .glassmorphism {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <!-- Header -->
+    <header class="bg-white/90 dark:bg-gray-800/90 backdrop-blur-lg shadow-lg sticky top-0 z-50 transition-all duration-300">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo & Brand -->
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="flex items-center space-x-2">
+                        <div class="w-12 h-12 bg-gradient-to-r from-primary-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg">
+                            <i class="fas fa-code text-white text-lg"></i>
+                        </div>
+                        <h1 class="text-3xl font-bold bg-gradient-to-r from-primary-500 to-purple-600 bg-clip-text text-transparent">
+                            DevHub
+                        </h1>
+                    </a>
+                    <div class="hidden md:flex items-center space-x-2 text-gray-500">
+                        <i class="fas fa-chevron-right text-sm"></i>
+                        <span class="text-primary-600">Careers</span>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 transition-colors font-medium">Home</a>
+                    <a href="about-comprehensive.html" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 transition-colors font-medium">About</a>
+                    <a href="#" class="text-primary-600 font-bold">Careers</a>
+                    <a href="community-enhanced.html" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 transition-colors font-medium">Community</a>
+                    <a href="help-support.html" class="text-gray-600 dark:text-gray-300 hover:text-primary-600 transition-colors font-medium">Support</a>
+                </nav>
+
+                <!-- Actions -->
+                <div class="flex items-center space-x-4">
+                    <!-- Dark Mode Toggle -->
+                    <button onclick="toggleDarkMode()" class="p-3 rounded-xl hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-moon dark:hidden text-lg"></i>
+                        <i class="fas fa-sun hidden dark:block text-lg"></i>
+                    </button>
+
+                    <!-- View All Jobs -->
+                    <button onclick="scrollToJobs()" class="bg-primary-600 text-white px-6 py-2 rounded-lg hover:bg-primary-700 transition-colors font-semibold">
+                        <i class="fas fa-briefcase mr-2"></i>View Open Roles
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="careers-gradient text-white py-24 relative">
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-5xl mx-auto text-center">
+                <h2 class="text-5xl md:text-7xl font-black mb-8">
+                    Build the Future with 
+                    <span class="bg-gradient-to-r from-yellow-300 to-orange-400 bg-clip-text text-transparent">DevHub</span>
+                </h2>
+                <p class="text-xl md:text-2xl mb-12 opacity-90 leading-relaxed max-w-4xl mx-auto">
+                    Join a team of passionate innovators who are transforming how developers build for the web. 
+                    We're looking for exceptional talent to help us shape the future of development tools.
+                </p>
+                
+                <!-- Quick Stats -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mt-16">
+                    <div class="glassmorphism rounded-2xl p-6 text-center">
+                        <div class="text-3xl font-black mb-2">52</div>
+                        <div class="text-blue-200 font-medium">Team Members</div>
+                        <div class="text-xs text-blue-300 mt-1">Growing fast</div>
+                    </div>
+                    <div class="glassmorphism rounded-2xl p-6 text-center">
+                        <div class="text-3xl font-black mb-2">23</div>
+                        <div class="text-blue-200 font-medium">Countries</div>
+                        <div class="text-xs text-blue-300 mt-1">Global team</div>
+                    </div>
+                    <div class="glassmorphism rounded-2xl p-6 text-center">
+                        <div class="text-3xl font-black mb-2">4.9</div>
+                        <div class="text-blue-200 font-medium">Glassdoor Rating</div>
+                        <div class="text-xs text-blue-300 mt-1">Employee satisfaction</div>
+                    </div>
+                    <div class="glassmorphism rounded-2xl p-6 text-center">
+                        <div class="text-3xl font-black mb-2">18</div>
+                        <div class="text-blue-200 font-medium">Open Positions</div>
+                        <div class="text-xs text-blue-300 mt-1">Join us now</div>
+                    </div>
+                </div>
+
+                <!-- Current Opportunities Highlight -->
+                <div class="mt-16 max-w-3xl mx-auto">
+                    <div class="glassmorphism rounded-2xl p-8 border border-white/30">
+                        <h3 class="text-2xl font-bold mb-4">🚀 We're Hiring!</h3>
+                        <p class="text-lg leading-relaxed opacity-95 mb-6">
+                            We're expanding rapidly across Engineering, Design, Product, and Operations. 
+                            Competitive salaries, equity, and the chance to work on products used by 50,000+ developers worldwide.
+                        </p>
+                        <div class="flex flex-wrap justify-center gap-3">
+                            <span class="urgent-badge">Senior Engineers Needed</span>
+                            <span class="remote-badge">100% Remote OK</span>
+                            <span class="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Great Benefits</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Work With Us Section -->
+    <section class="py-20 -mt-12 relative z-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 text-gray-800 dark:text-gray-100">Why DevHub?</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
+                    Join a company that's not just building great products, but creating an exceptional place to work
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                <div class="benefit-card rounded-2xl p-8 text-center">
+                    <div class="perk-icon mx-auto mb-6">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-gray-800 dark:text-gray-100">High Impact Work</h3>
+                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                        Your code and designs directly impact 50,000+ developers. See your work make a real difference 
+                        in the global development community.
+                    </p>
+                </div>
+
+                <div class="benefit-card rounded-2xl p-8 text-center">
+                    <div class="perk-icon mx-auto mb-6">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-gray-800 dark:text-gray-100">Rapid Growth</h3>
+                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                        Join a rocket ship. We're growing 20% month-over-month with massive opportunities for 
+                        career advancement and learning.
+                    </p>
+                </div>
+
+                <div class="benefit-card rounded-2xl p-8 text-center">
+                    <div class="perk-icon mx-auto mb-6">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-gray-800 dark:text-gray-100">World-Class Team</h3>
+                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                        Work alongside veterans from Google, Facebook, Airbnb, and other top tech companies. 
+                        Learn from the best in the industry.
+                    </p>
+                </div>
+
+                <div class="benefit-card rounded-2xl p-8 text-center">
+                    <div class="perk-icon mx-auto mb-6">
+                        <i class="fas fa-globe"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-gray-800 dark:text-gray-100">Remote-First Culture</h3>
+                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                        Work from anywhere in the world. We've been remote-first since day one with excellent 
+                        async communication and collaboration tools.
+                    </p>
+                </div>
+
+                <div class="benefit-card rounded-2xl p-8 text-center">
+                    <div class="perk-icon mx-auto mb-6">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-gray-800 dark:text-gray-100">Cutting-Edge Tech</h3>
+                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                        Work with the latest technologies including AI/ML, WebAssembly, edge computing, 
+                        and next-generation web frameworks.
+                    </p>
+                </div>
+
+                <div class="benefit-card rounded-2xl p-8 text-center">
+                    <div class="perk-icon mx-auto mb-6">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-gray-800 dark:text-gray-100">Work-Life Balance</h3>
+                    <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                        Unlimited PTO, flexible hours, mental health support, and a culture that truly values 
+                        your well-being and personal growth.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Employee Testimonials -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="employee-quote rounded-2xl p-8">
+                    <div class="relative z-10">
+                        <p class="text-lg italic leading-relaxed text-gray-700 dark:text-gray-300 mb-6">
+                            DevHub gave me the opportunity to work on products that millions of developers use daily. 
+                            The learning curve is steep, but the support from the team is incredible.
+                        </p>
+                        <div class="flex items-center space-x-4">
+                            <img src="https://placehold.co/60x60" alt="Profile of Lisa Chen, Senior Frontend Engineer at DevHub" class="w-15 h-15 rounded-full">
+                            <div>
+                                <div class="font-bold text-gray-800 dark:text-gray-100">Lisa Chen</div>
+                                <div class="text-gray-600 dark:text-gray-400">Senior Frontend Engineer</div>
+                                <div class="text-sm text-primary-600">2 years at DevHub</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="employee-quote rounded-2xl p-8">
+                    <div class="relative z-10">
+                        <p class="text-lg italic leading-relaxed text-gray-700 dark:text-gray-300 mb-6">
+                            The culture here is genuinely special. Everyone is passionate about what we're building, 
+                            and there's a real sense of ownership and pride in the work we do.
+                        </p>
+                        <div class="flex items-center space-x-4">
+                            <img src="https://placehold.co/60x60" alt="Profile of Marcus Williams, Product Designer at DevHub" class="w-15 h-15 rounded-full">
+                            <div>
+                                <div class="font-bold text-gray-800 dark:text-gray-100">Marcus Williams</div>
+                                <div class="text-gray-600 dark:text-gray-400">Product Designer</div>
+                                <div class="text-sm text-primary-600">1.5 years at DevHub</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits & Perks Section -->
+    <section class="py-20 bg-gray-100 dark:bg-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 text-gray-800 dark:text-gray-100">Benefits & Perks</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400">
+                    We believe in taking care of our team with comprehensive benefits and unique perks
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                <!-- Health & Wellness -->
+                <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg">
+                    <h3 class="text-lg font-bold mb-4 text-gray-800 dark:text-gray-100 flex items-center">
+                        <i class="fas fa-heart text-red-500 mr-3"></i>Health & Wellness
+                    </h3>
+                    <ul class="space-y-3 text-sm text-gray-600 dark:text-gray-400">
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Premium health insurance (100% covered)</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Dental & vision coverage</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Mental health support & therapy</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>$2,000 annual wellness budget</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>On-site gym & fitness classes</li>
+                    </ul>
+                </div>
+
+                <!-- Financial -->
+                <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg">
+                    <h3 class="text-lg font-bold mb-4 text-gray-800 dark:text-gray-100 flex items-center">
+                        <i class="fas fa-dollar-sign text-green-500 mr-3"></i>Financial
+                    </h3>
+                    <ul class="space-y-3 text-sm text-gray-600 dark:text-gray-400">
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Competitive salaries (top 10%)</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Equity in a fast-growing company</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>401(k) with 6% company match</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>$10,000 signing bonus</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Annual performance bonuses</li>
+                    </ul>
+                </div>
+
+                <!-- Time Off & Flexibility -->
+                <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg">
+                    <h3 class="text-lg font-bold mb-4 text-gray-800 dark:text-gray-100 flex items-center">
+                        <i class="fas fa-calendar text-blue-500 mr-3"></i>Time & Flexibility
+                    </h3>
+                    <ul class="space-y-3 text-sm text-gray-600 dark:text-gray-400">
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Unlimited PTO policy</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Flexible working hours</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>4-day work week option</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>3-month sabbatical (after 3 years)</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Work from anywhere policy</li>
+                    </ul>
+                </div>
+
+                <!-- Learning & Growth -->
+                <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg">
+                    <h3 class="text-lg font-bold mb-4 text-gray-800 dark:text-gray-100 flex items-center">
+                        <i class="fas fa-graduation-cap text-purple-500 mr-3"></i>Learning & Growth
+                    </h3>
+                    <ul class="space-y-3 text-sm text-gray-600 dark:text-gray-400">
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>$5,000 annual learning budget</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Conference attendance covered</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Internal tech talks & workshops</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Mentorship programs</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Side project support</li>
+                    </ul>
+                </div>
+
+                <!-- Office & Equipment -->
+                <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg">
+                    <h3 class="text-lg font-bold mb-4 text-gray-800 dark:text-gray-100 flex items-center">
+                        <i class="fas fa-laptop text-indigo-500 mr-3"></i>Equipment & Office
+                    </h3>
+                    <ul class="space-y-3 text-sm text-gray-600 dark:text-gray-400">
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Top-spec MacBook Pro or PC</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>$3,000 home office budget</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Multiple 4K monitors</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Premium software licenses</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Co-working space allowance</li>
+                    </ul>
+                </div>
+
+                <!-- Family & Personal -->
+                <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg">
+                    <h3 class="text-lg font-bold mb-4 text-gray-800 dark:text-gray-100 flex items-center">
+                        <i class="fas fa-baby text-pink-500 mr-3"></i>Family & Personal
+                    </h3>
+                    <ul class="space-y-3 text-sm text-gray-600 dark:text-gray-400">
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>16 weeks parental leave</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>$5,000 new parent bonus</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Childcare assistance</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Pet-friendly offices</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Family event allowances</li>
+                    </ul>
+                </div>
+
+                <!-- Fun & Culture -->
+                <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg">
+                    <h3 class="text-lg font-bold mb-4 text-gray-800 dark:text-gray-100 flex items-center">
+                        <i class="fas fa-gamepad text-orange-500 mr-3"></i>Fun & Culture
+                    </h3>
+                    <ul class="space-y-3 text-sm text-gray-600 dark:text-gray-400">
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Monthly team retreats</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Annual company off-sites</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Game rooms & relaxation areas</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Free gourmet meals & snacks</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Hobby project showcase</li>
+                    </ul>
+                </div>
+
+                <!-- Unique Perks -->
+                <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg">
+                    <h3 class="text-lg font-bold mb-4 text-gray-800 dark:text-gray-100 flex items-center">
+                        <i class="fas fa-star text-yellow-500 mr-3"></i>Unique Perks
+                    </h3>
+                    <ul class="space-y-3 text-sm text-gray-600 dark:text-gray-400">
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>DevHub Pro account (lifetime)</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Early access to new features</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Commuter benefits & transportation</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Professional headshots</li>
+                        <li class="flex items-center"><i class="fas fa-check text-green-500 mr-2"></i>Surprise & delight budget</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Special Programs -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="diversity-commitment rounded-xl p-8">
+                    <h3 class="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100">
+                        <i class="fas fa-handshake mr-3"></i>Diversity & Inclusion
+                    </h3>
+                    <p class="text-gray-700 dark:text-gray-200 mb-6">
+                        We're committed to building a diverse and inclusive workplace where everyone can thrive.
+                    </p>
+                    <ul class="space-y-2 text-sm">
+                        <li>• Unconscious bias training for all employees</li>
+                        <li>• Employee resource groups and mentorship</li>
+                        <li>• Diverse interview panels</li>
+                        <li>• Inclusive language guidelines</li>
+                        <li>• Pay equity audits and transparency</li>
+                    </ul>
+                </div>
+                
+                <div class="referral-bonus rounded-xl p-8 text-center">
+                    <h3 class="text-2xl font-bold mb-4 text-gray-800 dark:text-gray-100">
+                        <i class="fas fa-gift mr-3"></i>Employee Referral Program
+                    </h3>
+                    <div class="text-4xl font-black text-gray-800 dark:text-gray-100 mb-4">$5,000</div>
+                    <p class="text-gray-700 dark:text-gray-200 mb-6">
+                        Referral bonus for each successful hire. Help us build an amazing team and get rewarded!
+                    </p>
+                    <div class="text-sm text-gray-600 dark:text-gray-400">
+                        Additional $2,500 after 6 months retention
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Open Positions Section -->
+    <section id="open-positions" class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 text-gray-800 dark:text-gray-100">Open Positions</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400">
+                    Join our mission to transform web development. We're hiring across all departments.
+                </p>
+            </div>
+
+            <!-- Job Filters -->
+            <div class="flex flex-wrap justify-center gap-4 mb-8">
+                <button onclick="filterJobs('all')" class="job-filter active px-6 py-2 rounded-full bg-primary-600 text-white font-medium">
+                    All Positions (18)
+                </button>
+                <button onclick="filterJobs('engineering')" class="job-filter px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors font-medium">
+                    Engineering (8)
+                </button>
+                <button onclick="filterJobs('design')" class="job-filter px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors font-medium">
+                    Design (3)
+                </button>
+                <button onclick="filterJobs('product')" class="job-filter px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors font-medium">
+                    Product (4)
+                </button>
+                <button onclick="filterJobs('sales')" class="job-filter px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors font-medium">
+                    Sales (2)
+                </button>
+                <button onclick="filterJobs('operations')" class="job-filter px-6 py-2 rounded-full bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors font-medium">
+                    Operations (1)
+                </button>
+            </div>
+
+            <!-- Jobs Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8" id="jobs-grid">
+                <!-- Jobs will be populated by JavaScript -->
+            </div>
+
+            <!-- Load More Jobs -->
+            <div class="text-center mt-12">
+                <button onclick="loadMoreJobs()" class="bg-gray-600 text-white px-8 py-3 rounded-xl hover:bg-gray-700 transition-colors font-semibold" id="load-more-jobs">
+                    <span>View All Positions</span>
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hiring Process Section -->
+    <section class="py-20 bg-gray-100 dark:bg-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 text-gray-800 dark:text-gray-100">Our Hiring Process</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400">
+                    Transparent, fair, and designed to help you succeed
+                </p>
+            </div>
+
+            <div class="hiring-process rounded-2xl p-8 mb-12">
+                <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
+                    <div class="process-step rounded-xl p-6 text-center" data-step="1">
+                        <div class="w-16 h-16 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-file-alt text-blue-600 text-xl"></i>
+                        </div>
+                        <h4 class="font-bold text-gray-800 dark:text-gray-100 mb-2">Application</h4>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                            Submit your application with resume, portfolio, and cover letter
+                        </p>
+                        <div class="text-xs text-gray-500 mt-2">1-2 days response</div>
+                    </div>
+
+                    <div class="process-step rounded-xl p-6 text-center" data-step="2">
+                        <div class="w-16 h-16 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-phone text-green-600 text-xl"></i>
+                        </div>
+                        <h4 class="font-bold text-gray-800 dark:text-gray-100 mb-2">Recruiter Call</h4>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                            30-minute chat about your background, interests, and the role
+                        </p>
+                        <div class="text-xs text-gray-500 mt-2">30 minutes</div>
+                    </div>
+
+                    <div class="process-step rounded-xl p-6 text-center" data-step="3">
+                        <div class="w-16 h-16 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-code text-purple-600 text-xl"></i>
+                        </div>
+                        <h4 class="font-bold text-gray-800 dark:text-gray-100 mb-2">Technical Interview</h4>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                            Role-specific technical discussion or coding challenge
+                        </p>
+                        <div class="text-xs text-gray-500 mt-2">1-2 hours</div>
+                    </div>
+
+                    <div class="process-step rounded-xl p-6 text-center" data-step="4">
+                        <div class="w-16 h-16 bg-orange-100 dark:bg-orange-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-users text-orange-600 text-xl"></i>
+                        </div>
+                        <h4 class="font-bold text-gray-800 dark:text-gray-100 mb-2">Team Interview</h4>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                            Meet your potential teammates and discuss collaboration
+                        </p>
+                        <div class="text-xs text-gray-500 mt-2">45 minutes</div>
+                    </div>
+
+                    <div class="process-step rounded-xl p-6 text-center" data-step="5">
+                        <div class="w-16 h-16 bg-red-100 dark:bg-red-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-handshake text-red-600 text-xl"></i>
+                        </div>
+                        <h4 class="font-bold text-gray-800 dark:text-gray-100 mb-2">Final Interview</h4>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                            Culture fit and leadership discussion with founders
+                        </p>
+                        <div class="text-xs text-gray-500 mt-2">30 minutes</div>
+                    </div>
+                </div>
+
+                <div class="text-center mt-8">
+                    <p class="text-gray-600 dark:text-gray-400 mb-4">
+                        <strong>Total process time:</strong> 1-2 weeks from application to offer
+                    </p>
+                    <p class="text-sm text-gray-500">
+                        We provide detailed feedback at every stage and are committed to a respectful, 
+                        transparent process for all candidates.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Interview Tips -->
+            <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-xl">
+                <h3 class="text-2xl font-bold mb-6 text-gray-800 dark:text-gray-100 text-center">Interview Tips</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-lightbulb text-blue-600"></i>
+                        </div>
+                        <h4 class="font-bold mb-2 text-gray-800 dark:text-gray-100">Be Authentic</h4>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                            We value genuine passion over perfect answers. Show us who you really are.
+                        </p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-project-diagram text-green-600"></i>
+                        </div>
+                        <h4 class="font-bold mb-2 text-gray-800 dark:text-gray-100">Share Your Work</h4>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                            Bring examples of projects you're proud of. We love seeing your creative process.
+                        </p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-question-circle text-purple-600"></i>
+                        </div>
+                        <h4 class="font-bold mb-2 text-gray-800 dark:text-gray-100">Ask Questions</h4>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                            Interviews are two-way. Ask about culture, growth, and what excites us about the future.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Office Culture Section -->
+    <section class="py-20">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 text-gray-800 dark:text-gray-100">Life at DevHub</h2>
+                <p class="text-xl text-gray-600 dark:text-gray-400">
+                    A glimpse into our culture, workspace, and daily life
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+                <div class="lg:col-span-2">
+                    <img src="https://placehold.co/800x500" alt="DevHub team collaboration in modern office space with developers working together" class="team-photo w-full">
+                </div>
+                <div class="space-y-6">
+                    <div class="culture-highlight rounded-xl p-6 relative">
+                        <div class="relative z-10">
+                            <h4 class="text-xl font-bold mb-3">🚀 Innovation First</h4>
+                            <p class="text-sm opacity-90 leading-relaxed">
+                                We encourage experimentation and bold ideas. 20% of your time can be spent 
+                                on passion projects and exploring new technologies.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="culture-highlight rounded-xl p-6 relative">
+                        <div class="relative z-10">
+                            <h4 class="text-xl font-bold mb-3">🤝 Collaborative Spirit</h4>
+                            <p class="text-sm opacity-90 leading-relaxed">
+                                Cross-functional teams work together seamlessly. Engineering, design, and 
+                                product collaborate on every feature from conception to launch.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="culture-highlight rounded-xl p-6 relative">
+                        <div class="relative z-10">
+                            <h4 class="text-xl font-bold mb-3">📚 Continuous Learning</h4>
+                            <p class="text-sm opacity-90 leading-relaxed">
+                                Weekly tech talks, monthly book clubs, conference attendance, and dedicated 
+                                learning time built into every sprint.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Office Photos Grid -->
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <img src="https://placehold.co/300x300" alt="DevHub office kitchen with modern appliances and team gathering space" class="team-photo aspect-square object-cover">
+                <img src="https://placehold.co/300x300" alt="DevHub workspace showing developers coding with multiple monitors and modern setup" class="team-photo aspect-square object-cover">
+                <img src="https://placehold.co/300x300" alt="DevHub team meeting room with whiteboard sessions and collaborative design thinking" class="team-photo aspect-square object-cover">
+                <img src="https://placehold.co/300x300" alt="DevHub relaxation area with games, comfortable seating, and team bonding activities" class="team-photo aspect-square object-cover">
+            </div>
+        </div>
+    </section>
+
+    <!-- Application CTA Section -->
+    <section class="py-20 bg-gray-100 dark:bg-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6 text-gray-800 dark:text-gray-100">Ready to Join Us?</h2>
+                    <p class="text-xl text-gray-600 dark:text-gray-400">
+                        Don't see the perfect role? We're always looking for exceptional talent.
+                    </p>
+                </div>
+
+                <div class="application-form rounded-2xl p-8">
+                    <h3 class="text-2xl font-bold mb-6 text-gray-800 dark:text-gray-100 text-center">
+                        General Application
+                    </h3>
+                    <form id="general-application" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Full Name *</label>
+                                <input type="text" required class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Email Address *</label>
+                                <input type="email" required class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600">
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Location</label>
+                                <input type="text" placeholder="City, Country" class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Area of Interest</label>
+                                <select class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600">
+                                    <option>Engineering</option>
+                                    <option>Design</option>
+                                    <option>Product</option>
+                                    <option>Sales & Marketing</option>
+                                    <option>Operations</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Tell us about yourself *</label>
+                            <textarea rows="5" required class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600" placeholder="What makes you excited about DevHub? What unique value would you bring to our team?"></textarea>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Resume/CV</label>
+                                <div class="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-6 text-center">
+                                    <i class="fas fa-cloud-upload-alt text-2xl text-gray-400 mb-2"></i>
+                                    <p class="text-gray-600 dark:text-gray-400 text-sm mb-2">Drag & drop or click to browse</p>
+                                    <input type="file" accept=".pdf,.doc,.docx" class="hidden" id="resume-upload">
+                                    <button type="button" onclick="document.getElementById('resume-upload').click()" class="text-primary-600 hover:text-primary-700 font-medium text-sm">
+                                        Choose File
+                                    </button>
+                                </div>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-bold text-gray-700 dark:text-gray-300 mb-2">Portfolio/GitHub (Optional)</label>
+                                <input type="url" placeholder="https://your-portfolio.com" class="w-full px-4 py-3 border rounded-xl focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600">
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center space-x-2">
+                            <input type="checkbox" required class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500">
+                            <label class="text-sm text-gray-700 dark:text-gray-300">
+                                I agree to the <a href="#" class="text-primary-600 hover:text-primary-700">Privacy Policy</a> and 
+                                <a href="#" class="text-primary-600 hover:text-primary-700">Terms of Service</a>
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-gradient-to-r from-primary-600 to-purple-600 text-white py-4 px-8 rounded-xl hover:from-primary-700 hover:to-purple-700 transition-all duration-300 font-bold text-lg">
+                            <i class="fas fa-paper-plane mr-2"></i>Submit Application
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Job Detail Modal -->
+    <div id="job-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl max-w-4xl w-full max-h-90vh overflow-y-auto">
+            <div class="p-8" id="job-modal-content">
+                <!-- Job details will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // State Management
+        let isDarkMode = false;
+        let currentJobFilter = 'all';
+        let jobsDisplayed = 6;
+
+        // Comprehensive job data
+        const jobOpenings = [
+            {
+                id: 1,
+                title: 'Senior Full-Stack Engineer',
+                department: 'engineering',
+                location: 'San Francisco, CA / Remote',
+                type: 'Full-time',
+                salary: '$180K - $250K',
+                equity: '0.1% - 0.5%',
+                urgent: true,
+                remote: true,
+                posted: '2 days ago',
+                applicants: 47,
+                description: 'Lead development of core platform features and mentor junior engineers.',
+                requirements: [
+                    '5+ years full-stack development experience',
+                    'Expert in React, Node.js, and modern web technologies',
+                    'Experience with microservices and cloud infrastructure',
+                    'Strong system design and architecture skills',
+                    'Previous startup experience preferred'
+                ],
+                benefits: ['Equity package', 'Remote work', 'Learning budget'],
+                team: 'Platform Engineering (12 people)',
+                manager: 'Alex Chen, VP Engineering'
+            },
+            {
+                id: 2,
+                title: 'Product Designer',
+                department: 'design',
+                location: 'London, UK / Remote',
+                type: 'Full-time',
+                salary: '£80K - £120K',
+                equity: '0.05% - 0.25%',
+                urgent: false,
+                remote: true,
+                posted: '5 days ago',
+                applicants: 23,
+                description: 'Design user experiences that delight developers and drive product growth.',
+                requirements: [
+                    '4+ years product design experience',
+                    'Expert in Figma, Sketch, and design systems',
+                    'Strong UX research and usability testing skills',
+                    'Experience with developer tools preferred',
+                    'Portfolio demonstrating complex problem solving'
+                ],
+                benefits: ['Design conference budget', 'Remote work', 'Creative time'],
+                team: 'Design Team (8 people)',
+                manager: 'Sarah Chen, Head of Design'
+            },
+            {
+                id: 3,
+                title: 'DevOps Engineer',
+                department: 'engineering',
+                location: 'Singapore / Remote',
+                type: 'Full-time',
+                salary: '$120K - $180K',
+                equity: '0.05% - 0.3%',
+                urgent: true,
+                remote: true,
+                posted: '1 day ago',
+                applicants: 31,
+                description: 'Scale our infrastructure to support millions of developers worldwide.',
+                requirements: [
+                    '3+ years DevOps/SRE experience',
+                    'Expert in Kubernetes, Docker, and AWS',
+                    'Experience with CI/CD pipelines and automation',
+                    'Strong monitoring and observability skills',
+                    'Previous high-scale system experience'
+                ],
+                benefits: ['Infrastructure budget', 'Remote work', 'On-call compensation'],
+                team: 'Infrastructure Team (6 people)',
+                manager: 'Mike Rodriguez, Principal Engineer'
+            },
+            {
+                id: 4,
+                title: 'Frontend Engineer',
+                department: 'engineering',
+                location: 'Remote Worldwide',
+                type: 'Full-time',
+                salary: '$140K - $200K',
+                equity: '0.05% - 0.3%',
+                urgent: false,
+                remote: true,
+                posted: '3 days ago',
+                applicants: 89,
+                description: 'Build beautiful, performant user interfaces that scale to millions of users.',
+                requirements: [
+                    '3+ years frontend development experience',
+                    'Expert in React, TypeScript, and modern CSS',
+                    'Experience with performance optimization',
+                    'Understanding of accessibility standards',
+                    'Interest in developer tools and workflow'
+                ],
+                benefits: ['Remote work', 'Conference attendance', 'Equipment budget'],
+                team: 'Frontend Team (10 people)',
+                manager: 'Emma Davis, Engineering Manager'
+            },
+            {
+                id: 5,
+                title: 'Product Manager',
+                department: 'product',
+                location: 'San Francisco, CA / Remote',
+                type: 'Full-time',
+                salary: '$160K - $220K',
+                equity: '0.1% - 0.4%',
+                urgent: false,
+                remote: true,
+                posted: '1 week ago',
+                applicants: 34,
+                description: 'Drive product strategy and execution for our core platform features.',
+                requirements: [
+                    '4+ years product management experience',
+                    'Experience with developer-focused products',
+                    'Strong analytical and data-driven approach',
+                    'Excellent communication and leadership skills',
+                    'Technical background preferred'
+                ],
+                benefits: ['Product conference budget', 'Remote work', 'Analytics tools access'],
+                team: 'Product Team (7 people)',
+                manager: 'David Kim, VP Product'
+            },
+            {
+                id: 6,
+                title: 'UX Researcher',
+                department: 'design',
+                location: 'Remote Worldwide',
+                type: 'Full-time',
+                salary: '$110K - $160K',
+                equity: '0.02% - 0.15%',
+                urgent: false,
+                remote: true,
+                posted: '4 days ago',
+                applicants: 18,
+                description: 'Understand developer needs and drive user-centered design decisions.',
+                requirements: [
+                    '3+ years UX research experience',
+                    'Expert in user research methodologies',
+                    'Experience with developer or B2B products',
+                    'Strong statistical analysis skills',
+                    'Excellent presentation and storytelling abilities'
+                ],
+                benefits: ['Research tool budget', 'Remote work', 'Conference speaking opportunities'],
+                team: 'Design Team (8 people)',
+                manager: 'Sarah Chen, Head of Design'
+            }
+        ];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            initializePage();
+            renderJobs();
+            startCounterAnimations();
+            setupScrollProgress();
+            setupParallax();
+        });
+
+        function initializePage() {
+            if (localStorage.getItem('darkMode') === 'true') {
+                isDarkMode = true;
+                document.documentElement.classList.add('dark');
+            }
+        }
+
+        function renderJobs() {
+            const container = document.getElementById('jobs-grid');
+            const filteredJobs = currentJobFilter === 'all' 
+                ? jobOpenings.slice(0, jobsDisplayed) 
+                : jobOpenings.filter(job => job.department === currentJobFilter).slice(0, jobsDisplayed);
+            
+            container.innerHTML = filteredJobs.map(job => `
+                <div class="job-card rounded-2xl p-8 shadow-xl relative" onclick="openJobModal(${job.id})">
+                    <div class="flex justify-between items-start mb-6">
+                        <div>
+                            <div class="flex items-center space-x-3 mb-3">
+                                ${job.urgent ? '<span class="urgent-badge">Urgent Hiring</span>' : ''}
+                                ${job.remote ? '<span class="remote-badge">Remote OK</span>' : ''}
+                            </div>
+                            <h3 class="text-2xl font-bold mb-2 text-gray-800 dark:text-gray-100">${job.title}</h3>
+                            <p class="text-gray-600 dark:text-gray-400 mb-2">${job.department.charAt(0).toUpperCase() + job.department.slice(1)} • ${job.type}</p>
+                            <div class="flex items-center space-x-4 text-sm text-gray-500">
+                                <span><i class="fas fa-map-marker-alt mr-1"></i>${job.location}</span>
+                                <span><i class="fas fa-clock mr-1"></i>Posted ${job.posted}</span>
+                            </div>
+                        </div>
+                        <div class="text-right">
+                            <div class="salary-range text-sm mb-2">${job.salary}</div>
+                            <div class="text-xs text-gray-500">${job.applicants} applicants</div>
+                        </div>
+                    </div>
+                    
+                    <p class="text-gray-600 dark:text-gray-400 mb-6 leading-relaxed">
+                        ${job.description}
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        ${job.benefits.map(benefit => 
+                            `<span class="bg-blue-50 dark:bg-blue-900 text-blue-700 dark:text-blue-300 px-3 py-1 rounded-full text-xs font-medium">${benefit}</span>`
+                        ).join('')}
+                    </div>
+                    
+                    <div class="flex items-center justify-between pt-4 border-t dark:border-gray-700">
+                        <div class="text-sm text-gray-500">
+                            Reports to: ${job.manager}
+                        </div>
+                        <button class="bg-primary-600 text-white px-6 py-2 rounded-lg hover:bg-primary-700 transition-colors font-semibold">
+                            View Details
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterJobs(department) {
+            currentJobFilter = department;
+            jobsDisplayed = 6; // Reset display count
+            
+            // Update filter button states
+            document.querySelectorAll('.job-filter').forEach(btn => {
+                btn.classList.remove('active', 'bg-primary-600', 'text-white');
+                btn.classList.add('bg-gray-200', 'dark:bg-gray-700');
+            });
+            
+            event.target.classList.add('active', 'bg-primary-600', 'text-white');
+            event.target.classList.remove('bg-gray-200', 'dark:bg-gray-700');
+            
+            renderJobs();
+            showNotification(`Showing ${department === 'all' ? 'all' : department} positions`, 'info');
+        }
+
+        function loadMoreJobs() {
+            jobsDisplayed += 6;
+            renderJobs();
+            showNotification('Showing more positions...', 'info');
+        }
+
+        function openJobModal(jobId) {
+            const job = jobOpenings.find(j => j.id === jobId);
+            if (!job) return;
+            
+            const modal = document.getElementById('job-modal');
+            const content = document.getElementById('job-modal-content');
+            
+            content.innerHTML = `
+                <div class="flex justify-between items-start mb-8">
+                    <div>
+                        <div class="flex items-center space-x-3 mb-4">
+                            ${job.urgent ? '<span class="urgent-badge">Urgent Hiring</span>' : ''}
+                            ${job.remote ? '<span class="remote-badge">Remote OK</span>' : ''}
+                        </div>
+                        <h3 class="text-3xl font-bold mb-4 text-gray-800 dark:text-gray-100">${job.title}</h3>
+                        <div class="flex items-center space-x-6 text-gray-600 dark:text-gray-400 mb-4">
+                            <span><i class="fas fa-building mr-2"></i>${job.department.charAt(0).toUpperCase() + job.department.slice(1)}</span>
+                            <span><i class="fas fa-map-marker-alt mr-2"></i>${job.location}</span>
+                            <span><i class="fas fa-briefcase mr-2"></i>${job.type}</span>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <div class="salary-range">${job.salary}</div>
+                            <div class="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-3 py-1 rounded-full text-sm font-semibold">
+                                ${job.equity} equity
+                            </div>
+                        </div>
+                    </div>
+                    <button onclick="closeJobModal()" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 text-2xl">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <div class="lg:col-span-2 space-y-8">
+                        <div>
+                            <h4 class="text-xl font-bold mb-4 text-gray-800 dark:text-gray-100">Job Description</h4>
+                            <p class="text-gray-600 dark:text-gray-400 leading-relaxed mb-6">${job.description}</p>
+                            <p class="text-gray-600 dark:text-gray-400 leading-relaxed">
+                                You'll be working on challenging problems at scale, with the freedom to make significant 
+                                technical decisions and directly impact our product roadmap. This is a high-visibility role 
+                                with opportunities for leadership and mentoring.
+                            </p>
+                        </div>
+                        
+                        <div>
+                            <h4 class="text-xl font-bold mb-4 text-gray-800 dark:text-gray-100">Requirements</h4>
+                            <ul class="space-y-3">
+                                ${job.requirements.map(req => 
+                                    `<li class="flex items-start space-x-3">
+                                        <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                                        <span class="text-gray-600 dark:text-gray-400">${req}</span>
+                                    </li>`
+                                ).join('')}
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="text-xl font-bold mb-4 text-gray-800 dark:text-gray-100">What You'll Do</h4>
+                            <ul class="space-y-3 text-gray-600 dark:text-gray-400">
+                                <li>• Drive technical architecture decisions for core platform features</li>
+                                <li>• Collaborate with product and design teams on feature specifications</li>
+                                <li>• Mentor junior engineers and contribute to engineering culture</li>
+                                <li>• Participate in code reviews and maintain high code quality standards</li>
+                                <li>• Contribute to our open source projects and developer community</li>
+                            </ul>
+                        </div>
+                        
+                        <div>
+                            <h4 class="text-xl font-bold mb-4 text-gray-800 dark:text-gray-100">Nice to Have</h4>
+                            <ul class="space-y-2 text-gray-600 dark:text-gray-400">
+                                <li>• Experience with developer tools or APIs</li>
+                                <li>• Open source contributions</li>
+                                <li>• Previous remote work experience</li>
+                                <li>• Interest in AI/ML applications</li>
+                                <li>• Technical writing or speaking experience</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div class="bg-gray-50 dark:bg-gray-700 rounded-xl p-6">
+                            <h4 class="font-bold mb-4 text-gray-800 dark:text-gray-100">Job Details</h4>
+                            <div class="space-y-3 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-400">Department:</span>
+                                    <span class="font-medium text-gray-800 dark:text-gray-100">${job.team}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-400">Reports to:</span>
+                                    <span class="font-medium text-gray-800 dark:text-gray-100">${job.manager}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-400">Posted:</span>
+                                    <span class="font-medium text-gray-800 dark:text-gray-100">${job.posted}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-400">Applicants:</span>
+                                    <span class="font-medium text-gray-800 dark:text-gray-100">${job.applicants}</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-blue-50 dark:bg-blue-900 rounded-xl p-6">
+                            <h4 class="font-bold mb-4 text-gray-800 dark:text-gray-100">Compensation</h4>
+                            <div class="space-y-3 text-sm">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-400">Base Salary:</span>
+                                    <span class="font-bold text-green-600">${job.salary}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-400">Equity:</span>
+                                    <span class="font-bold text-purple-600">${job.equity}</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-600 dark:text-gray-400">Bonus:</span>
+                                    <span class="font-medium text-gray-800 dark:text-gray-100">Up to 20%</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button onclick="applyForJob(${job.id})" class="w-full bg-gradient-to-r from-primary-600 to-purple-600 text-white py-3 px-6 rounded-xl hover:from-primary-700 hover:to-purple-700 transition-all duration-300 font-bold">
+                            <i class="fas fa-paper-plane mr-2"></i>Apply for This Position
+                        </button>
+                        
+                        <button onclick="scheduleChat(${job.id})" class="w-full bg-gray-200 dark:bg-gray-600 text-gray-800 dark:text-gray-100 py-3 px-6 rounded-xl hover:bg-gray-300 dark:hover:bg-gray-700 transition-colors font-medium">
+                            <i class="fas fa-calendar mr-2"></i>Schedule Informal Chat
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            modal.classList.remove('hidden');
+        }
+
+        function closeJobModal() {
+            document.getElementById('job-modal').classList.add('hidden');
+        }
+
+        function applyForJob(jobId) {
+            const job = jobOpenings.find(j => j.id === jobId);
+            showNotification(`Opening application for ${job.title}...`, 'success');
+            closeJobModal();
+            // In a real app, this would open application form
+        }
+
+        function scheduleChat(jobId) {
+            const job = jobOpenings.find(j => j.id === jobId);
+            showNotification(`Scheduling informal chat about ${job.title}...`, 'info');
+            // In a real app, this would open calendar booking
+        }
+
+        function scrollToJobs() {
+            document.getElementById('open-positions').scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'start' 
+            });
+        }
+
+        function startCounterAnimations() {
+            const counters = document.querySelectorAll('.number-counter');
+            
+            const animateCounter = (counter) => {
+                const target = parseFloat(counter.getAttribute('data-target'));
+                const increment = target / 50;
+                let current = 0;
+                
+                const updateCounter = () => {
+                    if (current < target) {
+                        current += increment;
+                        if (target > 1000) {
+                            counter.textContent = Math.floor(current).toLocaleString();
+                        } else {
+                            counter.textContent = current.toFixed(target % 1 === 0 ? 0 : 2);
+                        }
+                        requestAnimationFrame(updateCounter);
+                    } else {
+                        if (target > 1000) {
+                            counter.textContent = target.toLocaleString();
+                        } else {
+                            counter.textContent = target.toFixed(target % 1 === 0 ? 0 : 2);
+                        }
+                    }
+                };
+                
+                updateCounter();
+            };
+
+            // Start animation when elements come into view
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => animateCounter(entry.target), 200);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            });
+
+            counters.forEach(counter => observer.observe(counter));
+        }
+
+        function setupScrollProgress() {
+            window.addEventListener('scroll', () => {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                document.getElementById('scroll-progress').style.width = scrolled + '%';
+            });
+        }
+
+        function setupParallax() {
+            window.addEventListener('scroll', () => {
+                const scrolled = window.pageYOffset;
+                const parallaxElements = document.querySelectorAll('.parallax-element');
+                
+                parallaxElements.forEach(element => {
+                    const speed = element.dataset.speed || 0.5;
+                    element.style.transform = `translateY(${scrolled * speed}px)`;
+                });
+            });
+        }
+
+        function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', isDarkMode);
+        }
+
+        function showNotification(message, type = 'info') {
+            const colors = {
+                info: 'bg-blue-500',
+                success: 'bg-green-500',
+                warning: 'bg-yellow-500',
+                error: 'bg-red-500'
+            };
+            
+            const notification = document.createElement('div');
+            notification.className = `fixed top-4 right-4 ${colors[type]} text-white px-6 py-3 rounded-lg shadow-lg z-50 transition-all duration-300 transform translate-x-full`;
+            notification.innerHTML = `
+                <div class="flex items-center space-x-2">
+                    <i class="fas fa-info-circle"></i>
+                    <span class="font-medium">${message}</span>
+                    <button onclick="this.parentElement.parentElement.remove()" class="ml-2 text-white hover:text-gray-200">
+                        <i class="fas fa-times text-xs"></i>
+                    </button>
+                </div>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.remove('translate-x-full');
+            }, 100);
+            
+            setTimeout(() => {
+                notification.classList.add('translate-x-full');
+                setTimeout(() => {
+                    if (notification.parentNode) {
+                        notification.parentNode.removeChild(notification);
+                    }
+                }, 300);
+            }, 4000);
+        }
+
+        // Form submission
+        document.getElementById('general-application')?.addEventListener('submit', function(e) {
+            e.preventDefault();
+            showNotification('Application submitted successfully! We\'ll review it within 48 hours and get back to you.', 'success');
+            this.reset();
+        });
+
+        // Close modal when clicking outside
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('bg-black')) {
+                closeJobModal();
+            }
+        });
+
+        // Escape key to close modal
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeJobModal();
+            }
+        });
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,1455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Login Form - DevHub Asset Detail</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-jsx.min.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#eff6ff',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            900: '#1e3a8a'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .tab-button.active {
+            background-color: #3b82f6;
+            color: white;
+        }
+        .live-preview {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .code-block {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .rating-stars {
+            color: #fbbf24;
+        }
+        .comment-thread {
+            border-left: 2px solid #e5e7eb;
+            padding-left: 1rem;
+            margin-left: 1rem;
+        }
+        .dark .comment-thread {
+            border-left-color: #374151;
+        }
+        .version-badge {
+            background: linear-gradient(45deg, #10b981, #059669);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-300">
+    <!-- Header -->
+    <header class="bg-white dark:bg-gray-800 shadow-lg sticky top-0 z-50 transition-colors duration-300">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo & Brand -->
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="flex items-center space-x-2">
+                        <div class="w-10 h-10 bg-gradient-to-r from-primary-500 to-purple-600 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-code text-white text-lg"></i>
+                        </div>
+                        <h1 class="text-2xl font-bold bg-gradient-to-r from-primary-500 to-purple-600 bg-clip-text text-transparent">
+                            DevHub
+                        </h1>
+                    </a>
+                    <div class="hidden md:flex items-center space-x-2 text-gray-500">
+                        <i class="fas fa-chevron-right text-sm"></i>
+                        <span>Assets</span>
+                        <i class="fas fa-chevron-right text-sm"></i>
+                        <span class="text-primary-600">Modern Login Form</span>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex items-center space-x-4">
+                    <button onclick="toggleFavorite()" class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" id="favorite-btn">
+                        <i class="far fa-heart text-xl"></i>
+                    </button>
+                    
+                    <button onclick="shareAsset()" class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-share text-xl"></i>
+                    </button>
+
+                    <button onclick="toggleDarkMode()" class="p-2 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors">
+                        <i class="fas fa-moon dark:hidden"></i>
+                        <i class="fas fa-sun hidden dark:block"></i>
+                    </button>
+
+                    <a href="index.html" class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors">
+                        <i class="fas fa-arrow-left mr-2"></i>Back to Hub
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Asset Header -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-8 mb-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Asset Info -->
+                <div class="lg:col-span-2">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <span class="bg-primary-100 dark:bg-primary-900 text-primary-800 dark:text-primary-200 px-3 py-1 rounded-full text-sm font-medium">
+                            Component
+                        </span>
+                        <span class="version-badge text-white px-3 py-1 rounded-full text-sm font-medium">
+                            v2.1.0
+                        </span>
+                        <div class="flex items-center space-x-1">
+                            <div class="flex rating-stars">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-sm text-gray-500 ml-2">(4.9)</span>
+                        </div>
+                    </div>
+                    
+                    <h1 class="text-4xl font-bold mb-4">Modern Login Form</h1>
+                    <p class="text-xl text-gray-600 dark:text-gray-400 mb-6">
+                        A beautifully designed, responsive login form component with gradient styling, form validation, and accessibility features. Perfect for modern web applications.
+                    </p>
+                    
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span class="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-200 px-3 py-1 rounded-full text-sm">React</span>
+                        <span class="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-3 py-1 rounded-full text-sm">Tailwind CSS</span>
+                        <span class="bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-200 px-3 py-1 rounded-full text-sm">TypeScript</span>
+                        <span class="bg-orange-100 dark:bg-orange-900 text-orange-800 dark:text-orange-200 px-3 py-1 rounded-full text-sm">Responsive</span>
+                        <span class="bg-red-100 dark:bg-red-900 text-red-800 dark:text-red-200 px-3 py-1 rounded-full text-sm">Accessible</span>
+                    </div>
+
+                    <div class="flex items-center space-x-6 text-sm text-gray-500">
+                        <div class="flex items-center space-x-2">
+                            <img src="https://placehold.co/32x32" alt="Profile picture of Sarah Chen, React developer and UI designer" class="w-8 h-8 rounded-full">
+                            <span>by <strong class="text-gray-900 dark:text-gray-100">Sarah Chen</strong></span>
+                        </div>
+                        <span>Updated 2 days ago</span>
+                        <span><i class="fas fa-download mr-1"></i>1,247 downloads</span>
+                        <span><i class="fas fa-heart mr-1"></i>89 likes</span>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="space-y-4">
+                    <button onclick="downloadAsset()" class="w-full bg-primary-600 text-white py-3 px-6 rounded-lg hover:bg-primary-700 transition-colors font-semibold">
+                        <i class="fas fa-download mr-2"></i>Download Component
+                    </button>
+                    
+                    <button onclick="copyToClipboard()" class="w-full bg-green-600 text-white py-3 px-6 rounded-lg hover:bg-green-700 transition-colors font-semibold">
+                        <i class="fas fa-copy mr-2"></i>Copy Code
+                    </button>
+                    
+                    <button onclick="openInCodepen()" class="w-full bg-gray-600 text-white py-3 px-6 rounded-lg hover:bg-gray-700 transition-colors font-semibold">
+                        <i class="fab fa-codepen mr-2"></i>Try in CodePen
+                    </button>
+
+                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                        <h3 class="font-semibold mb-2">Installation</h3>
+                        <div class="bg-gray-900 text-green-400 p-3 rounded text-sm font-mono">
+                            npm install @devhub/login-form
+                        </div>
+                    </div>
+
+                    <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                        <h3 class="font-semibold mb-2">Bundle Size</h3>
+                        <div class="text-sm text-gray-600 dark:text-gray-400">
+                            <div class="flex justify-between">
+                                <span>Minified:</span>
+                                <span class="font-mono">4.2kb</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Gzipped:</span>
+                                <span class="font-mono">1.8kb</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Live Preview -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg mb-8 overflow-hidden">
+            <div class="bg-gray-50 dark:bg-gray-700 px-6 py-4 border-b dark:border-gray-600">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-xl font-bold">Live Preview</h2>
+                    <div class="flex items-center space-x-2">
+                        <button onclick="togglePreviewMode('desktop')" class="preview-mode-btn active px-3 py-1 rounded bg-primary-600 text-white text-sm">
+                            <i class="fas fa-desktop mr-1"></i>Desktop
+                        </button>
+                        <button onclick="togglePreviewMode('tablet')" class="preview-mode-btn px-3 py-1 rounded bg-gray-200 dark:bg-gray-600 text-sm">
+                            <i class="fas fa-tablet-alt mr-1"></i>Tablet
+                        </button>
+                        <button onclick="togglePreviewMode('mobile')" class="preview-mode-btn px-3 py-1 rounded bg-gray-200 dark:bg-gray-600 text-sm">
+                            <i class="fas fa-mobile-alt mr-1"></i>Mobile
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="live-preview p-8 min-h-96 flex items-center justify-center" id="preview-container">
+                <div class="preview-frame w-full max-w-md" id="preview-frame">
+                    <!-- Live Component Preview -->
+                    <div class="bg-white rounded-lg shadow-xl p-8">
+                        <div class="text-center mb-8">
+                            <div class="w-16 h-16 bg-gradient-to-r from-primary-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <i class="fas fa-lock text-white text-xl"></i>
+                            </div>
+                            <h2 class="text-2xl font-bold text-gray-900 mb-2">Welcome Back</h2>
+                            <p class="text-gray-600">Sign in to your account</p>
+                        </div>
+                        
+                        <form class="space-y-6" onsubmit="handleLogin(event)">
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-700 mb-2">Email Address</label>
+                                <div class="relative">
+                                    <input 
+                                        type="email" 
+                                        id="email" 
+                                        name="email" 
+                                        class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                                        placeholder="Enter your email"
+                                        required
+                                    >
+                                    <i class="fas fa-envelope absolute left-3 top-4 text-gray-400"></i>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label for="password" class="block text-sm font-medium text-gray-700 mb-2">Password</label>
+                                <div class="relative">
+                                    <input 
+                                        type="password" 
+                                        id="password" 
+                                        name="password" 
+                                        class="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary-500 focus:border-primary-500 transition-colors"
+                                        placeholder="Enter your password"
+                                        required
+                                    >
+                                    <i class="fas fa-lock absolute left-3 top-4 text-gray-400"></i>
+                                    <button type="button" onclick="togglePassword()" class="absolute right-3 top-4 text-gray-400 hover:text-gray-600">
+                                        <i class="fas fa-eye" id="password-toggle"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center justify-between">
+                                <label class="flex items-center">
+                                    <input type="checkbox" class="w-4 h-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500">
+                                    <span class="ml-2 text-sm text-gray-600">Remember me</span>
+                                </label>
+                                <a href="#" class="text-sm text-primary-600 hover:text-primary-700">Forgot password?</a>
+                            </div>
+                            
+                            <button 
+                                type="submit" 
+                                class="w-full bg-gradient-to-r from-primary-500 to-purple-600 text-white py-3 px-4 rounded-lg hover:from-primary-600 hover:to-purple-700 focus:ring-4 focus:ring-primary-200 transition-all font-semibold"
+                            >
+                                Sign In
+                            </button>
+                        </form>
+                        
+                        <div class="mt-6 text-center">
+                            <p class="text-sm text-gray-600">
+                                Don't have an account? 
+                                <a href="#" class="text-primary-600 hover:text-primary-700 font-medium">Sign up here</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Code Tabs -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg mb-8">
+            <div class="border-b dark:border-gray-700">
+                <nav class="flex space-x-8 px-6">
+                    <button onclick="switchTab('react')" class="tab-button active py-4 px-2 border-b-2 border-transparent font-medium text-sm">
+                        <i class="fab fa-react mr-2"></i>React
+                    </button>
+                    <button onclick="switchTab('vue')" class="tab-button py-4 px-2 border-b-2 border-transparent font-medium text-sm">
+                        <i class="fab fa-vuejs mr-2"></i>Vue
+                    </button>
+                    <button onclick="switchTab('html')" class="tab-button py-4 px-2 border-b-2 border-transparent font-medium text-sm">
+                        <i class="fab fa-html5 mr-2"></i>HTML
+                    </button>
+                    <button onclick="switchTab('css')" class="tab-button py-4 px-2 border-b-2 border-transparent font-medium text-sm">
+                        <i class="fab fa-css3-alt mr-2"></i>CSS
+                    </button>
+                    <button onclick="switchTab('typescript')" class="tab-button py-4 px-2 border-b-2 border-transparent font-medium text-sm">
+                        <i class="fas fa-code mr-2"></i>TypeScript
+                    </button>
+                </nav>
+            </div>
+            
+            <div class="p-6">
+                <!-- React Tab -->
+                <div id="react-tab" class="tab-content active">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold">React Component</h3>
+                        <button onclick="copyCode('react')" class="bg-primary-600 text-white px-4 py-2 rounded hover:bg-primary-700 transition-colors">
+                            <i class="fas fa-copy mr-2"></i>Copy
+                        </button>
+                    </div>
+                    <div class="code-block">
+                        <pre><code class="language-jsx" id="react-code">import React, { useState } from 'react';
+
+const LoginForm = () => {
+  const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    rememberMe: false
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log('Login attempt:', formData);
+  };
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value
+    }));
+  };
+
+  return (
+    &lt;div className="bg-white rounded-lg shadow-xl p-8 max-w-md mx-auto"&gt;
+      &lt;div className="text-center mb-8"&gt;
+        &lt;div className="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4"&gt;
+          &lt;svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20"&gt;
+            &lt;path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" /&gt;
+          &lt;/svg&gt;
+        &lt;/div&gt;
+        &lt;h2 className="text-2xl font-bold text-gray-900 mb-2"&gt;Welcome Back&lt;/h2&gt;
+        &lt;p className="text-gray-600"&gt;Sign in to your account&lt;/p&gt;
+      &lt;/div&gt;
+      
+      &lt;form onSubmit={handleSubmit} className="space-y-6"&gt;
+        &lt;div&gt;
+          &lt;label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2"&gt;
+            Email Address
+          &lt;/label&gt;
+          &lt;div className="relative"&gt;
+            &lt;input
+              type="email"
+              id="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+              placeholder="Enter your email"
+              required
+            /&gt;
+            &lt;svg className="w-5 h-5 text-gray-400 absolute left-3 top-4" fill="currentColor" viewBox="0 0 20 20"&gt;
+              &lt;path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" /&gt;
+              &lt;path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" /&gt;
+            &lt;/svg&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        
+        &lt;div&gt;
+          &lt;label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-2"&gt;
+            Password
+          &lt;/label&gt;
+          &lt;div className="relative"&gt;
+            &lt;input
+              type={showPassword ? 'text' : 'password'}
+              id="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              className="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+              placeholder="Enter your password"
+              required
+            /&gt;
+            &lt;svg className="w-5 h-5 text-gray-400 absolute left-3 top-4" fill="currentColor" viewBox="0 0 20 20"&gt;
+              &lt;path fillRule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clipRule="evenodd" /&gt;
+            &lt;/svg&gt;
+            &lt;button
+              type="button"
+              onClick={() =&gt; setShowPassword(!showPassword)}
+              className="absolute right-3 top-4 text-gray-400 hover:text-gray-600"
+            &gt;
+              {showPassword ? (
+                &lt;svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"&gt;
+                  &lt;path fillRule="evenodd" d="M3.707 2.293a1 1 0 00-1.414 1.414l14 14a1 1 0 001.414-1.414l-1.473-1.473A10.014 10.014 0 0019.542 10C18.268 5.943 14.478 3 10 3a9.958 9.958 0 00-4.512 1.074l-1.78-1.781zm4.261 4.26l1.514 1.515a2.003 2.003 0 012.45 2.45l1.514 1.514a4 4 0 00-5.478-5.478z" clipRule="evenodd" /&gt;
+                  &lt;path d="M12.454 16.697L9.75 13.992a4 4 0 01-3.742-3.741L2.335 6.578A9.98 9.98 0 00.458 10c1.274 4.057 5.065 7 9.542 7 .847 0 1.669-.105 2.454-.303z" /&gt;
+                &lt;/svg&gt;
+              ) : (
+                &lt;svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"&gt;
+                  &lt;path d="M10 12a2 2 0 100-4 2 2 0 000 4z" /&gt;
+                  &lt;path fillRule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clipRule="evenodd" /&gt;
+                &lt;/svg&gt;
+              )}
+            &lt;/button&gt;
+          &lt;/div&gt;
+        &lt;/div&gt;
+        
+        &lt;div className="flex items-center justify-between"&gt;
+          &lt;label className="flex items-center"&gt;
+            &lt;input
+              type="checkbox"
+              name="rememberMe"
+              checked={formData.rememberMe}
+              onChange={handleChange}
+              className="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+            /&gt;
+            &lt;span className="ml-2 text-sm text-gray-600"&gt;Remember me&lt;/span&gt;
+          &lt;/label&gt;
+          &lt;a href="#" className="text-sm text-blue-600 hover:text-blue-700"&gt;
+            Forgot password?
+          &lt;/a&gt;
+        &lt;/div&gt;
+        
+        &lt;button
+          type="submit"
+          className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 px-4 rounded-lg hover:from-blue-600 hover:to-purple-700 focus:ring-4 focus:ring-blue-200 transition-all font-semibold"
+        &gt;
+          Sign In
+        &lt;/button&gt;
+      &lt;/form&gt;
+      
+      &lt;div className="mt-6 text-center"&gt;
+        &lt;p className="text-sm text-gray-600"&gt;
+          Don't have an account?{' '}
+          &lt;a href="#" className="text-blue-600 hover:text-blue-700 font-medium"&gt;
+            Sign up here
+          &lt;/a&gt;
+        &lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  );
+};
+
+export default LoginForm;</code></pre>
+                    </div>
+                </div>
+
+                <!-- Vue Tab -->
+                <div id="vue-tab" class="tab-content">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold">Vue Component</h3>
+                        <button onclick="copyCode('vue')" class="bg-primary-600 text-white px-4 py-2 rounded hover:bg-primary-700 transition-colors">
+                            <i class="fas fa-copy mr-2"></i>Copy
+                        </button>
+                    </div>
+                    <div class="code-block">
+                        <pre><code class="language-javascript" id="vue-code">&lt;template&gt;
+  &lt;div class="bg-white rounded-lg shadow-xl p-8 max-w-md mx-auto"&gt;
+    &lt;div class="text-center mb-8"&gt;
+      &lt;div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4"&gt;
+        &lt;svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20"&gt;
+          &lt;path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" /&gt;
+        &lt;/svg&gt;
+      &lt;/div&gt;
+      &lt;h2 class="text-2xl font-bold text-gray-900 mb-2"&gt;Welcome Back&lt;/h2&gt;
+      &lt;p class="text-gray-600"&gt;Sign in to your account&lt;/p&gt;
+    &lt;/div&gt;
+    
+    &lt;form @submit.prevent="handleSubmit" class="space-y-6"&gt;
+      &lt;div&gt;
+        &lt;label for="email" class="block text-sm font-medium text-gray-700 mb-2"&gt;
+          Email Address
+        &lt;/label&gt;
+        &lt;div class="relative"&gt;
+          &lt;input
+            type="email"
+            id="email"
+            v-model="formData.email"
+            class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+            placeholder="Enter your email"
+            required
+          /&gt;
+          &lt;svg class="w-5 h-5 text-gray-400 absolute left-3 top-4" fill="currentColor" viewBox="0 0 20 20"&gt;
+            &lt;path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" /&gt;
+            &lt;path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" /&gt;
+          &lt;/svg&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      
+      &lt;div&gt;
+        &lt;label for="password" class="block text-sm font-medium text-gray-700 mb-2"&gt;
+          Password
+        &lt;/label&gt;
+        &lt;div class="relative"&gt;
+          &lt;input
+            :type="showPassword ? 'text' : 'password'"
+            id="password"
+            v-model="formData.password"
+            class="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+            placeholder="Enter your password"
+            required
+          /&gt;
+          &lt;button
+            type="button"
+            @click="showPassword = !showPassword"
+            class="absolute right-3 top-4 text-gray-400 hover:text-gray-600"
+          &gt;
+            &lt;svg v-if="showPassword" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"&gt;
+              &lt;path fill-rule="evenodd" d="M3.707 2.293a1 1 0 00-1.414 1.414l14 14a1 1 0 001.414-1.414l-1.473-1.473A10.014 10.014 0 0019.542 10C18.268 5.943 14.478 3 10 3a9.958 9.958 0 00-4.512 1.074l-1.78-1.781zm4.261 4.26l1.514 1.515a2.003 2.003 0 012.45 2.45l1.514 1.514a4 4 0 00-5.478-5.478z" clip-rule="evenodd" /&gt;
+            &lt;/svg&gt;
+            &lt;svg v-else class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"&gt;
+              &lt;path d="M10 12a2 2 0 100-4 2 2 0 000 4z" /&gt;
+              &lt;path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" /&gt;
+            &lt;/svg&gt;
+          &lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      
+      &lt;button
+        type="submit"
+        class="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 px-4 rounded-lg hover:from-blue-600 hover:to-purple-700 focus:ring-4 focus:ring-blue-200 transition-all font-semibold"
+      &gt;
+        Sign In
+      &lt;/button&gt;
+    &lt;/form&gt;
+  &lt;/div&gt;
+&lt;/template&gt;
+
+&lt;script&gt;
+export default {
+  name: 'LoginForm',
+  data() {
+    return {
+      showPassword: false,
+      formData: {
+        email: '',
+        password: '',
+        rememberMe: false
+      }
+    }
+  },
+  methods: {
+    handleSubmit() {
+      console.log('Login attempt:', this.formData);
+    }
+  }
+}
+&lt;/script&gt;</code></pre>
+                    </div>
+                </div>
+
+                <!-- HTML Tab -->
+                <div id="html-tab" class="tab-content">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold">HTML Structure</h3>
+                        <button onclick="copyCode('html')" class="bg-primary-600 text-white px-4 py-2 rounded hover:bg-primary-700 transition-colors">
+                            <i class="fas fa-copy mr-2"></i>Copy
+                        </button>
+                    </div>
+                    <div class="code-block">
+                        <pre><code class="language-html" id="html-code">&lt;div class="bg-white rounded-lg shadow-xl p-8 max-w-md mx-auto"&gt;
+  &lt;div class="text-center mb-8"&gt;
+    &lt;div class="w-16 h-16 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-4"&gt;
+      &lt;svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 20 20"&gt;
+        &lt;path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" /&gt;
+      &lt;/svg&gt;
+    &lt;/div&gt;
+    &lt;h2 class="text-2xl font-bold text-gray-900 mb-2"&gt;Welcome Back&lt;/h2&gt;
+    &lt;p class="text-gray-600"&gt;Sign in to your account&lt;/p&gt;
+  &lt;/div&gt;
+  
+  &lt;form class="space-y-6"&gt;
+    &lt;div&gt;
+      &lt;label for="email" class="block text-sm font-medium text-gray-700 mb-2"&gt;
+        Email Address
+      &lt;/label&gt;
+      &lt;div class="relative"&gt;
+        &lt;input
+          type="email"
+          id="email"
+          name="email"
+          class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+          placeholder="Enter your email"
+          required
+        /&gt;
+        &lt;svg class="w-5 h-5 text-gray-400 absolute left-3 top-4" fill="currentColor" viewBox="0 0 20 20"&gt;
+          &lt;path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" /&gt;
+          &lt;path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" /&gt;
+        &lt;/svg&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    
+    &lt;div&gt;
+      &lt;label for="password" class="block text-sm font-medium text-gray-700 mb-2"&gt;
+        Password
+      &lt;/label&gt;
+      &lt;div class="relative"&gt;
+        &lt;input
+          type="password"
+          id="password"
+          name="password"
+          class="w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+          placeholder="Enter your password"
+          required
+        /&gt;
+        &lt;svg class="w-5 h-5 text-gray-400 absolute left-3 top-4" fill="currentColor" viewBox="0 0 20 20"&gt;
+          &lt;path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" /&gt;
+        &lt;/svg&gt;
+        &lt;button type="button" class="absolute right-3 top-4 text-gray-400 hover:text-gray-600"&gt;
+          &lt;svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"&gt;
+            &lt;path d="M10 12a2 2 0 100-4 2 2 0 000 4z" /&gt;
+            &lt;path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" /&gt;
+          &lt;/svg&gt;
+        &lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+    
+    &lt;div class="flex items-center justify-between"&gt;
+      &lt;label class="flex items-center"&gt;
+        &lt;input type="checkbox" class="w-4 h-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500" /&gt;
+        &lt;span class="ml-2 text-sm text-gray-600"&gt;Remember me&lt;/span&gt;
+      &lt;/label&gt;
+      &lt;a href="#" class="text-sm text-blue-600 hover:text-blue-700"&gt;Forgot password?&lt;/a&gt;
+    &lt;/div&gt;
+    
+    &lt;button
+      type="submit"
+      class="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 px-4 rounded-lg hover:from-blue-600 hover:to-purple-700 focus:ring-4 focus:ring-blue-200 transition-all font-semibold"
+    &gt;
+      Sign In
+    &lt;/button&gt;
+  &lt;/form&gt;
+  
+  &lt;div class="mt-6 text-center"&gt;
+    &lt;p class="text-sm text-gray-600"&gt;
+      Don't have an account? 
+      &lt;a href="#" class="text-blue-600 hover:text-blue-700 font-medium"&gt;Sign up here&lt;/a&gt;
+    &lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                    </div>
+                </div>
+
+                <!-- CSS Tab -->
+                <div id="css-tab" class="tab-content">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold">CSS Styles</h3>
+                        <button onclick="copyCode('css')" class="bg-primary-600 text-white px-4 py-2 rounded hover:bg-primary-700 transition-colors">
+                            <i class="fas fa-copy mr-2"></i>Copy
+                        </button>
+                    </div>
+                    <div class="code-block">
+                        <pre><code class="language-css" id="css-code">/* Login Form Styles */
+.login-form {
+  background: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  padding: 2rem;
+  max-width: 28rem;
+  margin: 0 auto;
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.login-icon {
+  width: 4rem;
+  height: 4rem;
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1rem;
+}
+
+.login-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #111827;
+  margin-bottom: 0.5rem;
+}
+
+.login-subtitle {
+  color: #6b7280;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 0.5rem;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.5rem;
+  border: 1px solid #d1d5db;
+  border-radius: 0.5rem;
+  transition: all 0.2s;
+}
+
+.form-input:focus {
+  outline: none;
+  ring: 2px;
+  ring-color: #3b82f6;
+  border-color: #3b82f6;
+}
+
+.input-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 1rem;
+  color: #9ca3af;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.submit-button {
+  width: 100%;
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  color: white;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.submit-button:hover {
+  background: linear-gradient(135deg, #2563eb, #7c3aed);
+}
+
+.submit-button:focus {
+  outline: none;
+  ring: 4px;
+  ring-color: rgba(59, 130, 246, 0.3);
+}
+
+.form-footer {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.form-footer p {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+
+.form-footer a {
+  color: #3b82f6;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.form-footer a:hover {
+  color: #2563eb;
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .login-form {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+  
+  .login-title {
+    font-size: 1.25rem;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  .login-form {
+    background: #1f2937;
+    color: #f9fafb;
+  }
+  
+  .login-title {
+    color: #f9fafb;
+  }
+  
+  .form-input {
+    background: #374151;
+    border-color: #4b5563;
+    color: #f9fafb;
+  }
+  
+  .form-input:focus {
+    border-color: #3b82f6;
+  }
+}</code></pre>
+                    </div>
+                </div>
+
+                <!-- TypeScript Tab -->
+                <div id="typescript-tab" class="tab-content">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-lg font-semibold">TypeScript Types</h3>
+                        <button onclick="copyCode('typescript')" class="bg-primary-600 text-white px-4 py-2 rounded hover:bg-primary-700 transition-colors">
+                            <i class="fas fa-copy mr-2"></i>Copy
+                        </button>
+                    </div>
+                    <div class="code-block">
+                        <pre><code class="language-typescript" id="typescript-code">// Types for Login Form Component
+export interface LoginFormData {
+  email: string;
+  password: string;
+  rememberMe: boolean;
+}
+
+export interface LoginFormProps {
+  onSubmit?: (data: LoginFormData) => void;
+  onForgotPassword?: () => void;
+  onSignUp?: () => void;
+  loading?: boolean;
+  error?: string;
+  className?: string;
+}
+
+export interface LoginFormState {
+  formData: LoginFormData;
+  showPassword: boolean;
+  isSubmitting: boolean;
+  validationErrors: ValidationErrors;
+}
+
+export interface ValidationErrors {
+  email?: string;
+  password?: string;
+  general?: string;
+}
+
+// Login Form Component with TypeScript
+import React, { useState, FormEvent } from 'react';
+
+const LoginForm: React.FC&lt;LoginFormProps&gt; = ({
+  onSubmit,
+  onForgotPassword,
+  onSignUp,
+  loading = false,
+  error,
+  className = ''
+}) =&gt; {
+  const [formData, setFormData] = useState&lt;LoginFormData&gt;({
+    email: '',
+    password: '',
+    rememberMe: false
+  });
+
+  const [showPassword, setShowPassword] = useState&lt;boolean&gt;(false);
+  const [validationErrors, setValidationErrors] = useState&lt;ValidationErrors&gt;({});
+
+  const validateForm = (): boolean =&gt; {
+    const errors: ValidationErrors = {};
+
+    // Email validation
+    if (!formData.email) {
+      errors.email = 'Email is required';
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      errors.email = 'Please enter a valid email address';
+    }
+
+    // Password validation
+    if (!formData.password) {
+      errors.password = 'Password is required';
+    } else if (formData.password.length &lt; 6) {
+      errors.password = 'Password must be at least 6 characters';
+    }
+
+    setValidationErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
+
+  const handleSubmit = (e: FormEvent&lt;HTMLFormElement&gt;): void =&gt; {
+    e.preventDefault();
+    
+    if (!validateForm()) {
+      return;
+    }
+
+    if (onSubmit) {
+      onSubmit(formData);
+    }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent&lt;HTMLInputElement&gt;): void =&gt; {
+    const { name, value, type, checked } = e.target;
+    
+    setFormData(prev =&gt; ({
+      ...prev,
+      [name]: type === 'checkbox' ? checked : value
+    }));
+
+    // Clear validation error when user starts typing
+    if (validationErrors[name as keyof ValidationErrors]) {
+      setValidationErrors(prev =&gt; ({
+        ...prev,
+        [name]: undefined
+      }));
+    }
+  };
+
+  const togglePasswordVisibility = (): void =&gt; {
+    setShowPassword(prev =&gt; !prev);
+  };
+
+  return (
+    &lt;div className={`bg-white rounded-lg shadow-xl p-8 max-w-md mx-auto ${className}`}&gt;
+      {/* Component JSX here */}
+    &lt;/div&gt;
+  );
+};
+
+export default LoginForm;
+
+// Usage Example
+const App: React.FC = () =&gt; {
+  const handleLogin = async (data: LoginFormData) =&gt; {
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        // Handle successful login
+        console.log('Login successful:', result);
+      } else {
+        // Handle login error
+        console.error('Login failed');
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+    }
+  };
+
+  return (
+    &lt;div className="min-h-screen bg-gray-100 flex items-center justify-center"&gt;
+      &lt;LoginForm onSubmit={handleLogin} /&gt;
+    &lt;/div&gt;
+  );
+};</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Features & Documentation -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+            <!-- Features -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                <h3 class="text-xl font-bold mb-6">Features</h3>
+                <div class="space-y-4">
+                    <div class="flex items-start space-x-3">
+                        <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                        <div>
+                            <h4 class="font-semibold">Fully Responsive</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Works seamlessly across all device sizes</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                        <div>
+                            <h4 class="font-semibold">Accessibility Ready</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">WCAG 2.1 compliant with proper ARIA labels</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                        <div>
+                            <h4 class="font-semibold">Form Validation</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Built-in client-side validation with error states</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                        <div>
+                            <h4 class="font-semibold">Dark Mode Support</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Automatic dark mode detection and styling</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                        <div>
+                            <h4 class="font-semibold">TypeScript Support</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Full type safety with TypeScript definitions</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <i class="fas fa-check-circle text-green-500 mt-1"></i>
+                        <div>
+                            <h4 class="font-semibold">Customizable</h4>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">Easy to modify colors, spacing, and layout</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Props Documentation -->
+            <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+                <h3 class="text-xl font-bold mb-6">Props & Configuration</h3>
+                <div class="space-y-4">
+                    <div class="border-b dark:border-gray-700 pb-3">
+                        <div class="flex items-center justify-between mb-1">
+                            <code class="text-sm font-mono text-primary-600">onSubmit</code>
+                            <span class="text-xs bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">function</span>
+                        </div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Callback function called when form is submitted</p>
+                    </div>
+                    <div class="border-b dark:border-gray-700 pb-3">
+                        <div class="flex items-center justify-between mb-1">
+                            <code class="text-sm font-mono text-primary-600">loading</code>
+                            <span class="text-xs bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">boolean</span>
+                        </div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Shows loading state on submit button</p>
+                    </div>
+                    <div class="border-b dark:border-gray-700 pb-3">
+                        <div class="flex items-center justify-between mb-1">
+                            <code class="text-sm font-mono text-primary-600">error</code>
+                            <span class="text-xs bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">string</span>
+                        </div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Error message to display</p>
+                    </div>
+                    <div class="border-b dark:border-gray-700 pb-3">
+                        <div class="flex items-center justify-between mb-1">
+                            <code class="text-sm font-mono text-primary-600">className</code>
+                            <span class="text-xs bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">string</span>
+                        </div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Additional CSS classes</p>
+                    </div>
+                    <div class="pb-3">
+                        <div class="flex items-center justify-between mb-1">
+                            <code class="text-sm font-mono text-primary-600">onForgotPassword</code>
+                            <span class="text-xs bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">function</span>
+                        </div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Callback for forgot password link</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reviews & Ratings -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg mb-8">
+            <div class="p-6 border-b dark:border-gray-700">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-xl font-bold">Reviews & Ratings</h3>
+                    <button onclick="openReviewModal()" class="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors">
+                        Write Review
+                    </button>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                    <div class="text-center">
+                        <div class="text-4xl font-bold text-primary-600 mb-2">4.9</div>
+                        <div class="flex justify-center rating-stars mb-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">Based on 89 reviews</p>
+                    </div>
+                    
+                    <div class="col-span-2">
+                        <div class="space-y-2">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-sm w-8">5</span>
+                                <div class="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                    <div class="bg-yellow-400 h-2 rounded-full" style="width: 85%"></div>
+                                </div>
+                                <span class="text-sm text-gray-600 dark:text-gray-400 w-8">75</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <span class="text-sm w-8">4</span>
+                                <div class="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                    <div class="bg-yellow-400 h-2 rounded-full" style="width: 10%"></div>
+                                </div>
+                                <span class="text-sm text-gray-600 dark:text-gray-400 w-8">9</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <span class="text-sm w-8">3</span>
+                                <div class="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                    <div class="bg-yellow-400 h-2 rounded-full" style="width: 3%"></div>
+                                </div>
+                                <span class="text-sm text-gray-600 dark:text-gray-400 w-8">3</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <span class="text-sm w-8">2</span>
+                                <div class="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                    <div class="bg-yellow-400 h-2 rounded-full" style="width: 1%"></div>
+                                </div>
+                                <span class="text-sm text-gray-600 dark:text-gray-400 w-8">1</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <span class="text-sm w-8">1</span>
+                                <div class="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                                    <div class="bg-yellow-400 h-2 rounded-full" style="width: 1%"></div>
+                                </div>
+                                <span class="text-sm text-gray-600 dark:text-gray-400 w-8">1</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="p-6">
+                <div class="space-y-6" id="reviews-container">
+                    <!-- Reviews will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Related Assets -->
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
+            <h3 class="text-xl font-bold mb-6">Related Assets</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="related-assets">
+                <!-- Related assets will be populated by JavaScript -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Review Modal -->
+    <div id="review-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-lg max-w-md w-full p-6">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold">Write a Review</h3>
+                <button onclick="closeReviewModal()" class="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form onsubmit="submitReview(event)">
+                <div class="mb-4">
+                    <label class="block text-sm font-medium mb-2">Rating</label>
+                    <div class="flex space-x-1 text-2xl" id="rating-input">
+                        <i class="far fa-star cursor-pointer hover:text-yellow-400" onclick="setRating(1)"></i>
+                        <i class="far fa-star cursor-pointer hover:text-yellow-400" onclick="setRating(2)"></i>
+                        <i class="far fa-star cursor-pointer hover:text-yellow-400" onclick="setRating(3)"></i>
+                        <i class="far fa-star cursor-pointer hover:text-yellow-400" onclick="setRating(4)"></i>
+                        <i class="far fa-star cursor-pointer hover:text-yellow-400" onclick="setRating(5)"></i>
+                    </div>
+                </div>
+                
+                <div class="mb-4">
+                    <label for="review-title" class="block text-sm font-medium mb-2">Review Title</label>
+                    <input 
+                        type="text" 
+                        id="review-title" 
+                        class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600"
+                        placeholder="Great component!"
+                        required
+                    >
+                </div>
+                
+                <div class="mb-6">
+                    <label for="review-content" class="block text-sm font-medium mb-2">Your Review</label>
+                    <textarea 
+                        id="review-content" 
+                        rows="4" 
+                        class="w-full px-3 py-2 border rounded-lg focus:ring-2 focus:ring-primary-500 dark:bg-gray-700 dark:border-gray-600"
+                        placeholder="Share your experience with this component..."
+                        required
+                    ></textarea>
+                </div>
+                
+                <div class="flex space-x-4">
+                    <button type="submit" class="flex-1 bg-primary-600 text-white py-2 px-4 rounded-lg hover:bg-primary-700 transition-colors">
+                        Submit Review
+                    </button>
+                    <button type="button" onclick="closeReviewModal()" class="flex-1 bg-gray-300 dark:bg-gray-600 py-2 px-4 rounded-lg hover:bg-gray-400 dark:hover:bg-gray-700 transition-colors">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // State
+        let isDarkMode = false;
+        let currentRating = 0;
+        let isFavorited = false;
+
+        // Sample data
+        const sampleReviews = [
+            {
+                id: 1,
+                author: "Alex Thompson",
+                avatar: "https://placehold.co/40x40",
+                avatarAlt: "Profile picture of Alex Thompson, frontend developer",
+                rating: 5,
+                title: "Excellent component!",
+                content: "This login form is exactly what I needed. Clean design, great accessibility features, and easy to integrate. The TypeScript support is a nice bonus.",
+                date: "2 days ago",
+                helpful: 12
+            },
+            {
+                id: 2,
+                author: "Maria Garcia",
+                avatar: "https://placehold.co/40x40",
+                avatarAlt: "Profile picture of Maria Garcia, UX designer",
+                rating: 5,
+                title: "Perfect for modern apps",
+                content: "Love the gradient styling and smooth animations. The form validation works flawlessly. Saved me hours of development time!",
+                date: "1 week ago",
+                helpful: 8
+            },
+            {
+                id: 3,
+                author: "David Chen",
+                avatar: "https://placehold.co/40x40",
+                avatarAlt: "Profile picture of David Chen, full-stack developer",
+                rating: 4,
+                title: "Great starting point",
+                content: "Solid component with good documentation. Had to make some minor adjustments for our specific use case, but overall very satisfied.",
+                date: "2 weeks ago",
+                helpful: 5
+            }
+        ];
+
+        const relatedAssets = [
+            {
+                id: 2,
+                title: "Registration Form",
+                description: "Matching registration form component",
+                imageUrl: "https://placehold.co/400x300",
+                imageAlt: "Registration form interface with matching design to login form, including additional fields for user signup",
+                downloads: 892,
+                likes: 67
+            },
+            {
+                id: 3,
+                title: "Password Reset Modal",
+                description: "Forgot password modal component",
+                imageUrl: "https://placehold.co/400x300",
+                imageAlt: "Password reset modal dialog with email input field and modern styling",
+                downloads: 456,
+                likes: 34
+            },
+            {
+                id: 4,
+                title: "User Profile Card",
+                description: "Clean user profile display component",
+                imageUrl: "https://placehold.co/400x300",
+                imageAlt: "User profile card showing avatar, name, role, and action buttons with modern design",
+                downloads: 723,
+                likes: 89
+            }
+        ];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            initializePage();
+            renderReviews();
+            renderRelatedAssets();
+            Prism.highlightAll();
+        });
+
+        function initializePage() {
+            if (localStorage.getItem('darkMode') === 'true') {
+                isDarkMode = true;
+                document.documentElement.classList.add('dark');
+            }
+        }
+
+        function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            document.documentElement.classList.toggle('dark');
+            localStorage.setItem('darkMode', isDarkMode);
+        }
+
+        function toggleFavorite() {
+            isFavorited = !isFavorited;
+            const btn = document.getElementById('favorite-btn');
+            const icon = btn.querySelector('i');
+            
+            if (isFavorited) {
+                icon.className = 'fas fa-heart text-xl text-red-500';
+                showNotification('Added to favorites!');
+            } else {
+                icon.className = 'far fa-heart text-xl';
+                showNotification('Removed from favorites');
+            }
+        }
+
+        function shareAsset() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Modern Login Form - DevHub',
+                    text: 'Check out this amazing login form component!',
+                    url: window.location.href
+                });
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                showNotification('Link copied to clipboard!');
+            }
+        }
+
+        function togglePreviewMode(mode) {
+            const buttons = document.querySelectorAll('.preview-mode-btn');
+            buttons.forEach(btn => {
+                btn.classList.remove('active', 'bg-primary-600', 'text-white');
+                btn.classList.add('bg-gray-200', 'dark:bg-gray-600');
+            });
+            
+            event.target.classList.add('active', 'bg-primary-600', 'text-white');
+            event.target.classList.remove('bg-gray-200', 'dark:bg-gray-600');
+            
+            const frame = document.getElementById('preview-frame');
+            
+            switch(mode) {
+                case 'desktop':
+                    frame.style.maxWidth = '100%';
+                    break;
+                case 'tablet':
+                    frame.style.maxWidth = '768px';
+                    break;
+                case 'mobile':
+                    frame.style.maxWidth = '375px';
+                    break;
+            }
+        }
+
+        function switchTab(tab) {
+            // Update tab buttons
+            const buttons = document.querySelectorAll('.tab-button');
+            buttons.forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Update tab content
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(tab + '-tab').classList.add('active');
+            
+            // Re-highlight code
+            setTimeout(() => {
+                Prism.highlightAll();
+            }, 100);
+        }
+
+        function copyCode(type) {
+            const codeElement = document.getElementById(type + '-code');
+            const code = codeElement.textContent;
+            
+            navigator.clipboard.writeText(code).then(() => {
+                showNotification('Code copied to clipboard!');
+            });
+        }
+
+        function downloadAsset() {
+            showNotification('Download started!');
+            // Simulate download
+            setTimeout(() => {
+                const link = document.createElement('a');
+                link.href = 'data:text/plain;charset=utf-8,' + encodeURIComponent('// Modern Login Form Component\n// Downloaded from DevHub');
+                link.download = 'modern-login-form.zip';
+                link.click();
+            }, 1000);
+        }
+
+        function copyToClipboard() {
+            const code = document.getElementById('react-code').textContent;
+            navigator.clipboard.writeText(code).then(() => {
+                showNotification('Component code copied to clipboard!');
+            });
+        }
+
+        function openInCodepen() {
+            showNotification('Opening in CodePen...');
+            // Simulate CodePen integration
+            setTimeout(() => {
+                window.open('https://codepen.io/pen/', '_blank');
+            }, 500);
+        }
+
+        function renderReviews() {
+            const container = document.getElementById('reviews-container');
+            container.innerHTML = sampleReviews.map(review => `
+                <div class="border-b dark:border-gray-700 pb-6 last:border-b-0">
+                    <div class="flex items-start space-x-4">
+                        <img src="${review.avatar}" alt="${review.avatarAlt}" class="w-10 h-10 rounded-full">
+                        <div class="flex-1">
+                            <div class="flex items-center justify-between mb-2">
+                                <div class="flex items-center space-x-3">
+                                    <h4 class="font-semibold">${review.author}</h4>
+                                    <div class="flex rating-stars text-sm">
+                                        ${Array(5).fill().map((_, i) => `<i class="fas fa-star ${i < review.rating ? '' : 'text-gray-300'}"></i>`).join('')}
+                                    </div>
+                                </div>
+                                <span class="text-sm text-gray-500">${review.date}</span>
+                            </div>
+                            <h5 class="font-medium mb-2">${review.title}</h5>
+                            <p class="text-gray-600 dark:text-gray-400 mb-3">${review.content}</p>
+                            <div class="flex items-center space-x-4">
+                                <button class="text-sm text-gray-500 hover:text-primary-600 transition-colors">
+                                    <i class="fas fa-thumbs-up mr-1"></i>Helpful (${review.helpful})
+                                </button>
+                                <button class="text-sm text-gray-500 hover:text-primary-600 transition-colors">
+                                    <i class="fas fa-reply mr-1"></i>Reply
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderRelatedAssets() {
+            const container = document.getElementById('related-assets');
+            container.innerHTML = relatedAssets.map(asset => `
+                <div class="bg-gray-50 dark:bg-gray-700 rounded-lg overflow-hidden card-hover cursor-pointer">
+                    <img src="${asset.imageUrl}" alt="${asset.imageAlt}" class="w-full h-48 object-cover">
+                    <div class="p-4">
+                        <h4 class="font-semibold mb-2">${asset.title}</h4>
+                        
